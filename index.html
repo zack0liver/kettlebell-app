@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>KettleFit</title>
+<style>
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --surface2: #24243a;
+    --border: #2a2a3e;
+    --text: #e8e8f0;
+    --text2: #8888a0;
+    --accent: #ff6b35;
+    --accent2: #ff8c5a;
+    --primary-muscle: #ff6b35;
+    --secondary-muscle: #ff6b3566;
+    --green: #4ecf72;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; overflow:hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    display:flex; flex-direction:column;
+  }
+  /* Header */
+  .header {
+    padding: 12px 16px 8px; display:flex; align-items:center; justify-content:space-between;
+    background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink:0;
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+  .header h1 { font-size:20px; font-weight:700; color:var(--accent); }
+  .header-subtitle { font-size:11px; color:var(--text2); }
+
+  /* Tab content area */
+  .tab-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  .tab-panel { display:none; padding:16px; padding-bottom:80px; min-height:100%; }
+  .tab-panel.active { display:block; }
+
+  /* Bottom nav */
+  .bottom-nav {
+    display:flex; background:var(--surface); border-top:1px solid var(--border);
+    flex-shrink:0; padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .nav-btn {
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
+    padding:8px 0; border:none; background:none; color:var(--text2);
+    font-size:10px; font-weight:600; cursor:pointer; transition:color .2s;
+  }
+  .nav-btn.active { color:var(--accent); }
+  .nav-btn svg { width:22px; height:22px; }
+
+  /* Common UI */
+  .card { background:var(--surface); border-radius:12px; padding:14px; margin-bottom:12px; border:1px solid var(--border); }
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding:10px 18px; border-radius:10px; border:none; font-size:14px;
+    font-weight:600; cursor:pointer; transition:all .2s; touch-action:manipulation;
+  }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:active { background:var(--accent2); transform:scale(.97); }
+  .btn-secondary { background:var(--surface2); color:var(--text); }
+  .btn-secondary:active { background:var(--border); }
+  .btn-sm { padding:6px 12px; font-size:12px; border-radius:8px; }
+  .btn-danger { background:var(--red); color:#fff; }
+  .btn-block { width:100%; }
+
+  input, select {
+    background:var(--surface2); border:1px solid var(--border); color:var(--text);
+    padding:10px 12px; border-radius:8px; font-size:14px; width:100%; outline:none;
+  }
+  input:focus, select:focus { border-color:var(--accent); }
+  select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:32px; }
+  label { font-size:12px; color:var(--text2); margin-bottom:4px; display:block; font-weight:600; }
+
+  .section-title { font-size:16px; font-weight:700; margin-bottom:12px; }
+  .badge { display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:600; }
+  .badge-primary { background:var(--primary-muscle); color:#fff; }
+  .badge-secondary { background:var(--secondary-muscle); color:var(--text); }
+  .badge-kb { background:var(--accent); color:#fff; }
+  .badge-mat { background:var(--purple); color:#fff; }
+
+  .empty-state { text-align:center; padding:40px 20px; color:var(--text2); }
+  .empty-state svg { width:48px; height:48px; margin-bottom:12px; opacity:.5; }
+
+  /* Exercise list in builder */
+  .exercise-item {
+    display:flex; align-items:center; gap:10px; padding:10px;
+    border-radius:8px; cursor:pointer; transition:background .15s;
+  }
+  .exercise-item:active { background:var(--surface2); }
+  .exercise-info { flex:1; min-width:0; }
+  .exercise-name { font-size:14px; font-weight:600; }
+  .exercise-muscles { font-size:11px; color:var(--text2); margin-top:2px; }
+
+  /* Current workout */
+  .workout-item {
+    display:flex; align-items:center; gap:10px; padding:10px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .workout-item:last-child { border-bottom:none; }
+  .workout-item-info { flex:1; }
+  .workout-item-name { font-size:14px; font-weight:600; }
+  .workout-item-detail { font-size:12px; color:var(--text2); margin-top:2px; }
+  .workout-item-controls { display:flex; gap:6px; align-items:center; }
+  .workout-item-controls input { width:50px; text-align:center; padding:6px; font-size:13px; }
+  .remove-btn { width:28px; height:28px; border-radius:50%; border:none; background:var(--red); color:#fff; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+
+  /* Search */
+  .search-wrap { position:relative; margin-bottom:12px; }
+  .search-wrap input { padding-left:36px; }
+  .search-wrap svg { position:absolute; left:10px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--text2); }
+
+  /* Toggle */
+  .toggle-group { display:flex; background:var(--surface2); border-radius:10px; padding:3px; margin-bottom:14px; }
+  .toggle-btn {
+    flex:1; padding:8px; text-align:center; border-radius:8px; border:none;
+    background:none; color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
+  }
+  .toggle-btn.active { background:var(--accent); color:#fff; }
+
+  /* Quick gen */
+  .focus-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
+  .focus-card {
+    padding:12px; border-radius:10px; text-align:center; cursor:pointer; border:2px solid var(--border);
+    background:var(--surface); transition:all .2s; font-size:13px; font-weight:600;
+  }
+  .focus-card.selected { border-color:var(--accent); background:var(--surface2); color:var(--accent); }
+  .focus-card-icon { display:none; }
+
+  /* Duration pills */
+  .duration-pills { display:flex; gap:8px; margin-bottom:14px; }
+  .duration-pill {
+    flex:1; padding:10px; text-align:center; border-radius:8px; cursor:pointer;
+    border:2px solid var(--border); background:var(--surface); font-size:13px; font-weight:600; transition:all .2s;
+  }
+  .duration-pill.selected { border-color:var(--accent); color:var(--accent); background:var(--surface2); }
+
+  /* SVG diagram */
+  .diagram-container { display:flex; justify-content:center; gap:8px; margin-bottom:16px; }
+  .body-view { text-align:center; }
+  .body-view h3 { font-size:12px; color:var(--text2); margin-bottom:6px; }
+  .body-svg { width:140px; height:320px; }
+  .body-svg .muscle { fill:var(--surface2); stroke:var(--border); stroke-width:1; transition:fill .3s; cursor:pointer; }
+  .body-svg .muscle.active-primary { fill:var(--primary-muscle); }
+  .body-svg .muscle.active-secondary { fill:var(--secondary-muscle); }
+  .body-svg .outline { fill:none; stroke:var(--text2); stroke-width:1.2; }
+
+  .muscle-legend { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:16px; }
+  .legend-item { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text2); }
+  .legend-dot { width:8px; height:8px; border-radius:50%; }
+
+  /* Muscle detail popup */
+  .muscle-popup {
+    display:none; position:fixed; bottom:0; left:0; right:0; background:var(--surface);
+    border-top-left-radius:16px; border-top-right-radius:16px; padding:20px;
+    box-shadow:0 -4px 20px rgba(0,0,0,.5); z-index:100; max-height:50vh; overflow-y:auto;
+  }
+  .muscle-popup.show { display:block; }
+  .muscle-popup h3 { margin-bottom:10px; }
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:99; }
+  .overlay.show { display:block; }
+
+  /* Log */
+  .log-entry {
+    padding:12px; margin-bottom:8px; background:var(--surface); border-radius:10px;
+    border:1px solid var(--border);
+  }
+  .log-date { font-size:13px; font-weight:700; color:var(--accent); }
+  .log-exercises { font-size:12px; color:var(--text2); margin-top:4px; }
+  .log-stats { font-size:11px; color:var(--text2); margin-top:6px; display:flex; gap:12px; }
+  .log-actions { display:flex; gap:6px; margin-top:8px; }
+
+  /* Calendar */
+  .calendar { margin-bottom:16px; }
+  .cal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; }
+  .cal-day-label { font-size:10px; color:var(--text2); padding:4px; }
+  .cal-day {
+    aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+    font-size:12px; border-radius:8px; color:var(--text2);
+  }
+  .cal-day.has-workout { background:var(--accent); color:#fff; font-weight:700; }
+  .cal-day.today { border:1px solid var(--accent); }
+
+  /* Charts */
+  .chart-container { position:relative; height:180px; margin-bottom:16px; }
+  .chart-canvas { width:100%; height:100%; }
+
+  /* Insights */
+  .insight-card { margin-bottom:12px; }
+  .insight-card h3 { font-size:14px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .rank-list { list-style:none; }
+  .rank-item { display:flex; align-items:center; gap:8px; padding:6px 0; font-size:13px; }
+  .rank-num { width:22px; height:22px; border-radius:50%; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--accent); }
+
+  .suggestion-item {
+    display:flex; align-items:center; gap:10px; padding:8px; margin-bottom:6px;
+    background:var(--surface2); border-radius:8px; cursor:pointer;
+  }
+  .suggestion-item:active { background:var(--border); }
+
+  /* Heatmap controls */
+  .heatmap-controls { display:flex; gap:6px; margin-bottom:12px; }
+  .heatmap-btn {
+    padding:6px 12px; border-radius:6px; border:1px solid var(--border); background:var(--surface);
+    color:var(--text2); font-size:12px; font-weight:600; cursor:pointer;
+  }
+  .heatmap-btn.active { border-color:var(--accent); color:var(--accent); }
+
+  /* Modal */
+  .modal { display:none; position:fixed; inset:0; z-index:200; align-items:flex-end; justify-content:center; }
+  .modal.show { display:flex; }
+  .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.6); }
+  .modal-content {
+    position:relative; background:var(--surface); border-top-left-radius:16px;
+    border-top-right-radius:16px; padding:20px; width:100%; max-height:80vh; overflow-y:auto;
+  }
+  .modal-content h2 { margin-bottom:14px; font-size:18px; }
+  .form-group { margin-bottom:12px; }
+
+  /* Timer progress dots */
+  .timer-dot {
+    width:10px; height:10px; border-radius:50%; background:var(--surface2); border:1px solid var(--border); transition:all .3s;
+  }
+  .timer-dot.done { background:var(--green); border-color:var(--green); }
+  .timer-dot.current { background:var(--accent); border-color:var(--accent); transform:scale(1.3); }
+
+  /* Settings weight chips */
+  .weight-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+  .weight-chip {
+    padding:6px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface2);
+    color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
+  }
+  .weight-chip.owned { border-color:var(--accent); color:var(--accent); background:var(--surface); }
+  .weight-chip.preferred { background:var(--accent); color:#fff; border-color:var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>KettleFit</h1>
+    <div class="header-subtitle">Kettlebell Training Tracker</div>
+  </div>
+  <button class="btn btn-sm btn-secondary" onclick="openSettings()" style="padding:6px 8px">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  </button>
+</div>
+
+<!-- BUILD TAB -->
+<div class="tab-content">
+  <div class="tab-panel active" id="tab-build">
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="setBuildMode('quick')">Quick Generate</button>
+      <button class="toggle-btn" onclick="setBuildMode('manual')">Manual Build</button>
+    </div>
+
+    <!-- Quick Generate -->
+    <div id="quick-mode">
+      <label>Focus Area</label>
+      <div class="focus-grid">
+        <div class="focus-card selected" data-focus="full" onclick="selectFocus(this)">
+          <div class="focus-card-icon"><svg viewBox="0 0 80 80">
+            <!-- Vitruvian Man - full figure in circle/square -->
+            <circle class="davinci" cx="40" cy="40" r="34" stroke-dasharray="2,2"/>
+            <rect class="davinci-detail" x="10" y="8" width="60" height="68" rx="1"/>
+            <!-- Body -->
+            <circle class="davinci" cx="40" cy="20" r="5"/>
+            <line class="davinci" x1="40" y1="25" x2="40" y2="50"/>
+            <!-- Arms spread -->
+            <line class="davinci" x1="40" y1="30" x2="18" y2="24"/>
+            <line class="davinci" x1="40" y1="30" x2="62" y2="24"/>
+            <!-- Arms down -->
+            <line class="davinci-detail" x1="40" y1="30" x2="22" y2="42"/>
+            <line class="davinci-detail" x1="40" y1="30" x2="58" y2="42"/>
+            <!-- Legs spread -->
+            <line class="davinci" x1="40" y1="50" x2="25" y2="72"/>
+            <line class="davinci" x1="40" y1="50" x2="55" y2="72"/>
+            <!-- Legs together -->
+            <line class="davinci-detail" x1="40" y1="50" x2="36" y2="74"/>
+            <line class="davinci-detail" x1="40" y1="50" x2="44" y2="74"/>
+          </svg></div>Full Body
+        </div>
+        <div class="focus-card" data-focus="upper" onclick="selectFocus(this)">
+          <div class="focus-card-icon"><svg viewBox="0 0 80 80">
+            <!-- Upper body - torso, arms, shoulders detail -->
+            <circle class="davinci" cx="40" cy="16" r="6"/>
+            <line class="davinci" x1="40" y1="22" x2="40" y2="52"/>
+            <!-- Shoulder width -->
+            <line class="davinci" x1="26" y1="30" x2="54" y2="30"/>
+            <!-- Arms with muscle curves -->
+            <path class="davinci" d="M26,30 Q20,34 16,44 Q14,50 16,56"/>
+            <path class="davinci" d="M54,30 Q60,34 64,44 Q66,50 64,56"/>
+            <!-- Deltoid arcs -->
+            <path class="davinci-detail" d="M26,28 Q22,26 20,30 Q18,34 20,36"/>
+            <path class="davinci-detail" d="M54,28 Q58,26 60,30 Q62,34 60,36"/>
+            <!-- Chest lines -->
+            <path class="davinci-detail" d="M32,32 Q40,38 48,32"/>
+            <path class="davinci-detail" d="M34,36 Q40,40 46,36"/>
+            <!-- Forearm lines -->
+            <line class="davinci-detail" x1="16" y1="56" x2="14" y2="66"/>
+            <line class="davinci-detail" x1="64" y1="56" x2="66" y2="66"/>
+            <!-- Faded lower -->
+            <line class="davinci-detail" x1="36" y1="52" x2="34" y2="70" opacity="0.3"/>
+            <line class="davinci-detail" x1="44" y1="52" x2="46" y2="70" opacity="0.3"/>
+          </svg></div>Upper Body
+        </div>
+        <div class="focus-card" data-focus="lower" onclick="selectFocus(this)">
+          <div class="focus-card-icon"><svg viewBox="0 0 80 80">
+            <!-- Lower body - hips, legs detail -->
+            <!-- Pelvis -->
+            <path class="davinci" d="M26,14 Q32,10 40,10 Q48,10 54,14 L56,20 Q48,24 40,24 Q32,24 24,20 Z"/>
+            <!-- Quad muscles -->
+            <path class="davinci" d="M30,22 Q28,36 26,50 Q25,58 28,66"/>
+            <path class="davinci" d="M38,24 Q36,38 35,52 Q34,60 36,66"/>
+            <path class="davinci" d="M42,24 Q44,38 45,52 Q46,60 44,66"/>
+            <path class="davinci" d="M50,22 Q52,36 54,50 Q55,58 52,66"/>
+            <!-- Knee detail -->
+            <ellipse class="davinci-detail" cx="32" cy="54" rx="5" ry="3"/>
+            <ellipse class="davinci-detail" cx="48" cy="54" rx="5" ry="3"/>
+            <!-- Calves -->
+            <path class="davinci" d="M28,66 Q30,72 30,78"/>
+            <path class="davinci" d="M36,66 Q34,72 34,78"/>
+            <path class="davinci" d="M44,66 Q46,72 46,78"/>
+            <path class="davinci" d="M52,66 Q50,72 50,78"/>
+            <!-- Muscle line detail -->
+            <line class="davinci-detail" x1="34" y1="28" x2="34" y2="48"/>
+            <line class="davinci-detail" x1="46" y1="28" x2="46" y2="48"/>
+          </svg></div>Lower Body
+        </div>
+        <div class="focus-card" data-focus="core" onclick="selectFocus(this)">
+          <div class="focus-card-icon"><svg viewBox="0 0 80 80">
+            <!-- Core - zoomed torso with muscle detail -->
+            <!-- Ribcage outline -->
+            <path class="davinci" d="M22,10 Q30,6 40,6 Q50,6 58,10 L60,16 Q58,28 56,36 L54,42 Q48,46 40,46 Q32,46 26,42 L24,36 Q22,28 20,16 Z"/>
+            <!-- Abs segments -->
+            <line class="davinci" x1="40" y1="14" x2="40" y2="46"/>
+            <path class="davinci-detail" d="M32,18 Q40,20 48,18"/>
+            <path class="davinci-detail" d="M31,26 Q40,28 49,26"/>
+            <path class="davinci-detail" d="M30,34 Q40,36 50,34"/>
+            <path class="davinci-detail" d="M30,42 Q40,44 50,42"/>
+            <!-- Oblique lines -->
+            <path class="davinci-detail" d="M22,14 Q24,22 26,32 Q28,40 30,46"/>
+            <path class="davinci-detail" d="M58,14 Q56,22 54,32 Q52,40 50,46"/>
+            <!-- Pelvis hint -->
+            <path class="davinci" d="M26,46 Q32,54 40,56 Q48,54 54,46"/>
+            <!-- Hip bones -->
+            <path class="davinci-detail" d="M22,48 Q24,52 28,50"/>
+            <path class="davinci-detail" d="M58,48 Q56,52 52,50"/>
+            <!-- Navel -->
+            <ellipse class="davinci-detail" cx="40" cy="40" rx="2" ry="2.5"/>
+            <!-- Cross-hatch texture -->
+            <line class="davinci-detail" x1="34" y1="20" x2="36" y2="24" opacity="0.3"/>
+            <line class="davinci-detail" x1="44" y1="20" x2="46" y2="24" opacity="0.3"/>
+            <line class="davinci-detail" x1="34" y1="28" x2="36" y2="32" opacity="0.3"/>
+            <line class="davinci-detail" x1="44" y1="28" x2="46" y2="32" opacity="0.3"/>
+          </svg></div>Core
+        </div>
+        <div class="focus-card" data-focus="posterior" onclick="selectFocus(this)">
+          <div class="focus-card-icon"><svg viewBox="0 0 80 80">
+            <!-- Posterior - back anatomy study -->
+            <circle class="davinci" cx="40" cy="12" r="5"/>
+            <!-- Spine -->
+            <line class="davinci" x1="40" y1="17" x2="40" y2="50"/>
+            <!-- Vertebrae marks -->
+            <line class="davinci-detail" x1="38" y1="22" x2="42" y2="22"/>
+            <line class="davinci-detail" x1="38" y1="27" x2="42" y2="27"/>
+            <line class="davinci-detail" x1="38" y1="32" x2="42" y2="32"/>
+            <line class="davinci-detail" x1="38" y1="37" x2="42" y2="37"/>
+            <line class="davinci-detail" x1="38" y1="42" x2="42" y2="42"/>
+            <!-- Shoulder blades / scapulae -->
+            <path class="davinci" d="M28,20 Q24,24 24,30 Q26,34 32,32 Q36,28 34,22 Z"/>
+            <path class="davinci" d="M52,20 Q56,24 56,30 Q54,34 48,32 Q44,28 46,22 Z"/>
+            <!-- Lats -->
+            <path class="davinci-detail" d="M30,32 Q26,38 24,44 Q28,48 34,46"/>
+            <path class="davinci-detail" d="M50,32 Q54,38 56,44 Q52,48 46,46"/>
+            <!-- Glutes -->
+            <path class="davinci" d="M30,50 Q28,56 30,62 Q36,64 40,60"/>
+            <path class="davinci" d="M50,50 Q52,56 50,62 Q44,64 40,60"/>
+            <!-- Hamstrings -->
+            <line class="davinci" x1="32" y1="62" x2="30" y2="76"/>
+            <line class="davinci" x1="36" y1="62" x2="36" y2="76"/>
+            <line class="davinci" x1="48" y1="62" x2="50" y2="76"/>
+            <line class="davinci" x1="44" y1="62" x2="44" y2="76"/>
+            <!-- Erector spinae -->
+            <path class="davinci-detail" d="M36,20 Q37,30 36,40 Q36,46 38,50"/>
+            <path class="davinci-detail" d="M44,20 Q43,30 44,40 Q44,46 42,50"/>
+          </svg></div>Posterior Chain
+        </div>
+        <div class="focus-card" data-focus="conditioning" onclick="selectFocus(this)">
+          <div class="focus-card-icon"><svg viewBox="0 0 80 80">
+            <!-- Conditioning - dynamic figure in motion -->
+            <circle class="davinci" cx="44" cy="12" r="5"/>
+            <!-- Torso leaning forward -->
+            <line class="davinci" x1="44" y1="17" x2="38" y2="40"/>
+            <!-- Lead arm forward -->
+            <path class="davinci" d="M42,24 Q50,28 56,22 Q60,18 62,20"/>
+            <!-- Trail arm back -->
+            <path class="davinci" d="M42,24 Q34,22 28,28 Q24,32 22,30"/>
+            <!-- Lead leg forward -->
+            <path class="davinci" d="M38,40 Q44,48 48,56 Q50,62 46,70"/>
+            <!-- Trail leg back -->
+            <path class="davinci" d="M38,40 Q30,48 24,56 Q20,62 22,70"/>
+            <!-- Motion lines -->
+            <line class="davinci-detail" x1="60" y1="14" x2="66" y2="12" opacity="0.4"/>
+            <line class="davinci-detail" x1="60" y1="18" x2="66" y2="18" opacity="0.4"/>
+            <line class="davinci-detail" x1="60" y1="22" x2="66" y2="24" opacity="0.4"/>
+            <!-- Muscle tension arcs -->
+            <path class="davinci-detail" d="M40,30 Q36,34 38,38"/>
+            <path class="davinci-detail" d="M44,44 Q48,48 48,54"/>
+            <!-- Ground line -->
+            <line class="davinci-detail" x1="16" y1="72" x2="64" y2="72" stroke-dasharray="3,3"/>
+          </svg></div>Conditioning
+        </div>
+      </div>
+
+      <label>Duration</label>
+      <div class="duration-pills">
+        <div class="duration-pill" data-dur="15" onclick="selectDuration(this)">15 min</div>
+        <div class="duration-pill selected" data-dur="20" onclick="selectDuration(this)">20 min</div>
+        <div class="duration-pill" data-dur="30" onclick="selectDuration(this)">30 min</div>
+        <div class="duration-pill" data-dur="45" onclick="selectDuration(this)">45 min</div>
+      </div>
+
+      <div id="weight-note" style="font-size:12px; color:var(--text2); margin-bottom:10px; padding:8px; background:var(--surface2); border-radius:8px;">
+        Using preferred weight: <strong id="pref-weight-display">16 kg</strong> <span style="opacity:.6">( change in Settings )</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" onclick="generateWorkout()" style="margin-top:8px">Generate Workout</button>
+    </div>
+
+    <!-- Manual Build -->
+    <div id="manual-mode" style="display:none">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="exercise-search" placeholder="Search exercises..." oninput="filterExercises()">
+      </div>
+      <div class="form-group">
+        <select id="category-filter" onchange="filterExercises()">
+          <option value="all">All Categories</option>
+          <option value="swing">Swings</option>
+          <option value="press">Presses</option>
+          <option value="squat">Squats</option>
+          <option value="pull">Pulls / Rows</option>
+          <option value="core">Core</option>
+          <option value="carry">Carries</option>
+          <option value="complex">Complexes</option>
+          <option value="mat">Mat / Bodyweight</option>
+        </select>
+      </div>
+      <div id="exercise-list"></div>
+    </div>
+
+    <!-- Current Workout -->
+    <div id="current-workout" style="display:none; margin-top:16px">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 class="section-title" style="margin-bottom:0">Current Workout</h3>
+        <button class="btn btn-sm btn-secondary" onclick="clearWorkout()">Clear</button>
+      </div>
+      <div id="workout-exercises"></div>
+      <div style="display:flex; gap:8px; margin-top:12px">
+        <button class="btn btn-primary" style="flex:1" onclick="startWorkoutTimer()">Start Workout</button>
+        <button class="btn btn-secondary" onclick="switchTab('diagram')">View Muscles</button>
+      </div>
+
+      <!-- Active Timer -->
+      <div id="timer-panel" style="display:none; margin-top:14px;">
+        <div class="card" style="text-align:center; border-color:var(--accent);">
+          <div style="font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Workout Timer</div>
+          <div id="timer-display" style="font-size:36px; font-weight:700; font-variant-numeric:tabular-nums; color:var(--accent);">00:00</div>
+          <div id="timer-exercise" style="font-size:14px; font-weight:600; margin-top:8px;"></div>
+          <div id="timer-allotment" style="font-size:12px; color:var(--text2); margin-top:2px;"></div>
+          <div style="display:flex; gap:8px; margin-top:12px; justify-content:center;">
+            <button class="btn btn-sm btn-secondary" id="timer-prev-btn" onclick="timerPrevExercise()">Prev</button>
+            <button class="btn btn-sm btn-primary" id="timer-pause-btn" onclick="timerTogglePause()">Pause</button>
+            <button class="btn btn-sm btn-secondary" id="timer-next-btn" onclick="timerNextExercise()">Next</button>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:8px; justify-content:center;">
+            <button class="btn btn-sm btn-danger" onclick="stopWorkoutTimer()">End Workout</button>
+          </div>
+          <!-- Exercise progress bar -->
+          <div style="margin-top:12px;">
+            <div id="timer-progress-bar" style="display:flex; gap:3px; justify-content:center;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGRAM TAB -->
+  <div class="tab-panel" id="tab-diagram">
+    <div class="section-title">Muscle Activation</div>
+
+    <div class="diagram-container">
+      <div class="body-view">
+        <h3>FRONT</h3>
+        <svg class="body-svg" id="svg-front" viewBox="0 0 200 450">
+          <!-- Head -->
+          <ellipse class="outline" cx="100" cy="30" rx="22" ry="26"/>
+          <!-- Neck -->
+          <rect class="outline" x="90" y="56" width="20" height="14" rx="4"/>
+          <!-- Torso outline -->
+          <path class="outline" d="M60,70 Q55,70 50,80 L42,130 Q40,155 50,180 L55,200 Q60,210 65,215 L70,220 Q80,225 100,225 Q120,225 130,220 L135,215 Q140,210 145,200 L150,180 Q160,155 158,130 L150,80 Q145,70 140,70 Z"/>
+
+          <!-- Chest (left) -->
+          <path class="muscle" id="front-chest-l" data-muscle="chest" d="M60,75 Q58,78 54,85 L48,110 Q50,120 60,118 L95,105 L95,75 Q80,70 60,75 Z"/>
+          <!-- Chest (right) -->
+          <path class="muscle" id="front-chest-r" data-muscle="chest" d="M140,75 Q142,78 146,85 L152,110 Q150,120 140,118 L105,105 L105,75 Q120,70 140,75 Z"/>
+
+          <!-- Shoulders (left) -->
+          <path class="muscle" id="front-shoulder-l" data-muscle="shoulders" d="M55,70 Q38,72 32,88 L40,110 L50,85 Z"/>
+          <!-- Shoulders (right) -->
+          <path class="muscle" id="front-shoulder-r" data-muscle="shoulders" d="M145,70 Q162,72 168,88 L160,110 L150,85 Z"/>
+
+          <!-- Abs -->
+          <path class="muscle" id="front-abs" data-muscle="abs" d="M80,110 L80,200 Q90,210 100,210 Q110,210 120,200 L120,110 Q110,105 100,105 Q90,105 80,110 Z"/>
+
+          <!-- Obliques (left) -->
+          <path class="muscle" id="front-oblique-l" data-muscle="obliques" d="M55,118 L48,130 Q43,155 50,180 L60,200 L65,215 Q70,218 78,205 L78,110 Q68,115 55,118 Z"/>
+          <!-- Obliques (right) -->
+          <path class="muscle" id="front-oblique-r" data-muscle="obliques" d="M145,118 L152,130 Q157,155 150,180 L140,200 L135,215 Q130,218 122,205 L122,110 Q132,115 145,118 Z"/>
+
+          <!-- Biceps (left) -->
+          <path class="muscle" id="front-bicep-l" data-muscle="biceps" d="M32,95 L26,115 Q24,135 28,155 L38,155 Q42,135 40,115 Z"/>
+          <!-- Biceps (right) -->
+          <path class="muscle" id="front-bicep-r" data-muscle="biceps" d="M168,95 L174,115 Q176,135 172,155 L162,155 Q158,135 160,115 Z"/>
+
+          <!-- Forearms (left) -->
+          <path class="muscle" id="front-forearm-l" data-muscle="forearms" d="M28,158 L22,200 Q20,220 24,240 L34,240 Q36,220 34,200 L38,158 Z"/>
+          <!-- Forearms (right) -->
+          <path class="muscle" id="front-forearm-r" data-muscle="forearms" d="M172,158 L178,200 Q180,220 176,240 L166,240 Q164,220 166,200 L162,158 Z"/>
+
+          <!-- Quads (left) -->
+          <path class="muscle" id="front-quad-l" data-muscle="quads" d="M68,222 L60,280 Q58,310 62,340 L88,340 Q92,310 90,280 L95,222 Q82,228 68,222 Z"/>
+          <!-- Quads (right) -->
+          <path class="muscle" id="front-quad-r" data-muscle="quads" d="M132,222 L140,280 Q142,310 138,340 L112,340 Q108,310 110,280 L105,222 Q118,228 132,222 Z"/>
+
+          <!-- Hip flexors -->
+          <path class="muscle" id="front-hipflexor-l" data-muscle="hip_flexors" d="M78,210 L68,222 L95,222 L92,210 Z"/>
+          <path class="muscle" id="front-hipflexor-r" data-muscle="hip_flexors" d="M122,210 L132,222 L105,222 L108,210 Z"/>
+
+          <!-- Calves (front, tibialis) -->
+          <path class="muscle" id="front-calf-l" data-muscle="calves" d="M64,345 L62,380 Q60,400 64,420 L86,420 Q90,400 88,380 L86,345 Z"/>
+          <path class="muscle" id="front-calf-r" data-muscle="calves" d="M136,345 L138,380 Q140,400 136,420 L114,420 Q110,400 112,380 L114,345 Z"/>
+        </svg>
+      </div>
+
+      <div class="body-view">
+        <h3>BACK</h3>
+        <svg class="body-svg" id="svg-back" viewBox="0 0 200 450">
+          <!-- Head -->
+          <ellipse class="outline" cx="100" cy="30" rx="22" ry="26"/>
+          <!-- Neck -->
+          <rect class="outline" x="90" y="56" width="20" height="14" rx="4"/>
+          <!-- Torso outline -->
+          <path class="outline" d="M60,70 Q55,70 50,80 L42,130 Q40,155 50,180 L55,200 Q60,210 65,215 L70,220 Q80,225 100,225 Q120,225 130,220 L135,215 Q140,210 145,200 L150,180 Q160,155 158,130 L150,80 Q145,70 140,70 Z"/>
+
+          <!-- Traps -->
+          <path class="muscle" id="back-traps" data-muscle="traps" d="M75,68 L60,72 L54,85 L70,95 L95,80 L95,72 Z"/>
+          <path class="muscle" id="back-traps-r" data-muscle="traps" d="M125,68 L140,72 L146,85 L130,95 L105,80 L105,72 Z"/>
+
+          <!-- Rear delts -->
+          <path class="muscle" id="back-reardelt-l" data-muscle="shoulders" d="M55,70 Q38,72 32,88 L40,110 L50,85 Z"/>
+          <path class="muscle" id="back-reardelt-r" data-muscle="shoulders" d="M145,70 Q162,72 168,88 L160,110 L150,85 Z"/>
+
+          <!-- Lats (left) -->
+          <path class="muscle" id="back-lat-l" data-muscle="lats" d="M56,95 L48,115 Q44,140 48,165 L58,180 L75,170 L80,115 L70,100 Z"/>
+          <!-- Lats (right) -->
+          <path class="muscle" id="back-lat-r" data-muscle="lats" d="M144,95 L152,115 Q156,140 152,165 L142,180 L125,170 L120,115 L130,100 Z"/>
+
+          <!-- Lower back -->
+          <path class="muscle" id="back-lowerback" data-muscle="lower_back" d="M78,120 L78,200 Q90,210 100,210 Q110,210 122,200 L122,120 Q110,115 100,115 Q90,115 78,120 Z"/>
+
+          <!-- Triceps (left) -->
+          <path class="muscle" id="back-tricep-l" data-muscle="triceps" d="M32,95 L26,115 Q24,135 28,155 L38,155 Q42,135 40,115 Z"/>
+          <!-- Triceps (right) -->
+          <path class="muscle" id="back-tricep-r" data-muscle="triceps" d="M168,95 L174,115 Q176,135 172,155 L162,155 Q158,135 160,115 Z"/>
+
+          <!-- Forearms back -->
+          <path class="muscle" id="back-forearm-l" data-muscle="forearms" d="M28,158 L22,200 Q20,220 24,240 L34,240 Q36,220 34,200 L38,158 Z"/>
+          <path class="muscle" id="back-forearm-r" data-muscle="forearms" d="M172,158 L178,200 Q180,220 176,240 L166,240 Q164,220 166,200 L162,158 Z"/>
+
+          <!-- Glutes -->
+          <path class="muscle" id="back-glute-l" data-muscle="glutes" d="M65,210 L60,230 Q62,250 75,255 L97,250 L97,210 Q82,215 65,210 Z"/>
+          <path class="muscle" id="back-glute-r" data-muscle="glutes" d="M135,210 L140,230 Q138,250 125,255 L103,250 L103,210 Q118,215 135,210 Z"/>
+
+          <!-- Hamstrings (left) -->
+          <path class="muscle" id="back-ham-l" data-muscle="hamstrings" d="M62,255 L58,290 Q56,320 60,345 L88,345 Q92,320 90,290 L92,255 Q78,260 62,255 Z"/>
+          <!-- Hamstrings (right) -->
+          <path class="muscle" id="back-ham-r" data-muscle="hamstrings" d="M138,255 L142,290 Q144,320 140,345 L112,345 Q108,320 110,290 L108,255 Q122,260 138,255 Z"/>
+
+          <!-- Calves (back) -->
+          <path class="muscle" id="back-calf-l" data-muscle="calves" d="M62,348 L60,380 Q58,400 62,420 L86,420 Q90,400 88,380 L86,348 Z"/>
+          <path class="muscle" id="back-calf-r" data-muscle="calves" d="M138,348 L140,380 Q142,400 138,420 L114,420 Q110,400 112,380 L114,348 Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="muscle-legend" id="muscle-legend"></div>
+
+    <div id="diagram-context" class="card" style="display:none">
+      <div style="font-size:13px; color:var(--text2); margin-bottom:6px;">Tap a muscle group on the diagram to see which exercises activate it.</div>
+    </div>
+
+    <div id="no-workout-msg" class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <p>Build a workout first to see muscle activation</p>
+      <button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="switchTab('build')">Go to Builder</button>
+    </div>
+  </div>
+
+  <!-- LOG TAB -->
+  <div class="tab-panel" id="tab-log">
+    <div class="section-title">Workout Log</div>
+    <div class="calendar card" id="calendar"></div>
+    <div id="log-list"></div>
+    <div id="log-empty" class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <p>No workouts logged yet</p>
+    </div>
+  </div>
+
+  <!-- INSIGHTS TAB -->
+  <div class="tab-panel" id="tab-insights">
+    <div class="section-title">Insights</div>
+
+    <div class="card insight-card">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Top 5 Exercises</h3>
+      <ol class="rank-list" id="top-exercises">
+        <li class="empty-state" style="padding:10px"><p>Log workouts to see your top exercises</p></li>
+      </ol>
+    </div>
+
+    <div class="card insight-card">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Weekly Volume</h3>
+      <div class="chart-container">
+        <canvas class="chart-canvas" id="volume-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="card insight-card">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> Muscle Coverage</h3>
+      <div class="heatmap-controls">
+        <button class="heatmap-btn active" data-days="7" onclick="setHeatmapRange(this,7)">7 days</button>
+        <button class="heatmap-btn" data-days="14" onclick="setHeatmapRange(this,14)">14 days</button>
+        <button class="heatmap-btn" data-days="30" onclick="setHeatmapRange(this,30)">30 days</button>
+      </div>
+      <div class="diagram-container" id="heatmap-diagram"></div>
+    </div>
+
+    <div class="card insight-card">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0"/></svg> Try These Next</h3>
+      <div id="suggestions-list">
+        <div class="empty-state" style="padding:10px"><p>Log workouts to get suggestions</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="switchTab('build')" data-tab="build">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+    Build
+  </button>
+  <button class="nav-btn" onclick="switchTab('diagram')" data-tab="diagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Muscles
+  </button>
+  <button class="nav-btn" onclick="switchTab('log')" data-tab="log">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Log
+  </button>
+  <button class="nav-btn" onclick="switchTab('insights')" data-tab="insights">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+    Insights
+  </button>
+</nav>
+
+<!-- Overlay for muscle popup -->
+<div class="overlay" id="overlay" onclick="closeMusclePopup()"></div>
+<div class="muscle-popup" id="muscle-popup">
+  <h3 id="popup-muscle-name"></h3>
+  <div id="popup-exercises"></div>
+</div>
+
+<!-- Log Workout Modal -->
+<div class="modal" id="log-modal">
+  <div class="modal-backdrop" onclick="closeLogModal()"></div>
+  <div class="modal-content">
+    <h2>Log Workout</h2>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" id="log-date">
+    </div>
+    <div class="form-group">
+      <label>Notes (optional)</label>
+      <input type="text" id="log-notes" placeholder="How did it feel?">
+    </div>
+    <div id="log-exercise-summary" style="margin-bottom:14px"></div>
+    <div style="display:flex; gap:8px">
+      <button class="btn btn-primary" style="flex:1" onclick="saveWorkoutLog()">Save</button>
+      <button class="btn btn-secondary" onclick="closeLogModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal" id="settings-modal">
+  <div class="modal-backdrop" onclick="closeSettings()"></div>
+  <div class="modal-content">
+    <h2>Settings</h2>
+    <div class="form-group">
+      <label>Kettlebells You Own (tap to toggle)</label>
+      <div class="weight-chips" id="owned-weights"></div>
+    </div>
+    <div class="form-group">
+      <label>Preferred Weight (tap one you own)</label>
+      <div class="weight-chips" id="preferred-weight"></div>
+    </div>
+    <div class="form-group">
+      <label>Unit Preference</label>
+      <select id="unit-pref" onchange="saveSettings()">
+        <option value="kg">Kilograms (kg)</option>
+        <option value="lb">Pounds (lb)</option>
+      </select>
+    </div>
+    <div style="display:flex; gap:8px; margin-top:14px;">
+      <button class="btn btn-primary" style="flex:1" onclick="closeSettings()">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== EXERCISE DATABASE ====================
+const EXERCISES = [
+  // Swings
+  { id:'kb_swing', name:'Kettlebell Swing', category:'swing', equipment:'kettlebell', difficulty:'beginner',
+    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'] },
+  { id:'kb_swing_1h', name:'One-Hand Swing', category:'swing', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms','obliques'] },
+  { id:'kb_swing_alt', name:'Alternating Swing', category:'swing', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'] },
+
+  // Squats
+  { id:'kb_goblet', name:'Goblet Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
+    primary:['quads','glutes'], secondary:['core','hamstrings'] },
+  { id:'kb_sumo', name:'Sumo Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
+    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings'] },
+  { id:'kb_cossack', name:'Cossack Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
+    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings','calves'] },
+  { id:'kb_front_squat', name:'Front Rack Squat', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['quads','glutes'], secondary:['core','shoulders','upper_back'] },
+
+  // Presses
+  { id:'kb_press', name:'Overhead Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['shoulders','triceps'], secondary:['core','chest'] },
+  { id:'kb_push_press', name:'Push Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['shoulders','triceps','quads'], secondary:['core','glutes'] },
+  { id:'kb_floor_press', name:'Floor Press', category:'press', equipment:'kettlebell', difficulty:'beginner',
+    primary:['chest','triceps'], secondary:['shoulders'] },
+  { id:'kb_bottoms_up', name:'Bottoms-Up Press', category:'press', equipment:'kettlebell', difficulty:'advanced',
+    primary:['shoulders','forearms'], secondary:['core','triceps'] },
+
+  // Pulls / Rows
+  { id:'kb_row', name:'Single-Arm Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
+    primary:['lats','biceps'], secondary:['core','forearms','traps'] },
+  { id:'kb_gorilla_row', name:'Gorilla Row', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['lats','biceps'], secondary:['core','forearms','traps','lower_back'] },
+  { id:'kb_high_pull', name:'High Pull', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['shoulders','traps','hamstrings'], secondary:['glutes','core','biceps','forearms'] },
+  { id:'kb_upright_row', name:'Upright Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
+    primary:['shoulders','traps'], secondary:['biceps','forearms'] },
+
+  // Core
+  { id:'kb_turkish', name:'Turkish Get-Up', category:'core', equipment:'kettlebell', difficulty:'advanced',
+    primary:['core','shoulders'], secondary:['glutes','quads','triceps','hip_flexors','obliques'] },
+  { id:'kb_windmill', name:'Windmill', category:'core', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['obliques','shoulders'], secondary:['hamstrings','hip_flexors','core'] },
+  { id:'kb_halo', name:'Halo', category:'core', equipment:'kettlebell', difficulty:'beginner',
+    primary:['shoulders','core'], secondary:['triceps','forearms'] },
+  { id:'kb_russian_twist', name:'Russian Twist (KB)', category:'core', equipment:'kettlebell', difficulty:'beginner',
+    primary:['obliques','abs'], secondary:['hip_flexors'] },
+  { id:'kb_pullover', name:'KB Pullover', category:'core', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['lats','abs'], secondary:['chest','triceps'] },
+  { id:'kb_figure8', name:'Figure 8', category:'core', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['core','obliques'], secondary:['forearms','quads','glutes'] },
+
+  // Carries
+  { id:'kb_farmer', name:'Farmer Carry', category:'carry', equipment:'kettlebell', difficulty:'beginner',
+    primary:['forearms','traps'], secondary:['core','shoulders','calves'] },
+  { id:'kb_rack_carry', name:'Rack Carry', category:'carry', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['core','shoulders'], secondary:['forearms','biceps','calves'] },
+  { id:'kb_overhead_carry', name:'Overhead Carry', category:'carry', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['shoulders','core'], secondary:['triceps','forearms','calves','traps'] },
+  { id:'kb_suitcase', name:'Suitcase Carry', category:'carry', equipment:'kettlebell', difficulty:'beginner',
+    primary:['obliques','forearms'], secondary:['core','traps','calves'] },
+
+  // Complexes / Dynamic
+  { id:'kb_clean', name:'Kettlebell Clean', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','shoulders','traps'] },
+  { id:'kb_snatch', name:'Kettlebell Snatch', category:'complex', equipment:'kettlebell', difficulty:'advanced',
+    primary:['shoulders','hamstrings','glutes'], secondary:['core','traps','forearms','quads'] },
+  { id:'kb_clean_press', name:'Clean & Press', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','forearms','traps'] },
+  { id:'kb_thruster', name:'Thruster', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['quads','shoulders','glutes'], secondary:['core','triceps','hamstrings'] },
+  { id:'kb_lunge', name:'KB Lunge', category:'complex', equipment:'kettlebell', difficulty:'beginner',
+    primary:['quads','glutes'], secondary:['hamstrings','core','calves'] },
+  { id:'kb_deadlift', name:'KB Deadlift', category:'complex', equipment:'kettlebell', difficulty:'beginner',
+    primary:['hamstrings','glutes','lower_back'], secondary:['core','forearms','quads'] },
+  { id:'kb_single_dl', name:'Single-Leg Deadlift', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
+    primary:['hamstrings','glutes'], secondary:['core','lower_back','calves'] },
+
+  // Mat / Bodyweight
+  { id:'mat_plank', name:'Plank', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['abs','core'], secondary:['shoulders','glutes'] },
+  { id:'mat_side_plank', name:'Side Plank', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['obliques'], secondary:['shoulders','core','hip_flexors'] },
+  { id:'mat_hollow', name:'Hollow Body Hold', category:'mat', equipment:'mat', difficulty:'intermediate',
+    primary:['abs','hip_flexors'], secondary:['core'] },
+  { id:'mat_deadbug', name:'Dead Bug', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['abs','core'], secondary:['hip_flexors'] },
+  { id:'mat_glute_bridge', name:'Glute Bridge', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['glutes'], secondary:['hamstrings','core'] },
+  { id:'mat_bird_dog', name:'Bird Dog', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['core','lower_back'], secondary:['glutes','shoulders'] },
+  { id:'mat_mountain_climber', name:'Mountain Climbers', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['core','hip_flexors'], secondary:['shoulders','quads','calves'] },
+  { id:'mat_superman', name:'Superman Hold', category:'mat', equipment:'mat', difficulty:'beginner',
+    primary:['lower_back','glutes'], secondary:['hamstrings','traps'] },
+];
+
+const MUSCLE_NAMES = {
+  chest:'Chest', shoulders:'Shoulders', abs:'Abs', obliques:'Obliques',
+  biceps:'Biceps', triceps:'Triceps', forearms:'Forearms', quads:'Quads',
+  hamstrings:'Hamstrings', glutes:'Glutes', calves:'Calves', hip_flexors:'Hip Flexors',
+  lats:'Lats', traps:'Traps', lower_back:'Lower Back', core:'Core'
+};
+
+const MUSCLE_TO_SVG = {
+  chest: ['front-chest-l','front-chest-r'],
+  shoulders: ['front-shoulder-l','front-shoulder-r','back-reardelt-l','back-reardelt-r'],
+  abs: ['front-abs'],
+  obliques: ['front-oblique-l','front-oblique-r'],
+  biceps: ['front-bicep-l','front-bicep-r'],
+  triceps: ['back-tricep-l','back-tricep-r'],
+  forearms: ['front-forearm-l','front-forearm-r','back-forearm-l','back-forearm-r'],
+  quads: ['front-quad-l','front-quad-r'],
+  hamstrings: ['back-ham-l','back-ham-r'],
+  glutes: ['back-glute-l','back-glute-r'],
+  calves: ['front-calf-l','front-calf-r','back-calf-l','back-calf-r'],
+  hip_flexors: ['front-hipflexor-l','front-hipflexor-r'],
+  lats: ['back-lat-l','back-lat-r'],
+  traps: ['back-traps','back-traps-r'],
+  lower_back: ['back-lowerback'],
+  core: ['front-abs','front-oblique-l','front-oblique-r']
+};
+
+// ==================== APP STATE ====================
+let currentWorkout = []; // [{exercise, sets, reps, weight}]
+let selectedFocus = 'full';
+let selectedDuration = 20;
+let buildMode = 'quick';
+let calendarMonth = new Date();
+let heatmapDays = 7;
+
+// Timer state
+let timerInterval = null;
+let timerSeconds = 0;
+let timerPaused = false;
+let timerCurrentEx = 0;
+let timerExAllotments = [];
+
+// ==================== STORAGE ====================
+function getWorkoutLogs() {
+  try { return JSON.parse(localStorage.getItem('kf_logs') || '[]'); }
+  catch { return []; }
+}
+function saveWorkoutLogs(logs) { localStorage.setItem('kf_logs', JSON.stringify(logs)); }
+
+// ==================== SETTINGS ====================
+const ALL_WEIGHTS = [8,12,16,20,24,28,32,36,40,44,48];
+const KG_TO_LB = {8:18,12:26,16:35,20:44,24:53,28:62,32:70,36:80,40:88,44:97,48:106};
+
+function getSettings() {
+  try {
+    return JSON.parse(localStorage.getItem('kf_settings') || '{}');
+  } catch { return {}; }
+}
+function saveSettings() {
+  const s = getSettings();
+  s.unit = document.getElementById('unit-pref').value;
+  localStorage.setItem('kf_settings', JSON.stringify(s));
+  renderSettingsChips();
+  updatePrefWeightDisplay();
+}
+function getOwnedWeights() { return getSettings().owned || [16]; }
+function getPreferredWeight() { return getSettings().preferred || 16; }
+
+function openSettings() {
+  document.getElementById('settings-modal').classList.add('show');
+  const s = getSettings();
+  document.getElementById('unit-pref').value = s.unit || 'kg';
+  renderSettingsChips();
+}
+function closeSettings() {
+  document.getElementById('settings-modal').classList.remove('show');
+  updatePrefWeightDisplay();
+}
+
+function renderSettingsChips() {
+  const s = getSettings();
+  const owned = s.owned || [16];
+  const preferred = s.preferred || 16;
+  const unit = s.unit || 'kg';
+
+  const formatWt = (kg) => unit === 'kg' ? `${kg} kg` : `${KG_TO_LB[kg]} lb`;
+
+  document.getElementById('owned-weights').innerHTML = ALL_WEIGHTS.map(w =>
+    `<div class="weight-chip ${owned.includes(w)?'owned':''}" onclick="toggleOwnedWeight(${w})">${formatWt(w)}</div>`
+  ).join('');
+
+  document.getElementById('preferred-weight').innerHTML = owned.map(w =>
+    `<div class="weight-chip ${preferred===w?'preferred':''}" onclick="setPreferredWeight(${w})">${formatWt(w)}</div>`
+  ).join('');
+}
+
+function toggleOwnedWeight(w) {
+  const s = getSettings();
+  const owned = s.owned || [16];
+  const idx = owned.indexOf(w);
+  if (idx >= 0) owned.splice(idx, 1); else owned.push(w);
+  owned.sort((a,b) => a-b);
+  if (owned.length === 0) owned.push(16);
+  s.owned = owned;
+  if (!owned.includes(s.preferred)) s.preferred = owned[0];
+  localStorage.setItem('kf_settings', JSON.stringify(s));
+  renderSettingsChips();
+}
+
+function setPreferredWeight(w) {
+  const s = getSettings();
+  s.preferred = w;
+  localStorage.setItem('kf_settings', JSON.stringify(s));
+  renderSettingsChips();
+}
+
+function updatePrefWeightDisplay() {
+  const s = getSettings();
+  const unit = s.unit || 'kg';
+  const w = s.preferred || 16;
+  const display = unit === 'kg' ? `${w} kg` : `${KG_TO_LB[w]} lb`;
+  const el = document.getElementById('pref-weight-display');
+  if (el) el.textContent = display;
+}
+
+// ==================== WORKOUT TIMER ====================
+function startWorkoutTimer() {
+  if (currentWorkout.length === 0) return;
+  timerSeconds = 0;
+  timerPaused = false;
+  timerCurrentEx = 0;
+
+  // Calculate per-exercise time allotments
+  const totalSec = selectedDuration * 60;
+  const totalSets = currentWorkout.reduce((s,item) => s + (parseInt(item.sets)||3), 0);
+  timerExAllotments = currentWorkout.map(item => {
+    const sets = parseInt(item.sets) || 3;
+    return Math.round((sets / totalSets) * totalSec);
+  });
+
+  document.getElementById('timer-panel').style.display = 'block';
+  updateTimerDisplay();
+  renderTimerProgress();
+
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!timerPaused) {
+      timerSeconds++;
+      updateTimerDisplay();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(timerSeconds / 60);
+  const sec = timerSeconds % 60;
+  document.getElementById('timer-display').textContent =
+    `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+
+  if (currentWorkout[timerCurrentEx]) {
+    const item = currentWorkout[timerCurrentEx];
+    document.getElementById('timer-exercise').textContent = item.exercise.name;
+    const allotMin = Math.floor(timerExAllotments[timerCurrentEx] / 60);
+    const allotSec = timerExAllotments[timerCurrentEx] % 60;
+    document.getElementById('timer-allotment').textContent =
+      `${item.sets} sets x ${item.reps} reps  |  ~${allotMin}:${String(allotSec).padStart(2,'0')} allotted`;
+  }
+
+  document.getElementById('timer-pause-btn').textContent = timerPaused ? 'Resume' : 'Pause';
+}
+
+function renderTimerProgress() {
+  const bar = document.getElementById('timer-progress-bar');
+  bar.innerHTML = currentWorkout.map((_, i) => {
+    let cls = 'timer-dot';
+    if (i < timerCurrentEx) cls += ' done';
+    if (i === timerCurrentEx) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function timerTogglePause() { timerPaused = !timerPaused; updateTimerDisplay(); }
+function timerNextExercise() {
+  if (timerCurrentEx < currentWorkout.length - 1) { timerCurrentEx++; renderTimerProgress(); updateTimerDisplay(); }
+}
+function timerPrevExercise() {
+  if (timerCurrentEx > 0) { timerCurrentEx--; renderTimerProgress(); updateTimerDisplay(); }
+}
+
+function stopWorkoutTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById('timer-panel').style.display = 'none';
+  openLogModal();
+}
+
+// ==================== TAB NAVIGATION ====================
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelector(`.nav-btn[data-tab="${tab}"]`).classList.add('active');
+  if (tab === 'diagram') updateDiagram();
+  if (tab === 'log') renderLog();
+  if (tab === 'insights') renderInsights();
+}
+
+// ==================== BUILD MODE ====================
+function setBuildMode(mode) {
+  buildMode = mode;
+  document.querySelectorAll('.toggle-group .toggle-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && mode==='quick') || (i===1 && mode==='manual'));
+  });
+  document.getElementById('quick-mode').style.display = mode==='quick' ? 'block' : 'none';
+  document.getElementById('manual-mode').style.display = mode==='manual' ? 'block' : 'none';
+  if (mode === 'manual') renderExerciseList();
+}
+
+function selectFocus(el) {
+  document.querySelectorAll('.focus-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedFocus = el.dataset.focus;
+}
+function selectDuration(el) {
+  document.querySelectorAll('.duration-pill').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedDuration = parseInt(el.dataset.dur);
+}
+
+// ==================== QUICK GENERATE ====================
+function generateWorkout() {
+  const s = getSettings();
+  const unit = s.unit || 'kg';
+  const prefKg = getPreferredWeight();
+  const weight = unit === 'kg' ? prefKg : KG_TO_LB[prefKg];
+  const focusMap = {
+    full: { muscles:['glutes','hamstrings','quads','shoulders','core','lats'], count:{15:4,20:5,30:7,45:9} },
+    upper: { muscles:['shoulders','chest','triceps','biceps','lats','traps','forearms'], count:{15:4,20:5,30:6,45:8} },
+    lower: { muscles:['glutes','hamstrings','quads','calves','hip_flexors'], count:{15:4,20:5,30:6,45:8} },
+    core: { muscles:['abs','obliques','core','lower_back','hip_flexors'], count:{15:4,20:5,30:6,45:8} },
+    posterior: { muscles:['glutes','hamstrings','lower_back','lats','traps','calves'], count:{15:4,20:5,30:6,45:8} },
+    conditioning: { muscles:['glutes','hamstrings','shoulders','core','quads'], count:{15:5,20:6,30:8,45:10} }
+  };
+  const focus = focusMap[selectedFocus];
+  const targetCount = focus.count[selectedDuration] || 5;
+  const targetMuscles = focus.muscles;
+
+  // Score exercises by relevance
+  let scored = EXERCISES.map(ex => {
+    let score = 0;
+    ex.primary.forEach(m => { if (targetMuscles.includes(m)) score += 3; });
+    ex.secondary.forEach(m => { if (targetMuscles.includes(m)) score += 1; });
+    if (selectedFocus === 'conditioning' && ['swing','complex'].includes(ex.category)) score += 2;
+    return { exercise: ex, score };
+  }).filter(s => s.score > 0).sort((a,b) => b.score - a.score);
+
+  // Pick exercises ensuring variety
+  const picked = [];
+  const usedCategories = new Set();
+  for (const s of scored) {
+    if (picked.length >= targetCount) break;
+    if (picked.length < targetCount - 1 && usedCategories.has(s.exercise.category)) continue;
+    picked.push(s.exercise);
+    usedCategories.add(s.exercise.category);
+  }
+  // Fill remaining if needed
+  if (picked.length < targetCount) {
+    for (const s of scored) {
+      if (picked.length >= targetCount) break;
+      if (!picked.includes(s.exercise)) picked.push(s.exercise);
+    }
+  }
+
+  // Assign sets/reps based on duration
+  const isConditioning = selectedFocus === 'conditioning';
+  currentWorkout = picked.map(ex => {
+    let sets, reps;
+    if (ex.equipment === 'mat') {
+      sets = selectedDuration >= 30 ? 3 : 2;
+      reps = ex.name.includes('Hold') || ex.name.includes('Plank') ? '30s' : '10';
+    } else if (isConditioning) {
+      sets = selectedDuration >= 30 ? 4 : 3;
+      reps = ex.category === 'swing' ? '15' : '10';
+    } else {
+      sets = selectedDuration >= 30 ? 4 : 3;
+      reps = ['swing','complex'].includes(ex.category) ? '12' : '8';
+    }
+    const wtLabel = unit === 'kg' ? `${weight} kg` : `${weight} lb`;
+    return { exercise: ex, sets, reps, weight: ex.equipment === 'mat' ? 'BW' : wtLabel };
+  });
+
+  renderCurrentWorkout();
+}
+
+// ==================== MANUAL BUILD ====================
+function renderExerciseList() {
+  const search = (document.getElementById('exercise-search').value || '').toLowerCase();
+  const cat = document.getElementById('category-filter').value;
+  const filtered = EXERCISES.filter(ex => {
+    if (cat !== 'all' && ex.category !== cat) return false;
+    if (search && !ex.name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+  const el = document.getElementById('exercise-list');
+  el.innerHTML = filtered.map(ex => `
+    <div class="exercise-item" onclick="addExercise('${ex.id}')">
+      <div class="exercise-info">
+        <div class="exercise-name">${ex.name}</div>
+        <div class="exercise-muscles">
+          <span class="badge ${ex.equipment==='kettlebell'?'badge-kb':'badge-mat'}" style="margin-right:4px">${ex.equipment==='kettlebell'?'KB':'Mat'}</span>
+          ${ex.primary.map(m => MUSCLE_NAMES[m]).join(', ')}
+        </div>
+      </div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+    </div>
+  `).join('');
+}
+function filterExercises() { renderExerciseList(); }
+
+function addExercise(id) {
+  const ex = EXERCISES.find(e => e.id === id);
+  if (!ex) return;
+  const s = getSettings();
+  const unit = s.unit || 'kg';
+  const prefKg = getPreferredWeight();
+  const wt = unit === 'kg' ? prefKg : KG_TO_LB[prefKg];
+  const wtLabel = unit === 'kg' ? `${wt} kg` : `${wt} lb`;
+  currentWorkout.push({
+    exercise: ex, sets: 3,
+    reps: ex.name.includes('Hold') || ex.name.includes('Plank') ? '30s' : '10',
+    weight: ex.equipment === 'mat' ? 'BW' : wtLabel
+  });
+  renderCurrentWorkout();
+}
+
+// ==================== CURRENT WORKOUT ====================
+function renderCurrentWorkout() {
+  const container = document.getElementById('current-workout');
+  const list = document.getElementById('workout-exercises');
+  if (currentWorkout.length === 0) {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+  list.innerHTML = currentWorkout.map((item, i) => `
+    <div class="workout-item">
+      <div class="workout-item-info">
+        <div class="workout-item-name">${item.exercise.name}</div>
+        <div class="workout-item-detail">${item.exercise.primary.map(m=>MUSCLE_NAMES[m]).join(', ')}</div>
+      </div>
+      <div class="workout-item-controls">
+        <div>
+          <label style="font-size:10px;text-align:center">Sets</label>
+          <input type="number" value="${item.sets}" min="1" max="10" onchange="updateItem(${i},'sets',this.value)">
+        </div>
+        <div>
+          <label style="font-size:10px;text-align:center">Reps</label>
+          <input type="text" value="${item.reps}" onchange="updateItem(${i},'reps',this.value)">
+        </div>
+        <div>
+          <label style="font-size:10px;text-align:center">Wt</label>
+          <input type="text" value="${item.weight}" onchange="updateItem(${i},'weight',this.value)" style="width:55px">
+        </div>
+        <button class="remove-btn" onclick="removeItem(${i})">&#215;</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateItem(i, field, val) {
+  if (field === 'sets') currentWorkout[i].sets = parseInt(val) || 1;
+  else currentWorkout[i][field] = val;
+}
+function removeItem(i) { currentWorkout.splice(i, 1); renderCurrentWorkout(); }
+function clearWorkout() { currentWorkout = []; renderCurrentWorkout(); }
+
+// ==================== MUSCLE DIAGRAM ====================
+function updateDiagram() {
+  // Clear all
+  document.querySelectorAll('.muscle').forEach(m => {
+    m.classList.remove('active-primary','active-secondary');
+  });
+
+  const hasWorkout = currentWorkout.length > 0;
+  document.getElementById('no-workout-msg').style.display = hasWorkout ? 'none' : 'block';
+  document.getElementById('diagram-context').style.display = hasWorkout ? 'block' : 'none';
+
+  if (!hasWorkout) { document.getElementById('muscle-legend').innerHTML = ''; return; }
+
+  // Collect activated muscles
+  const primaryMuscles = new Set();
+  const secondaryMuscles = new Set();
+  currentWorkout.forEach(item => {
+    item.exercise.primary.forEach(m => primaryMuscles.add(m));
+    item.exercise.secondary.forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
+  });
+
+  // Apply to SVG
+  primaryMuscles.forEach(m => {
+    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('active-primary');
+    });
+  });
+  secondaryMuscles.forEach(m => {
+    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
+      const el = document.getElementById(id);
+      if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary');
+    });
+  });
+
+  // Build legend
+  const legend = document.getElementById('muscle-legend');
+  let html = '';
+  primaryMuscles.forEach(m => {
+    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
+  });
+  secondaryMuscles.forEach(m => {
+    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
+  });
+  legend.innerHTML = html;
+}
+
+// Muscle click handler
+document.addEventListener('click', e => {
+  const muscle = e.target.closest('.muscle');
+  if (!muscle) return;
+  const muscleKey = muscle.dataset.muscle;
+  if (!muscleKey || currentWorkout.length === 0) return;
+
+  const exercises = currentWorkout.filter(item =>
+    item.exercise.primary.includes(muscleKey) || item.exercise.secondary.includes(muscleKey)
+  );
+
+  document.getElementById('popup-muscle-name').textContent = MUSCLE_NAMES[muscleKey] || muscleKey;
+  const list = document.getElementById('popup-exercises');
+  if (exercises.length === 0) {
+    list.innerHTML = '<p style="color:var(--text2);font-size:13px">No exercises in current workout target this muscle.</p>';
+  } else {
+    list.innerHTML = exercises.map(item => `
+      <div style="padding:6px 0;border-bottom:1px solid var(--border)">
+        <div style="font-weight:600;font-size:14px">${item.exercise.name}</div>
+        <div style="font-size:12px;color:var(--text2)">${item.sets} sets x ${item.reps} reps @ ${item.weight}
+          &mdash; <span class="badge badge-${item.exercise.primary.includes(muscleKey)?'primary':'secondary'}">${item.exercise.primary.includes(muscleKey)?'Primary':'Secondary'}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('muscle-popup').classList.add('show');
+});
+
+function closeMusclePopup() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('muscle-popup').classList.remove('show');
+}
+
+// ==================== WORKOUT LOGGING ====================
+function openLogModal() {
+  if (currentWorkout.length === 0) return;
+  document.getElementById('log-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('log-notes').value = '';
+  const summary = document.getElementById('log-exercise-summary');
+  summary.innerHTML = '<label>Exercises</label>' + currentWorkout.map(item =>
+    `<div style="font-size:13px;padding:4px 0">${item.exercise.name} &mdash; ${item.sets}x${item.reps} @ ${item.weight}</div>`
+  ).join('');
+  document.getElementById('log-modal').classList.add('show');
+}
+function closeLogModal() { document.getElementById('log-modal').classList.remove('show'); }
+
+function saveWorkoutLog() {
+  const date = document.getElementById('log-date').value;
+  const notes = document.getElementById('log-notes').value;
+  if (!date) return;
+
+  const log = {
+    id: Date.now().toString(36),
+    date,
+    notes,
+    exercises: currentWorkout.map(item => ({
+      id: item.exercise.id,
+      name: item.exercise.name,
+      sets: item.sets,
+      reps: item.reps,
+      weight: item.weight,
+      primary: item.exercise.primary,
+      secondary: item.exercise.secondary
+    }))
+  };
+
+  const logs = getWorkoutLogs();
+  logs.push(log);
+  logs.sort((a,b) => b.date.localeCompare(a.date));
+  saveWorkoutLogs(logs);
+  closeLogModal();
+  currentWorkout = [];
+  renderCurrentWorkout();
+  switchTab('log');
+}
+
+// ==================== LOG DISPLAY ====================
+function renderLog() {
+  const logs = getWorkoutLogs();
+  renderCalendar(logs);
+
+  const list = document.getElementById('log-list');
+  const empty = document.getElementById('log-empty');
+  if (logs.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  list.innerHTML = logs.map(log => {
+    const totalSets = log.exercises.reduce((s,e) => s + (parseInt(e.sets)||0), 0);
+    return `
+    <div class="log-entry">
+      <div class="log-date">${formatDate(log.date)}</div>
+      <div class="log-exercises">${log.exercises.map(e => e.name).join(', ')}</div>
+      <div class="log-stats">
+        <span>${log.exercises.length} exercises</span>
+        <span>${totalSets} total sets</span>
+        ${log.notes ? `<span>${log.notes}</span>` : ''}
+      </div>
+      <div class="log-actions">
+        <button class="btn btn-sm btn-secondary" onclick="reloadWorkout('${log.id}')">Reload</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteLog('${log.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function reloadWorkout(logId) {
+  const logs = getWorkoutLogs();
+  const log = logs.find(l => l.id === logId);
+  if (!log) return;
+  currentWorkout = log.exercises.map(e => {
+    const exercise = EXERCISES.find(ex => ex.id === e.id) || {
+      id: e.id, name: e.name, category: 'complex', equipment: 'kettlebell',
+      difficulty: 'intermediate', primary: e.primary || [], secondary: e.secondary || []
+    };
+    return { exercise, sets: e.sets, reps: e.reps, weight: e.weight };
+  });
+  renderCurrentWorkout();
+  switchTab('build');
+}
+
+function deleteLog(logId) {
+  const logs = getWorkoutLogs().filter(l => l.id !== logId);
+  saveWorkoutLogs(logs);
+  renderLog();
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+}
+
+// ==================== CALENDAR ====================
+function renderCalendar(logs) {
+  const el = document.getElementById('calendar');
+  const year = calendarMonth.getFullYear();
+  const month = calendarMonth.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+
+  const workoutDates = new Set(logs.map(l => l.date));
+  const monthName = calendarMonth.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+
+  let html = `
+    <div class="cal-header">
+      <button class="btn btn-sm btn-secondary" onclick="changeMonth(-1)">&larr;</button>
+      <span style="font-weight:600;font-size:14px">${monthName}</span>
+      <button class="btn btn-sm btn-secondary" onclick="changeMonth(1)">&rarr;</button>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-day-label">S</div><div class="cal-day-label">M</div><div class="cal-day-label">T</div>
+      <div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div>
+  `;
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day"></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = today.getFullYear()===year && today.getMonth()===month && today.getDate()===d;
+    const hasW = workoutDates.has(dateStr);
+    html += `<div class="cal-day${hasW?' has-workout':''}${isToday?' today':''}">${d}</div>`;
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+function changeMonth(dir) {
+  calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + dir, 1);
+  renderLog();
+}
+
+// ==================== INSIGHTS ====================
+function renderInsights() {
+  const logs = getWorkoutLogs();
+  renderTopExercises(logs);
+  renderVolumeChart(logs);
+  renderHeatmap(logs);
+  renderSuggestions(logs);
+}
+
+function renderTopExercises(logs) {
+  const counts = {};
+  logs.forEach(log => log.exercises.forEach(e => { counts[e.name] = (counts[e.name]||0) + 1; }));
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,5);
+  const el = document.getElementById('top-exercises');
+  if (sorted.length === 0) {
+    el.innerHTML = '<li class="empty-state" style="padding:10px"><p>Log workouts to see your top exercises</p></li>';
+    return;
+  }
+  el.innerHTML = sorted.map(([name, count], i) =>
+    `<li class="rank-item"><span class="rank-num">${i+1}</span><span style="flex:1">${name}</span><span style="color:var(--text2);font-size:12px">${count}x</span></li>`
+  ).join('');
+}
+
+function renderVolumeChart(logs) {
+  const canvas = document.getElementById('volume-chart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+
+  // Get last 8 weeks of data
+  const weeks = [];
+  const now = new Date();
+  for (let i = 7; i >= 0; i--) {
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - (now.getDay() + i*7));
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    const startStr = weekStart.toISOString().slice(0,10);
+    const endStr = weekEnd.toISOString().slice(0,10);
+    const weekLogs = logs.filter(l => l.date >= startStr && l.date <= endStr);
+    const totalSets = weekLogs.reduce((s, log) => s + log.exercises.reduce((s2,e) => s2 + (parseInt(e.sets)||0), 0), 0);
+    weeks.push({ label: `${weekStart.getMonth()+1}/${weekStart.getDate()}`, count: weekLogs.length, sets: totalSets });
+  }
+
+  ctx.clearRect(0,0,W,H);
+  const pad = { top:20, right:10, bottom:30, left:35 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const maxSets = Math.max(...weeks.map(w => w.sets), 10);
+  const barW = chartW / weeks.length * 0.6;
+  const gap = chartW / weeks.length;
+
+  // Grid lines
+  ctx.strokeStyle = '#2a2a3e';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + chartH - (chartH * i / 4);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#8888a0'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxSets * i / 4), pad.left - 5, y + 3);
+  }
+
+  // Bars
+  weeks.forEach((w, i) => {
+    const x = pad.left + i * gap + (gap - barW) / 2;
+    const h = (w.sets / maxSets) * chartH;
+    const y = pad.top + chartH - h;
+
+    const grad = ctx.createLinearGradient(x, y, x, pad.top + chartH);
+    grad.addColorStop(0, '#ff6b35');
+    grad.addColorStop(1, '#ff6b3533');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, h, [4,4,0,0]);
+    ctx.fill();
+
+    // Workout count on top
+    if (w.count > 0) {
+      ctx.fillStyle = '#e8e8f0'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(w.count + 'w', x + barW/2, y - 5);
+    }
+
+    // Week label
+    ctx.fillStyle = '#8888a0'; ctx.font = '10px sans-serif';
+    ctx.fillText(w.label, x + barW/2, H - pad.bottom + 15);
+  });
+
+  // Y axis label
+  ctx.save(); ctx.translate(10, pad.top + chartH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillStyle = '#8888a0'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Total Sets', 0, 0);
+  ctx.restore();
+}
+
+function renderHeatmap(logs) {
+  const container = document.getElementById('heatmap-diagram');
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - heatmapDays);
+  const cutoffStr = cutoff.toISOString().slice(0,10);
+  const recentLogs = logs.filter(l => l.date >= cutoffStr);
+
+  // Count muscle frequency
+  const freq = {};
+  recentLogs.forEach(log => {
+    log.exercises.forEach(e => {
+      (e.primary||[]).forEach(m => { freq[m] = (freq[m]||0) + 2; });
+      (e.secondary||[]).forEach(m => { freq[m] = (freq[m]||0) + 1; });
+    });
+  });
+
+  const maxFreq = Math.max(...Object.values(freq), 1);
+
+  // Clone the SVGs
+  container.innerHTML = '';
+  ['svg-front','svg-back'].forEach(svgId => {
+    const orig = document.getElementById(svgId);
+    const clone = orig.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('.muscle').forEach(m => {
+      m.classList.remove('active-primary','active-secondary');
+      const muscle = m.dataset.muscle;
+      if (muscle && freq[muscle]) {
+        const intensity = freq[muscle] / maxFreq;
+        const alpha = 0.2 + intensity * 0.8;
+        m.style.fill = `rgba(255,107,53,${alpha})`;
+      }
+    });
+    const wrap = document.createElement('div');
+    wrap.className = 'body-view';
+    wrap.appendChild(clone);
+    container.appendChild(wrap);
+  });
+}
+
+function setHeatmapRange(btn, days) {
+  document.querySelectorAll('.heatmap-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  heatmapDays = days;
+  renderInsights();
+}
+
+function renderSuggestions(logs) {
+  const el = document.getElementById('suggestions-list');
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 7);
+  const cutoffStr = cutoff.toISOString().slice(0,10);
+  const recentLogs = logs.filter(l => l.date >= cutoffStr);
+
+  // Find muscles worked recently
+  const recentMuscles = new Set();
+  recentLogs.forEach(log => {
+    log.exercises.forEach(e => {
+      (e.primary||[]).forEach(m => recentMuscles.add(m));
+    });
+  });
+
+  // Find muscles NOT worked
+  const allMuscles = Object.keys(MUSCLE_NAMES);
+  const neglected = allMuscles.filter(m => !recentMuscles.has(m) && m !== 'core');
+
+  if (neglected.length === 0 && logs.length > 0) {
+    el.innerHTML = '<div style="padding:10px;font-size:13px;color:var(--green)">Great coverage! You\'ve hit all muscle groups in the last 7 days.</div>';
+    return;
+  }
+  if (logs.length === 0) {
+    el.innerHTML = '<div class="empty-state" style="padding:10px"><p>Log workouts to get suggestions</p></div>';
+    return;
+  }
+
+  // Find exercises that target neglected muscles
+  const suggestions = [];
+  const usedIds = new Set();
+  neglected.forEach(muscle => {
+    const exs = EXERCISES.filter(e => e.primary.includes(muscle) && !usedIds.has(e.id));
+    if (exs.length > 0) {
+      const ex = exs[Math.floor(Math.random() * exs.length)];
+      usedIds.add(ex.id);
+      suggestions.push({ exercise: ex, reason: MUSCLE_NAMES[muscle] });
+    }
+  });
+
+  el.innerHTML = `<div style="font-size:12px;color:var(--text2);margin-bottom:8px">You haven't targeted these muscles in 7+ days:</div>` +
+    suggestions.slice(0,5).map(s => `
+      <div class="suggestion-item" onclick="addExercise('${s.exercise.id}');switchTab('build')">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">${s.exercise.name}</div>
+          <div style="font-size:11px;color:var(--text2)">Targets: ${s.reason}</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+    `).join('');
+}
+
+// ==================== INIT ====================
+updatePrefWeightDisplay();
+renderExerciseList();
+renderLog();
+</script>
+</body>
+</html>
