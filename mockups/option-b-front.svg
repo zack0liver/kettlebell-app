@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 450">
+  <defs>
+    <style>
+      .muscle { cursor:pointer; transition:fill .2s, opacity .2s; }
+      .outline { fill:#1a1a24; stroke:#2a2a3e; stroke-width:0.8; }
+      .muscle-off { fill:#24243a; stroke:#2a2a3e; stroke-width:0.7; }
+      .muscle-pri { fill:#ff6b35; stroke:#e55a2b; stroke-width:0.6; }
+      .muscle-sec { fill:#ff6b3566; stroke:#ff6b3544; stroke-width:0.6; }
+      .sep { fill:none; stroke:#1a1a24; stroke-width:0.6; }
+      .detail { fill:none; stroke:#2a2a3e; stroke-width:0.4; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="200" height="450" fill="#0f0f13"/>
+
+  <!-- Head -->
+  <ellipse cx="100" cy="38" rx="17" ry="21" class="outline"/>
+  <!-- Neck — slightly thicker for athletic build -->
+  <rect x="90" y="57" width="20" height="13" rx="4" class="outline"/>
+
+  <!-- Torso — wider shoulders, narrower waist (V-taper) -->
+  <path class="outline" d="M62,70 Q54,72 48,84 L42,120 Q40,148 46,176 L54,198 Q60,210 68,218 L78,224 Q90,228 100,228 Q110,228 122,224 L132,218 Q140,210 146,198 L154,176 Q160,148 158,120 L152,84 Q146,72 138,70 Z"/>
+
+  <!-- Arms — slightly thicker -->
+  <path class="outline" d="M48,84 Q40,80 34,88 L26,110 Q22,132 22,152 L24,172 Q26,186 28,200 L30,214 Q31,228 30,242 L28,256 Q26,264 28,268 L36,268 Q38,264 38,256 L40,242 Q42,228 42,214 L42,200 Q42,186 42,172 L44,152 Q44,132 46,114 Z"/>
+  <path class="outline" d="M152,84 Q160,80 166,88 L174,110 Q178,132 178,152 L176,172 Q174,186 172,200 L170,214 Q169,228 170,242 L172,256 Q174,264 172,268 L164,268 Q162,264 162,256 L160,242 Q158,228 158,214 L158,200 Q158,186 158,172 L156,152 Q156,132 154,114 Z"/>
+
+  <!-- Legs -->
+  <path class="outline" d="M72,220 L66,252 Q62,284 62,314 L62,344 Q62,364 64,382 L66,404 Q66,424 64,438 L62,446 L88,446 L86,438 Q84,424 84,404 L86,382 Q88,364 88,344 L88,314 Q88,284 86,254 L82,232 Q92,228 100,228"/>
+  <path class="outline" d="M128,220 L134,252 Q138,284 138,314 L138,344 Q138,364 136,382 L134,404 Q134,424 136,438 L138,446 L112,446 L114,438 Q116,424 116,404 L114,382 Q112,364 112,344 L112,314 Q112,284 114,254 L118,232 Q108,228 100,228"/>
+
+  <!-- ===== MUSCLES ===== -->
+
+  <!-- Shoulders — wider deltoid caps (secondary) -->
+  <path id="front-shoulder-l" data-muscle="shoulders" class="muscle muscle-sec" d="M62,70 Q52,74 46,86 L38,100 Q36,106 40,108 L48,104 Q52,96 56,90 L62,82 L66,74 Z"/>
+  <path id="front-shoulder-r" data-muscle="shoulders" class="muscle muscle-sec" d="M138,70 Q148,74 154,86 L162,100 Q164,106 160,108 L152,104 Q148,96 144,90 L138,82 L134,74 Z"/>
+
+  <!-- Chest — broader, more angular (primary) -->
+  <path id="front-chest-l" data-muscle="chest" class="muscle muscle-pri" d="M96,80 Q86,78 74,82 L66,90 Q58,98 54,108 L52,116 Q56,124 64,122 L76,118 Q86,112 92,104 L96,96 Z"/>
+  <path id="front-chest-r" data-muscle="chest" class="muscle muscle-pri" d="M104,80 Q114,78 126,82 L134,90 Q142,98 146,108 L148,116 Q144,124 136,122 L124,118 Q114,112 108,104 L104,96 Z"/>
+
+  <!-- Serratus anterior detail (decorative) -->
+  <path class="detail" d="M62,118 L66,116 L64,124 L68,122 L66,130 L70,128"/>
+  <path class="detail" d="M138,118 L134,116 L136,124 L132,122 L134,130 L130,128"/>
+
+  <!-- Abs — 6-pack with individual segments (primary) -->
+  <g id="front-abs" data-muscle="abs" class="muscle" style="cursor:pointer">
+    <!-- Top pair -->
+    <path class="muscle-pri" d="M90,120 L90,136 Q94,138 98,136 L98,120 Q94,118 90,120 Z"/>
+    <path class="muscle-pri" d="M102,120 L102,136 Q106,138 110,136 L110,120 Q106,118 102,120 Z"/>
+    <!-- Mid pair -->
+    <path class="muscle-pri" d="M90,140 L90,156 Q94,158 98,156 L98,140 Q94,138 90,140 Z"/>
+    <path class="muscle-pri" d="M102,140 L102,156 Q106,158 110,156 L110,140 Q106,138 102,140 Z"/>
+    <!-- Lower pair -->
+    <path class="muscle-pri" d="M90,160 L90,176 Q94,178 98,176 L98,160 Q94,158 90,160 Z"/>
+    <path class="muscle-pri" d="M102,160 L102,176 Q106,178 110,176 L110,160 Q106,158 102,160 Z"/>
+    <!-- Bottom -->
+    <path class="muscle-pri" d="M90,180 L92,196 Q96,202 100,204 Q104,202 108,196 L110,180 Q106,178 100,178 Q94,178 90,180 Z"/>
+    <!-- Linea alba -->
+    <line x1="100" y1="118" x2="100" y2="204" class="sep" stroke-width="0.8"/>
+  </g>
+
+  <!-- Obliques — more angular (secondary) -->
+  <path id="front-oblique-l" data-muscle="obliques" class="muscle muscle-sec" d="M88,120 Q80,118 68,122 L56,134 Q48,154 50,178 L56,196 Q62,210 70,218 L78,224 Q84,218 86,210 L88,196 Z"/>
+  <path id="front-oblique-r" data-muscle="obliques" class="muscle muscle-sec" d="M112,120 Q120,118 132,122 L144,134 Q152,154 150,178 L144,196 Q138,210 130,218 L122,224 Q116,218 114,210 L112,196 Z"/>
+
+  <!-- Biceps — slightly larger (default) -->
+  <path id="front-bicep-l" data-muscle="biceps" class="muscle muscle-off" d="M44,102 L38,118 Q34,136 34,154 L36,166 Q40,172 46,166 L48,154 Q50,136 50,118 L48,104 Z"/>
+  <path id="front-bicep-r" data-muscle="biceps" class="muscle muscle-off" d="M156,102 L162,118 Q166,136 166,154 L164,166 Q160,172 154,166 L152,154 Q150,136 150,118 L152,104 Z"/>
+
+  <!-- Forearms (default) -->
+  <path id="front-forearm-l" data-muscle="forearms" class="muscle muscle-off" d="M36,168 L32,188 Q28,210 28,230 L30,248 Q32,252 36,248 L40,230 Q42,210 42,190 L44,168 Z"/>
+  <path id="front-forearm-r" data-muscle="forearms" class="muscle muscle-off" d="M164,168 L168,188 Q172,210 172,230 L170,248 Q168,252 164,248 L160,230 Q158,210 158,190 L156,168 Z"/>
+
+  <!-- Hip Flexors (default) -->
+  <path id="front-hipflexor-l" data-muscle="hip_flexors" class="muscle muscle-off" d="M80,208 L72,222 Q70,230 74,234 L86,230 Q90,226 88,218 Z"/>
+  <path id="front-hipflexor-r" data-muscle="hip_flexors" class="muscle muscle-off" d="M120,208 L128,222 Q130,230 126,234 L114,230 Q110,226 112,218 Z"/>
+
+  <!-- Quads — with visible heads (primary) -->
+  <g id="front-quad-l" data-muscle="quads" class="muscle" style="cursor:pointer">
+    <!-- Vastus lateralis -->
+    <path class="muscle-pri" d="M72,234 L66,264 Q62,294 62,324 L64,348 Q66,354 72,352 L76,348 Q76,324 74,294 L74,264 Z"/>
+    <!-- Rectus femoris -->
+    <path class="muscle-pri" d="M76,234 L76,264 Q76,294 76,324 L76,348 L82,348 Q84,324 84,294 L84,264 L82,234 Z"/>
+    <!-- Vastus medialis (teardrop) -->
+    <path class="muscle-pri" d="M84,234 L84,264 Q84,294 84,324 L86,348 Q88,354 90,348 L90,324 Q90,294 88,264 L86,234 Z"/>
+    <!-- Separation lines -->
+    <line x1="76" y1="238" x2="76" y2="350" class="sep" stroke-width="0.7"/>
+    <line x1="84" y1="238" x2="84" y2="350" class="sep" stroke-width="0.7"/>
+  </g>
+
+  <g id="front-quad-r" data-muscle="quads" class="muscle" style="cursor:pointer">
+    <!-- Vastus medialis -->
+    <path class="muscle-pri" d="M110,234 L112,264 Q112,294 112,324 L110,348 Q108,354 106,348 L106,324 Q106,294 108,264 L110,234 Z"/>
+    <!-- Rectus femoris -->
+    <path class="muscle-pri" d="M114,234 L114,264 Q114,294 114,324 L114,348 L120,348 Q120,324 120,294 L120,264 L118,234 Z"/>
+    <!-- Vastus lateralis -->
+    <path class="muscle-pri" d="M122,234 L124,264 Q126,294 126,324 L124,348 Q120,354 118,352 L120,348 Q120,324 120,294 L120,264 Z"/>
+    <path class="muscle-pri" d="M126,234 L134,264 Q138,294 138,324 L136,348 Q134,354 128,352 L124,348 Q126,324 126,294 L124,264 Z"/>
+    <!-- Separation lines -->
+    <line x1="114" y1="238" x2="114" y2="350" class="sep" stroke-width="0.7"/>
+    <line x1="120" y1="238" x2="120" y2="350" class="sep" stroke-width="0.7"/>
+  </g>
+
+  <!-- Kneecaps -->
+  <ellipse cx="76" cy="356" rx="8" ry="5" fill="#1a1a24" stroke="#2a2a3e" stroke-width="0.5"/>
+  <ellipse cx="124" cy="356" rx="8" ry="5" fill="#1a1a24" stroke="#2a2a3e" stroke-width="0.5"/>
+
+  <!-- Calves (default) -->
+  <path id="front-calf-l" data-muscle="calves" class="muscle muscle-off" d="M64,362 L62,384 Q62,406 64,422 L66,432 Q70,438 76,438 L82,436 Q86,432 86,422 L86,406 Q86,388 84,372 L82,362 Z"/>
+  <path id="front-calf-r" data-muscle="calves" class="muscle muscle-off" d="M136,362 L138,384 Q138,406 136,422 L134,432 Q130,438 124,438 L118,436 Q114,432 114,422 L114,406 Q114,388 116,372 L118,362 Z"/>
+</svg>

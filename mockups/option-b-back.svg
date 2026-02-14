@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 450">
+  <defs>
+    <style>
+      .muscle { cursor:pointer; transition:fill .2s, opacity .2s; }
+      .outline { fill:#1a1a24; stroke:#2a2a3e; stroke-width:0.8; }
+      .muscle-off { fill:#24243a; stroke:#2a2a3e; stroke-width:0.7; }
+      .muscle-pri { fill:#ff6b35; stroke:#e55a2b; stroke-width:0.6; }
+      .muscle-sec { fill:#ff6b3566; stroke:#ff6b3544; stroke-width:0.6; }
+      .sep { fill:none; stroke:#1a1a24; stroke-width:0.5; }
+      .detail { fill:none; stroke:#2a2a3e; stroke-width:0.4; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="200" height="450" fill="#0f0f13"/>
+
+  <!-- Head -->
+  <ellipse cx="100" cy="38" rx="17" ry="21" class="outline"/>
+  <!-- Neck -->
+  <rect x="90" y="57" width="20" height="13" rx="4" class="outline"/>
+
+  <!-- Torso — V-taper (wider shoulders, narrow waist) -->
+  <path class="outline" d="M62,70 Q54,72 48,84 L42,120 Q40,148 46,176 L54,198 Q60,210 68,218 L78,224 Q90,228 100,228 Q110,228 122,224 L132,218 Q140,210 146,198 L154,176 Q160,148 158,120 L152,84 Q146,72 138,70 Z"/>
+
+  <!-- Arms -->
+  <path class="outline" d="M48,84 Q40,80 34,88 L26,110 Q22,132 22,152 L24,172 Q26,186 28,200 L30,214 Q31,228 30,242 L28,256 Q26,264 28,268 L36,268 Q38,264 38,256 L40,242 Q42,228 42,214 L42,200 Q42,186 42,172 L44,152 Q44,132 46,114 Z"/>
+  <path class="outline" d="M152,84 Q160,80 166,88 L174,110 Q178,132 178,152 L176,172 Q174,186 172,200 L170,214 Q169,228 170,242 L172,256 Q174,264 172,268 L164,268 Q162,264 162,256 L160,242 Q158,228 158,214 L158,200 Q158,186 158,172 L156,152 Q156,132 154,114 Z"/>
+
+  <!-- Legs -->
+  <path class="outline" d="M72,220 L66,252 Q62,284 62,314 L62,344 Q62,364 64,382 L66,404 Q66,424 64,438 L62,446 L88,446 L86,438 Q84,424 84,404 L86,382 Q88,364 88,344 L88,314 Q88,284 86,254 L82,232 Q92,228 100,228"/>
+  <path class="outline" d="M128,220 L134,252 Q138,284 138,314 L138,344 Q138,364 136,382 L134,404 Q134,424 136,438 L138,446 L112,446 L114,438 Q116,424 116,404 L114,382 Q112,364 112,344 L112,314 Q112,284 114,254 L118,232 Q108,228 100,228"/>
+
+  <!-- ===== MUSCLES ===== -->
+
+  <!-- Traps — wider, more defined diamond shape (secondary) -->
+  <path id="back-traps" data-muscle="traps" class="muscle muscle-sec" d="M82,68 L62,76 Q54,84 50,94 L64,100 Q76,90 88,82 L96,74 Z"/>
+  <path id="back-traps-r" data-muscle="traps" class="muscle muscle-sec" d="M118,68 L138,76 Q146,84 150,94 L136,100 Q124,90 112,82 L104,74 Z"/>
+  <!-- Trap fiber detail -->
+  <path class="detail" d="M82,72 L62,80" stroke-width="0.3"/>
+  <path class="detail" d="M84,78 L64,88" stroke-width="0.3"/>
+  <path class="detail" d="M118,72 L138,80" stroke-width="0.3"/>
+  <path class="detail" d="M116,78 L136,88" stroke-width="0.3"/>
+
+  <!-- Rear Delts — wider caps (default) -->
+  <path id="back-reardelt-l" data-muscle="shoulders" class="muscle muscle-off" d="M62,70 Q52,74 46,86 L38,100 Q36,106 40,108 L48,104 Q52,96 56,90 L62,82 L66,74 Z"/>
+  <path id="back-reardelt-r" data-muscle="shoulders" class="muscle muscle-off" d="M138,70 Q148,74 154,86 L162,100 Q164,106 160,108 L152,104 Q148,96 144,90 L138,82 L134,74 Z"/>
+
+  <!-- Teres major/minor detail -->
+  <path class="detail" d="M58,98 Q62,104 66,108 L72,112" stroke-width="0.5"/>
+  <path class="detail" d="M142,98 Q138,104 134,108 L128,112" stroke-width="0.5"/>
+
+  <!-- Lats — wider spread for V-taper (primary) -->
+  <path id="back-lat-l" data-muscle="lats" class="muscle muscle-pri" d="M62,100 L48,116 Q44,138 44,160 L48,178 Q54,192 62,198 L76,200 Q84,194 88,182 L90,164 Q90,142 88,124 L82,108 Z"/>
+  <path id="back-lat-r" data-muscle="lats" class="muscle muscle-pri" d="M138,100 L152,116 Q156,138 156,160 L152,178 Q146,192 138,198 L124,200 Q116,194 112,182 L110,164 Q110,142 112,124 L118,108 Z"/>
+
+  <!-- Lower Back — with erector spinae columns (default) -->
+  <path id="back-lowerback" data-muscle="lower_back" class="muscle muscle-off" d="M88,134 L88,204 Q94,216 100,218 Q106,216 112,204 L112,134 Q106,128 100,126 Q94,128 88,134 Z"/>
+  <!-- Spine -->
+  <line x1="100" y1="126" x2="100" y2="218" class="sep" stroke-width="0.5"/>
+  <!-- Erector spinae columns -->
+  <path d="M94,132 Q93,164 94,200" class="sep" stroke-width="0.6"/>
+  <path d="M106,132 Q107,164 106,200" class="sep" stroke-width="0.6"/>
+
+  <!-- Triceps — horseshoe shape (default) -->
+  <path id="back-tricep-l" data-muscle="triceps" class="muscle muscle-off" d="M44,102 L36,120 Q32,140 34,158 L38,166 Q42,170 46,166 L48,158 Q50,140 50,120 L48,104 Z"/>
+  <path id="back-tricep-r" data-muscle="triceps" class="muscle muscle-off" d="M156,102 L164,120 Q168,140 166,158 L162,166 Q158,170 154,166 L152,158 Q150,140 150,120 L152,104 Z"/>
+  <!-- Horseshoe detail -->
+  <path class="detail" d="M42,130 Q42,146 40,160" stroke-width="0.4"/>
+  <path class="detail" d="M158,130 Q158,146 160,160" stroke-width="0.4"/>
+
+  <!-- Forearms (default) -->
+  <path id="back-forearm-l" data-muscle="forearms" class="muscle muscle-off" d="M36,168 L32,188 Q28,210 28,230 L30,248 Q32,252 36,248 L40,230 Q42,210 42,190 L44,168 Z"/>
+  <path id="back-forearm-r" data-muscle="forearms" class="muscle muscle-off" d="M164,168 L168,188 Q172,210 172,230 L170,248 Q168,252 164,248 L160,230 Q158,210 158,190 L156,168 Z"/>
+
+  <!-- Glutes — more muscular, defined (primary) -->
+  <path id="back-glute-l" data-muscle="glutes" class="muscle muscle-pri" d="M70,210 L64,226 Q60,242 66,256 L78,262 Q90,258 96,248 L98,234 Q98,222 94,214 L86,210 Z"/>
+  <path id="back-glute-r" data-muscle="glutes" class="muscle muscle-pri" d="M130,210 L136,226 Q140,242 134,256 L122,262 Q110,258 104,248 L102,234 Q102,222 106,214 L114,210 Z"/>
+
+  <!-- Hamstrings — with biceps femoris / semitendinosus separation (secondary) -->
+  <path id="back-ham-l" data-muscle="hamstrings" class="muscle muscle-sec" d="M66,264 L64,290 Q62,318 62,338 L64,354 Q68,360 76,358 L84,354 Q88,350 88,338 L88,318 Q86,290 84,266 L78,262 Z"/>
+  <path id="back-ham-r" data-muscle="hamstrings" class="muscle muscle-sec" d="M134,264 L136,290 Q138,318 138,338 L136,354 Q132,360 124,358 L116,354 Q112,350 112,338 L112,318 Q114,290 116,266 L122,262 Z"/>
+  <!-- Biceps femoris / semitendinosus separation -->
+  <path d="M74,266 Q74,300 74,336 Q74,350 74,356" class="sep" stroke-width="0.6"/>
+  <path d="M126,266 Q126,300 126,336 Q126,350 126,356" class="sep" stroke-width="0.6"/>
+
+  <!-- Calves — prominent gastrocnemius heads (default) -->
+  <path id="back-calf-l" data-muscle="calves" class="muscle muscle-off" d="M64,362 L62,386 Q60,408 64,426 L68,434 Q72,440 78,438 L84,434 Q88,428 88,418 L86,400 Q86,386 84,372 L82,362 Z"/>
+  <path id="back-calf-r" data-muscle="calves" class="muscle muscle-off" d="M136,362 L138,386 Q140,408 136,426 L132,434 Q128,440 122,438 L116,434 Q112,428 112,418 L114,400 Q114,386 116,372 L118,362 Z"/>
+  <!-- Gastrocnemius medial/lateral head separation -->
+  <path d="M73,366 Q73,396 72,428" class="sep" stroke-width="0.5"/>
+  <path d="M127,366 Q127,396 128,428" class="sep" stroke-width="0.5"/>
+</svg>
