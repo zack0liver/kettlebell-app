@@ -1,0 +1,86 @@
+id,name,category,equipment,difficulty,primary,secondary
+kb_swing,Kettlebell Swing,swing,kettlebell,beginner,"glutes, hamstrings","core, lower_back, shoulders, forearms"
+kb_swing_1h,One-Hand Swing,swing,kettlebell,intermediate,"glutes, hamstrings","core, lower_back, shoulders, forearms, obliques"
+kb_swing_alt,Alternating Swing,swing,kettlebell,intermediate,"glutes, hamstrings","core, lower_back, shoulders, forearms"
+kb_goblet,Goblet Squat,squat,kettlebell,beginner,"quads, glutes","core, hamstrings"
+kb_sumo,Sumo Squat,squat,kettlebell,beginner,"quads, glutes, hip_flexors","core, hamstrings"
+kb_cossack,Cossack Squat,squat,kettlebell,advanced,"quads, glutes, hip_flexors","core, hamstrings, calves"
+kb_front_squat,Front Rack Squat,squat,kettlebell,intermediate,"quads, glutes","core, shoulders, traps"
+kb_press,Overhead Press,press,kettlebell,intermediate,"shoulders, triceps","core, chest"
+kb_push_press,Push Press,press,kettlebell,intermediate,"shoulders, triceps, quads","core, glutes"
+kb_floor_press,Floor Press,press,kettlebell,beginner,"chest, triceps",shoulders
+kb_bottoms_up,Bottoms-Up Press,press,kettlebell,advanced,"shoulders, forearms","core, triceps"
+kb_row,Single-Arm Row,pull,kettlebell,beginner,"lats, biceps","core, forearms, traps"
+kb_gorilla_row,Gorilla Row,pull,kettlebell,intermediate,"lats, biceps","core, forearms, traps, lower_back"
+kb_high_pull,High Pull,pull,kettlebell,intermediate,"shoulders, traps, hamstrings","glutes, core, biceps, forearms"
+kb_upright_row,Upright Row,pull,kettlebell,beginner,"shoulders, traps","biceps, forearms"
+kb_turkish,Turkish Get-Up,core,kettlebell,advanced,"core, shoulders","glutes, quads, triceps, hip_flexors, obliques"
+kb_windmill,Windmill,core,kettlebell,intermediate,"obliques, shoulders","hamstrings, hip_flexors, core"
+kb_halo,Halo,core,kettlebell,beginner,"shoulders, core","triceps, forearms"
+kb_russian_twist,Russian Twist (KB),core,kettlebell,beginner,"obliques, abs",hip_flexors
+kb_pullover,KB Pullover,core,kettlebell,intermediate,"lats, abs","chest, triceps"
+kb_figure8,Figure 8,core,kettlebell,intermediate,"core, obliques","forearms, quads, glutes"
+kb_farmer,Farmer Carry,carry,kettlebell,beginner,"forearms, traps","core, shoulders, calves"
+kb_rack_carry,Rack Carry,carry,kettlebell,intermediate,"core, shoulders","forearms, biceps, calves"
+kb_overhead_carry,Overhead Carry,carry,kettlebell,intermediate,"shoulders, core","triceps, forearms, calves, traps"
+kb_suitcase,Suitcase Carry,carry,kettlebell,beginner,"obliques, forearms","core, traps, calves"
+kb_clean,Kettlebell Clean,complex,kettlebell,intermediate,"hamstrings, glutes, forearms","core, biceps, shoulders, traps"
+kb_snatch,Kettlebell Snatch,complex,kettlebell,advanced,"shoulders, hamstrings, glutes","core, traps, forearms, quads"
+kb_clean_press,Clean & Press,complex,kettlebell,intermediate,"shoulders, hamstrings, glutes","core, triceps, forearms, traps"
+kb_thruster,Thruster,complex,kettlebell,intermediate,"quads, shoulders, glutes","core, triceps, hamstrings"
+kb_lunge,KB Lunge,complex,kettlebell,beginner,"quads, glutes","hamstrings, core, calves"
+kb_deadlift,KB Deadlift,complex,kettlebell,beginner,"hamstrings, glutes, lower_back","core, forearms, quads"
+kb_single_dl,Single-Leg Deadlift,complex,kettlebell,intermediate,"hamstrings, glutes","core, lower_back, calves"
+mat_plank,Plank,mat,mat,beginner,"abs, core","shoulders, glutes"
+mat_side_plank,Side Plank,mat,mat,beginner,obliques,"shoulders, core, hip_flexors"
+mat_hollow,Hollow Body Hold,mat,mat,intermediate,"abs, hip_flexors",core
+mat_deadbug,Dead Bug,mat,mat,beginner,"abs, core",hip_flexors
+mat_glute_bridge,Glute Bridge,mat,mat,beginner,glutes,"hamstrings, core"
+mat_bird_dog,Bird Dog,mat,mat,beginner,"core, lower_back","glutes, shoulders"
+mat_mountain_climber,Mountain Climbers,mat,mat,beginner,"core, hip_flexors","shoulders, quads, calves"
+mat_superman,Superman Hold,mat,mat,beginner,"lower_back, glutes","hamstrings, traps"
+kb_split_squat,Split Squat,squat,kettlebell,beginner,"quads, glutes","hamstrings, core"
+kb_lateral_lunge,Lateral Lunge,squat,kettlebell,intermediate,"quads, glutes, hip_flexors","hamstrings, core"
+kb_step_up,Step-Up,squat,kettlebell,beginner,"quads, glutes","hamstrings, calves, core"
+kb_curtsy_lunge,Curtsy Lunge,squat,kettlebell,intermediate,"quads, glutes","hip_flexors, core"
+kb_bulgarian_split,Bulgarian Split Squat,squat,kettlebell,advanced,"quads, glutes","hamstrings, core, calves"
+kb_squat_jump,Squat Jump (KB),squat,kettlebell,intermediate,"quads, glutes, calves","hamstrings, core"
+kb_pistol_squat,Pistol Squat,squat,kettlebell,advanced,"quads, glutes, hip_flexors","hamstrings, calves, core"
+kb_calf_raise,Calf Raise (KB),squat,kettlebell,beginner,calves,quads
+kb_bicep_curl,KB Bicep Curl,arms,kettlebell,beginner,biceps,forearms
+kb_tricep_ext,KB Tricep Extension,arms,kettlebell,beginner,triceps,shoulders
+kb_crush_curl,Crush Curl,arms,kettlebell,intermediate,"biceps, forearms",chest
+kb_skull_crusher,KB Skull Crusher,arms,kettlebell,intermediate,triceps,"chest, shoulders"
+kb_hammer_curl,Hammer Curl (KB),arms,kettlebell,beginner,"biceps, forearms",
+kb_sa_floor_press,Single-Arm Floor Press,press,kettlebell,intermediate,"chest, triceps","shoulders, core"
+kb_push_up,KB Push-Up,press,kettlebell,beginner,"chest, triceps","shoulders, core"
+kb_chest_fly,KB Chest Fly,press,kettlebell,intermediate,chest,shoulders
+kb_close_grip_press,Close-Grip Floor Press,press,kettlebell,intermediate,"triceps, chest",shoulders
+kb_lateral_raise,Lateral Raise,press,kettlebell,beginner,shoulders,traps
+kb_front_raise,Front Raise,press,kettlebell,beginner,shoulders,"chest, core"
+kb_arnold_press,Arnold Press,press,kettlebell,intermediate,"shoulders, triceps","chest, core"
+kb_shrug,KB Shrug,pull,kettlebell,beginner,traps,"shoulders, forearms"
+kb_reverse_fly,Bent-Over Reverse Fly,pull,kettlebell,intermediate,"shoulders, traps","lats, core"
+kb_renegade_row,Renegade Row,pull,kettlebell,advanced,"lats, core","biceps, forearms, shoulders"
+kb_bent_row,KB Bent-Over Row,pull,kettlebell,beginner,"lats, traps","biceps, forearms, lower_back"
+kb_sit_up,KB Sit-Up,core,kettlebell,beginner,abs,hip_flexors
+kb_side_bend,KB Side Bend,core,kettlebell,beginner,obliques,core
+kb_plank_pull,Plank Pull-Through,core,kettlebell,intermediate,"core, obliques","shoulders, lats"
+kb_woodchop,KB Woodchop,core,kettlebell,intermediate,"obliques, core","shoulders, glutes"
+kb_leg_raise,KB Leg Raise,core,kettlebell,intermediate,"abs, hip_flexors",core
+kb_v_up,KB V-Up,core,kettlebell,advanced,"abs, hip_flexors",core
+kb_plank_drag,Plank Drag,core,kettlebell,intermediate,"core, obliques",shoulders
+kb_crunch,KB Crunch,core,kettlebell,beginner,abs,core
+kb_swing_high,KB Swing (High Rep),cardio,kettlebell,beginner,"glutes, hamstrings","core, shoulders, forearms"
+kb_burpee,KB Burpee,cardio,kettlebell,intermediate,"quads, chest, core","shoulders, triceps, glutes"
+kb_man_maker,Man Maker,cardio,kettlebell,advanced,"shoulders, chest, quads","core, triceps, lats"
+kb_long_cycle,Long Cycle,cardio,kettlebell,advanced,"shoulders, hamstrings, glutes","core, triceps, quads"
+kb_half_snatch,Half Snatch,cardio,kettlebell,intermediate,"shoulders, hamstrings","glutes, core, forearms"
+kb_jump_squat,KB Jump Squat,cardio,kettlebell,intermediate,"quads, glutes, calves","core, hamstrings"
+kb_clean_jerk,Clean & Jerk,complex,kettlebell,advanced,"shoulders, hamstrings, glutes","core, triceps, quads"
+kb_jerk,KB Jerk,complex,kettlebell,advanced,"shoulders, triceps","core, quads, glutes"
+kb_bent_press,Bent Press,complex,kettlebell,advanced,"shoulders, obliques","triceps, lats, core"
+kb_double_clean,Double Clean,complex,kettlebell,advanced,"hamstrings, glutes, forearms","core, biceps, traps"
+kb_tactical_lunge,Tactical Lunge,complex,kettlebell,intermediate,"quads, glutes","hamstrings, core, shoulders"
+kb_deck_squat,Deck Squat,complex,kettlebell,advanced,"quads, glutes, core","hamstrings, hip_flexors"
+kb_squat_press,Squat to Press,complex,kettlebell,intermediate,"quads, glutes, shoulders","core, triceps"

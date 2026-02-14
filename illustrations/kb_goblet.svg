@@ -1,0 +1,17 @@
+<svg viewBox="0 0 140 140" width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Goblet squat — front view, deep squat, KB at chest -->
+  <circle cx="70" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+  <line x1="70" y1="17" x2="70" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="47" x2="54" y2="64" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="54" y1="64" x2="52" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="47" x2="86" y2="64" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="86" y1="64" x2="88" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="28" x2="60" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="60" y1="38" x2="62" y2="44" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="28" x2="80" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="38" x2="78" y2="44" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="70" cy="47" r="5" fill="#ff6b35" opacity=".85"/>
+  <path d="M67,42 Q65,37 70,36 Q75,37 73,42" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <line x1="52" y1="86" x2="52" y2="89" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+  <line x1="88" y1="86" x2="88" y2="89" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 140 140" width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glute bridge — side view, lying on mat, hips raised -->
+  <rect x="8" y="90" width="110" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
+  <circle cx="22" cy="76" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+  <line x1="29" y1="78" x2="50" y2="82" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="50" y1="82" x2="72" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="72" y1="62" x2="88" y2="76" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="88" y1="76" x2="88" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="72" y1="62" x2="96" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="96" y1="70" x2="96" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="36" y1="78" x2="32" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="36" y1="78" x2="44" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="88" y1="86" x2="88" y2="89" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="96" y1="86" x2="96" y2="89" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

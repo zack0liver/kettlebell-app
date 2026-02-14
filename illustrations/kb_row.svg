@@ -1,0 +1,20 @@
+<svg viewBox="0 0 140 140" width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Row — side view, bent over, one arm pulling KB up, orange bench -->
+  <rect x="28" y="68" width="50" height="4" rx="2" fill="#ff6b35" opacity=".6"/>
+  <line x1="32" y1="72" x2="32" y2="90" stroke="#ff6b35" stroke-width="2" opacity=".4"/>
+  <line x1="74" y1="72" x2="74" y2="90" stroke="#ff6b35" stroke-width="2" opacity=".4"/>
+  <circle cx="42" cy="18" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+  <line x1="42" y1="25" x2="68" y2="42" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="68" y1="42" x2="60" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="60" y1="62" x2="56" y2="84" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="68" y1="42" x2="80" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="60" x2="84" y2="82" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="52" y1="32" x2="42" y2="46" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="42" y1="46" x2="38" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="52" y1="32" x2="62" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="62" y1="48" x2="66" y2="55" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="66" cy="61" r="5" fill="#ff6b35" opacity=".85"/>
+  <path d="M63,56 Q61,51 66,50 Q71,51 69,56" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <line x1="56" y1="84" x2="56" y2="87" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+  <line x1="84" y1="82" x2="84" y2="87" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+</svg>

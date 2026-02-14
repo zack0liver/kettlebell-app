@@ -1,0 +1,19 @@
+<svg viewBox="0 0 140 140" width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lunge — side view, deep split stance, KBs at sides -->
+  <circle cx="60" cy="8" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+  <line x1="60" y1="15" x2="60" y2="45" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="60" y1="45" x2="48" y2="64" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="48" y1="64" x2="44" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="60" y1="45" x2="80" y2="58" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="58" x2="92" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="60" y1="26" x2="48" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="48" y1="38" x2="44" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="60" y1="26" x2="72" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="72" y1="38" x2="76" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="44" cy="60" r="4" fill="#ff6b35" opacity=".85"/>
+  <path d="M41,56 Q39,52 44,51 Q49,52 47,56" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <circle cx="76" cy="60" r="4" fill="#ff6b35" opacity=".85"/>
+  <path d="M73,56 Q71,52 76,51 Q81,52 79,56" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <line x1="44" y1="86" x2="44" y2="89" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+  <line x1="92" y1="72" x2="92" y2="75" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+</svg>

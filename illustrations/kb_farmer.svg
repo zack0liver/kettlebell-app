@@ -1,0 +1,19 @@
+<svg viewBox="0 0 140 140" width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Farmer carry — front view, standing upright, KBs hanging at sides -->
+  <circle cx="70" cy="8" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+  <line x1="70" y1="15" x2="70" y2="45" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="45" x2="62" y2="67" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="62" y1="67" x2="62" y2="89" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="45" x2="78" y2="67" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="78" y1="67" x2="78" y2="89" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="26" x2="56" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="56" y1="38" x2="52" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="26" x2="84" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="84" y1="38" x2="88" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="52" cy="60" r="5" fill="#ff6b35" opacity=".85"/>
+  <path d="M49,55 Q47,50 52,49 Q57,50 55,55" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <circle cx="88" cy="60" r="5" fill="#ff6b35" opacity=".85"/>
+  <path d="M85,55 Q83,50 88,49 Q93,50 91,55" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <line x1="62" y1="89" x2="62" y2="92" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="89" x2="78" y2="92" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+</svg>

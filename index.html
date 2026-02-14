@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>KettleFit</title>
+<title>Kettle Bell Genie</title>
 <style>
   :root {
     --bg: #0f0f13;
@@ -87,6 +87,7 @@
   .badge-secondary { background:var(--secondary-muscle); color:var(--text); }
   .badge-kb { background:var(--accent); color:#fff; }
   .badge-mat { background:var(--purple); color:#fff; }
+  .badge-diff { background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
 
   .empty-state { text-align:center; padding:40px 20px; color:var(--text2); }
   .empty-state svg { width:48px; height:48px; margin-bottom:12px; opacity:.5; }
@@ -307,7 +308,7 @@
   .fs-clock { font-size:min(20vw, 96px); font-weight:700; font-variant-numeric:tabular-nums; color:var(--accent); line-height:1.1; margin:8px 0 16px; }
   .fs-exercise-name { font-size:22px; font-weight:700; text-align:center; }
   .fs-exercise-detail { font-size:14px; color:var(--text2); margin-top:4px; text-align:center; }
-  .fs-illustration { width:100%; height:200px; display:flex; align-items:center; justify-content:center; margin:16px 0; color:var(--text2); font-size:13px; opacity:.4; }
+  .fs-illustration { display:none; }
   .fs-upnext { font-size:14px; color:var(--text2); text-align:center; margin-bottom:16px; }
   .fs-upnext strong { color:var(--text); }
   .fs-progress { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
@@ -337,8 +338,8 @@
 
 <div class="header">
   <div>
-    <h1>KettleFit</h1>
-    <div class="header-subtitle">Kettlebell Training Tracker</div>
+    <h1>Kettle Bell Genie</h1>
+    <div class="header-subtitle">Your Workouts, On Command</div>
   </div>
   <button class="btn btn-sm btn-secondary" onclick="openSettings()" style="padding:6px 8px">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
@@ -350,7 +351,6 @@
   <div class="tab-panel active" id="tab-build">
     <div class="toggle-group">
       <button class="toggle-btn active" onclick="setBuildMode('quick')">Generate</button>
-      <button class="toggle-btn" onclick="setBuildMode('saved')">Saved</button>
       <button class="toggle-btn" onclick="setBuildMode('manual')">Manual</button>
     </div>
 
@@ -370,6 +370,12 @@
         <button class="btn btn-primary" style="flex:1" onclick="startWorkoutTimer()">Start Workout</button>
         <button class="btn btn-secondary" id="view-muscles-btn" onclick="switchTab('diagram')">View Muscles</button>
       </div>
+    </div>
+
+    <!-- Saved Workout Source Bar (shown after loading a saved workout) -->
+    <div id="saved-source-bar" style="display:none; padding:10px 14px; background:var(--surface); border-radius:10px; margin-bottom:12px; cursor:pointer; align-items:center; justify-content:space-between; border:1px solid var(--border)" onclick="editLoadedSaved()">
+      <span id="saved-source-name" style="font-size:13px; font-weight:600"></span>
+      <span style="font-size:12px; color:var(--accent); font-weight:600">Edit</span>
     </div>
 
     <!-- Quick Generate -->
@@ -558,69 +564,79 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         <input type="text" id="exercise-search" placeholder="Search exercises..." oninput="filterExercises()">
       </div>
-      <div class="form-group">
-        <select id="category-filter" onchange="filterExercises()">
-          <option value="all">All Categories</option>
-          <option value="swing">Swings</option>
-          <option value="press">Presses</option>
-          <option value="squat">Squats</option>
-          <option value="pull">Pulls / Rows</option>
-          <option value="core">Core</option>
-          <option value="carry">Carries</option>
-          <option value="arms">Arms</option>
-          <option value="complex">Complexes</option>
-          <option value="cardio">Cardio</option>
-          <option value="mat">Mat / Bodyweight</option>
-        </select>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div class="form-group" style="flex:1;margin-bottom:0">
+          <select id="category-filter" onchange="filterExercises()">
+            <option value="all">All Categories</option>
+            <option value="swing">Swings</option>
+            <option value="press">Presses</option>
+            <option value="squat">Squats</option>
+            <option value="pull">Pulls / Rows</option>
+            <option value="core">Core</option>
+            <option value="carry">Carries</option>
+            <option value="arms">Arms</option>
+            <option value="complex">Complexes</option>
+            <option value="cardio">Cardio</option>
+            <option value="mat">Mat / Bodyweight</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:1;margin-bottom:0">
+          <select id="sort-filter" onchange="filterExercises()">
+            <option value="default">Sort: Default</option>
+            <option value="alpha">Sort: A–Z</option>
+            <option value="difficulty">Sort: Difficulty</option>
+            <option value="equipment">Sort: Equipment</option>
+          </select>
+        </div>
       </div>
       <div id="exercise-list"></div>
     </div>
 
-    <!-- Saved Workouts -->
-    <div id="saved-mode" style="display:none">
-      <div id="saved-expand-bar" style="display:none; padding:10px 14px; background:var(--surface); border-radius:10px; margin-bottom:12px; cursor:pointer; align-items:center; justify-content:space-between; border:1px solid var(--border)" onclick="toggleSavedList()">
-        <span id="saved-expand-summary" style="font-size:13px; font-weight:600">Open Saved Workouts</span>
-        <span style="font-size:12px; color:var(--accent); font-weight:600">Show</span>
-      </div>
-      <div id="saved-content">
-      <div id="saved-list"></div>
-      <div id="saved-empty" class="empty-state">
-        <p>No saved workouts yet. Star a workout when logging to save it here.</p>
-      </div>
-      </div>
-      <!-- Edit Saved Workout Screen -->
-      <div id="saved-edit" style="display:none">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-          <button class="btn btn-sm btn-secondary" onclick="closeSavedEdit()" style="padding:6px 8px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          </button>
-          <h3 class="section-title" style="margin-bottom:0;flex:1">Edit Saved Workout</h3>
-        </div>
-        <div id="saved-edit-usage" style="font-size:11px;color:var(--text2);margin-bottom:12px"></div>
-        <div class="form-group">
-          <label>Workout Name</label>
-          <input type="text" id="saved-edit-name" placeholder="Name your workout...">
-        </div>
-        <div class="form-group">
-          <label>Notes</label>
-          <input type="text" id="saved-edit-notes" placeholder="Add notes (optional)">
-        </div>
-        <label>Exercises</label>
-        <div id="saved-edit-exercises" style="margin-bottom:14px"></div>
-        <div style="display:flex;gap:8px">
-          <button class="btn btn-primary" style="flex:1" onclick="saveSavedEdit()">Save Changes</button>
-          <button class="btn btn-secondary" onclick="loadFromEdit()">Load</button>
-        </div>
-        <button class="btn btn-sm" style="width:100%;margin-top:12px;color:var(--red);background:none;border:1px solid var(--red);border-radius:8px" onclick="deleteFromEdit()">Delete Workout</button>
-      </div>
-    </div>
+  </div>
 
+  <!-- SAVED TAB -->
+  <div class="tab-panel" id="tab-saved">
+    <div class="section-title">Saved Workouts</div>
+    <div id="saved-list"></div>
+    <div id="saved-empty" class="empty-state">
+      <p>No saved workouts yet. Star a workout when logging to save it here.</p>
+    </div>
+    <!-- Edit Saved Workout Screen -->
+    <div id="saved-edit" style="display:none">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <button class="btn btn-sm btn-secondary" onclick="closeSavedEdit()" style="padding:6px 8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <h3 class="section-title" style="margin-bottom:0;flex:1">Edit Saved Workout</h3>
+      </div>
+      <div id="saved-edit-usage" style="font-size:11px;color:var(--text2);margin-bottom:12px"></div>
+      <div class="form-group">
+        <label>Workout Name</label>
+        <input type="text" id="saved-edit-name" placeholder="Name your workout...">
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <input type="text" id="saved-edit-notes" placeholder="Add notes (optional)">
+      </div>
+      <label>Exercises</label>
+      <div id="saved-edit-exercises" style="margin-bottom:14px"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" style="flex:1" onclick="saveSavedEdit()">Save Changes</button>
+        <button class="btn btn-secondary" onclick="loadFromEdit()">Load</button>
+      </div>
+      <button class="btn btn-sm" style="width:100%;margin-top:12px;color:var(--red);background:none;border:1px solid var(--red);border-radius:8px" onclick="deleteFromEdit()">Delete Workout</button>
+    </div>
   </div>
 
   <!-- DIAGRAM TAB -->
   <div class="tab-panel" id="tab-diagram">
-    <div class="section-title">Muscle Activation</div>
-    <div id="diagram-context" style="font-size:13px; color:var(--text2); margin:-8px 0 14px;">Tap a muscle group to see which exercises activate it.</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <button class="btn btn-sm btn-secondary" onclick="switchTab('build')" style="padding:6px 8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="section-title" style="margin-bottom:0;flex:1">Muscle Activation</div>
+    </div>
+    <div id="diagram-context" style="font-size:13px; color:var(--text2); margin-bottom:14px;">Tap a muscle group to see which exercises activate it.</div>
 
     <div class="diagram-container">
       <div class="body-view">
@@ -789,6 +805,10 @@
   <button class="nav-btn active" onclick="switchTab('build')" data-tab="build">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
     Build
+  </button>
+  <button class="nav-btn" onclick="switchTab('saved')" data-tab="saved">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Saved
   </button>
   <button class="nav-btn" onclick="switchTab('diagram')" data-tab="diagram">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -1132,8 +1152,8 @@ function getWorkoutLogs() {
 function saveWorkoutLogs(logs) { localStorage.setItem('kf_logs', JSON.stringify(logs)); }
 
 // ==================== SETTINGS ====================
-const ALL_WEIGHTS = [8,12,16,20,24,28,32,36,40,44,48];
-const KG_TO_LB = {8:18,12:26,16:35,20:44,24:53,28:62,32:70,36:80,40:88,44:97,48:106};
+const ALL_WEIGHTS = [8,12,16,20,24,28];
+const KG_TO_LB = {8:18,12:26,16:35,20:44,24:53,28:62};
 
 function getSettings() {
   try {
@@ -1147,8 +1167,8 @@ function saveSettings() {
   renderSettingsChips();
   updatePrefWeightDisplay();
 }
-function getOwnedWeights() { return getSettings().owned || [16]; }
-function getPreferredWeight() { return getSettings().preferred || 16; }
+function getOwnedWeights() { return getSettings().owned || []; }
+function getPreferredWeight() { return getSettings().preferred || null; }
 
 function getAvailableExercises() {
   const diff = getSettings().difficulty || 'intermediate';
@@ -1194,8 +1214,8 @@ function kettlebellPath(cx, cy, r) {
 
 function renderSettingsChips() {
   const s = getSettings();
-  const owned = s.owned || [16];
-  const preferred = s.preferred || 16;
+  const owned = s.owned || [];
+  const preferred = s.preferred || null;
   const unit = s.unit || 'kg';
   const formatWt = (kg) => unit === 'kg' ? `${kg} kg` : `${KG_TO_LB[kg]} lb`;
 
@@ -1243,11 +1263,10 @@ function renderSettingsChips() {
 
 function toggleOwnedWeight(w) {
   const s = getSettings();
-  const owned = s.owned || [16];
+  const owned = s.owned || [];
   const idx = owned.indexOf(w);
   if (idx >= 0) owned.splice(idx, 1); else owned.push(w);
   owned.sort((a,b) => a-b);
-  if (owned.length === 0) owned.push(16);
   s.owned = owned;
   if (!owned.includes(s.preferred)) s.preferred = owned[0];
   localStorage.setItem('kf_settings', JSON.stringify(s));
@@ -1264,10 +1283,11 @@ function setPreferredWeight(w) {
 function updatePrefWeightDisplay() {
   const s = getSettings();
   const unit = s.unit || 'kg';
-  const w = s.preferred || 16;
-  const display = unit === 'kg' ? `${w} kg` : `${KG_TO_LB[w]} lb`;
+  const w = s.preferred;
   const el = document.getElementById('pref-weight-display');
-  if (el) el.textContent = display;
+  if (!el) return;
+  if (!w) { el.textContent = 'None — select in Settings'; return; }
+  el.textContent = unit === 'kg' ? `${w} kg` : `${KG_TO_LB[w]} lb`;
 }
 
 // ==================== WORKOUT TIMER ====================
@@ -1419,6 +1439,7 @@ function switchTab(tab) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`.nav-btn[data-tab="${tab}"]`).classList.add('active');
+  if (tab === 'saved') renderSavedWorkouts();
   if (tab === 'diagram') updateDiagram();
   if (tab === 'log') renderLog();
   if (tab === 'insights') renderInsights();
@@ -1427,21 +1448,13 @@ function switchTab(tab) {
 // ==================== BUILD MODE ====================
 function setBuildMode(mode) {
   buildMode = mode;
-  const modes = ['quick','saved','manual'];
+  const modes = ['quick','manual'];
   document.querySelectorAll('.toggle-group .toggle-btn').forEach((b,i) => {
     b.classList.toggle('active', modes[i]===mode);
   });
   document.getElementById('quick-mode').style.display = mode==='quick' ? 'block' : 'none';
   document.getElementById('manual-mode').style.display = mode==='manual' ? 'block' : 'none';
-  document.getElementById('saved-mode').style.display = mode==='saved' ? 'block' : 'none';
   if (mode === 'manual') renderExerciseList();
-  if (mode === 'saved') {
-    renderSavedWorkouts();
-    if (currentWorkout.length === 0) {
-      document.getElementById('saved-content').style.display = 'block';
-      document.getElementById('saved-expand-bar').style.display = 'none';
-    }
-  }
   if (mode === 'quick' && currentWorkout.length === 0) {
     document.getElementById('quick-settings').style.display = 'block';
     document.getElementById('quick-expand-bar').style.display = 'none';
@@ -1535,17 +1548,23 @@ function generateWorkout() {
   document.getElementById('quick-settings').style.display = 'none';
   document.getElementById('quick-expand-summary').textContent = focusLabel + ' \u00b7 ' + selectedDuration + ' min';
   document.getElementById('quick-expand-bar').style.display = 'flex';
+  document.getElementById('saved-source-bar').style.display = 'none';
 }
 
 // ==================== MANUAL BUILD ====================
 function renderExerciseList() {
   const search = (document.getElementById('exercise-search').value || '').toLowerCase();
   const cat = document.getElementById('category-filter').value;
+  const sort = (document.getElementById('sort-filter') || {}).value || 'default';
   const filtered = getAvailableExercises().filter(ex => {
     if (cat !== 'all' && ex.category !== cat) return false;
     if (search && !ex.name.toLowerCase().includes(search)) return false;
     return true;
   });
+  const diffOrder = {beginner:0, intermediate:1, advanced:2};
+  if (sort === 'alpha') filtered.sort((a,b) => a.name.localeCompare(b.name));
+  else if (sort === 'difficulty') filtered.sort((a,b) => diffOrder[a.difficulty] - diffOrder[b.difficulty] || a.name.localeCompare(b.name));
+  else if (sort === 'equipment') filtered.sort((a,b) => a.equipment.localeCompare(b.equipment) || a.name.localeCompare(b.name));
   const el = document.getElementById('exercise-list');
   el.innerHTML = filtered.map(ex => `
     <div class="exercise-item" onclick="addExercise('${ex.id}')">
@@ -1553,6 +1572,7 @@ function renderExerciseList() {
         <div class="exercise-name">${ex.name}</div>
         <div class="exercise-muscles">
           <span class="badge ${ex.equipment==='kettlebell'?'badge-kb':'badge-mat'}" style="margin-right:4px">${ex.equipment==='kettlebell'?'KB':'Mat'}</span>
+          <span class="badge badge-diff" style="margin-right:4px">${ex.difficulty.charAt(0).toUpperCase()+ex.difficulty.slice(1)}</span>
           ${ex.primary.map(m => MUSCLE_NAMES[m]).join(', ')}
         </div>
       </div>
@@ -1764,13 +1784,10 @@ function clearWorkout() {
   circuitMode = false;
   loadedSavedId = null;
   renderCurrentWorkout();
+  document.getElementById('saved-source-bar').style.display = 'none';
   if (buildMode === 'quick') {
     document.getElementById('quick-settings').style.display = 'block';
     document.getElementById('quick-expand-bar').style.display = 'none';
-  }
-  if (buildMode === 'saved') {
-    document.getElementById('saved-content').style.display = 'block';
-    document.getElementById('saved-expand-bar').style.display = 'none';
   }
 }
 
@@ -1939,6 +1956,7 @@ function renderSavedWorkouts() {
   const saved = getSavedWorkouts();
   const list = document.getElementById('saved-list');
   const empty = document.getElementById('saved-empty');
+  list.style.display = '';
   if (saved.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
   const logs = getWorkoutLogs();
@@ -1977,22 +1995,28 @@ function loadSavedWorkout(id) {
 
   // Show source subtitle under Current Workout
   const srcEl = document.getElementById('workout-source');
-  srcEl.textContent = w.exercises.length + ' exercises loaded from "' + w.name + '"';
+  srcEl.textContent = w.exercises.length + ' exercises from "' + w.name + '"';
   srcEl.style.display = 'block';
 
-  // Collapse saved list to show workout
-  document.getElementById('saved-content').style.display = 'none';
-  document.getElementById('saved-edit').style.display = 'none';
-  document.getElementById('saved-expand-summary').textContent = 'Open Saved Workouts';
-  document.getElementById('saved-expand-bar').style.display = 'flex';
+  // Collapse generate settings and show saved source bar
+  document.getElementById('quick-settings').style.display = 'none';
+  document.getElementById('quick-expand-bar').style.display = 'none';
+  document.getElementById('saved-source-name').textContent = w.name;
+  document.getElementById('saved-source-bar').style.display = 'flex';
+
+  // Switch to Build tab to show the loaded workout
+  switchTab('build');
+}
+
+function editLoadedSaved() {
+  if (loadedSavedId) {
+    switchTab('saved');
+    openSavedEdit(loadedSavedId);
+  }
 }
 
 function toggleSavedList() {
-  const content = document.getElementById('saved-content');
-  const bar = document.getElementById('saved-expand-bar');
-  const isHidden = content.style.display === 'none';
-  content.style.display = isHidden ? 'block' : 'none';
-  bar.style.display = isHidden ? 'none' : 'flex';
+  // No-op — saved workouts now have their own tab
 }
 
 function countSavedUsage(savedId, logs) {
@@ -2025,14 +2049,14 @@ function openSavedEdit(id) {
 
   renderSavedEditExercises();
 
-  document.getElementById('saved-content').style.display = 'none';
-  document.getElementById('saved-expand-bar').style.display = 'none';
+  document.getElementById('saved-list').style.display = 'none';
+  document.getElementById('saved-empty').style.display = 'none';
   document.getElementById('saved-edit').style.display = 'block';
 }
 
 function closeSavedEdit() {
   document.getElementById('saved-edit').style.display = 'none';
-  document.getElementById('saved-content').style.display = 'block';
+  document.getElementById('saved-list').style.display = '';
   editingSavedId = null;
   editingSavedExercises = [];
   renderSavedWorkouts();
@@ -2153,9 +2177,9 @@ function deleteFromEdit() {
   const id = editingSavedId;
   deleteSaved(id);
   document.getElementById('saved-edit').style.display = 'none';
-  document.getElementById('saved-content').style.display = 'block';
   editingSavedId = null;
   editingSavedExercises = [];
+  renderSavedWorkouts();
 }
 
 // ==================== LOG DISPLAY ====================
