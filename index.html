@@ -10,316 +10,11 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <title>Kettle Bell Genie</title>
-<style>
-  :root {
-    --bg: #0f0f13;
-    --surface: #1a1a24;
-    --surface2: #24243a;
-    --border: #2a2a3e;
-    --text: #e8e8f0;
-    --text2: #8888a0;
-    --accent: #ff6b35;
-    --accent2: #ff8c5a;
-    --primary-muscle: #ff6b35;
-    --secondary-muscle: #ff6b3566;
-    --green: #4ecf72;
-    --red: #ef4444;
-    --blue: #3b82f6;
-    --purple: #a855f7;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html, body { height:100%; overflow:hidden; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg); color: var(--text);
-    display:flex; flex-direction:column;
-  }
-  /* Header */
-  .header {
-    padding: 12px 16px 8px; display:flex; align-items:center; justify-content:space-between;
-    background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink:0;
-    padding-top: max(12px, env(safe-area-inset-top));
-  }
-  .header h1 { font-size:20px; font-weight:700; color:var(--accent); }
-  .header-subtitle { font-size:11px; color:var(--text2); }
-
-  /* Tab content area */
-  .tab-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-  .tab-panel { display:none; padding:16px; padding-bottom:80px; min-height:100%; }
-  .tab-panel.active { display:block; }
-
-  /* Bottom nav */
-  .bottom-nav {
-    display:flex; background:var(--surface); border-top:1px solid var(--border);
-    flex-shrink:0; padding-bottom: max(8px, env(safe-area-inset-bottom));
-  }
-  .nav-btn {
-    flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
-    padding:8px 0; border:none; background:none; color:var(--text2);
-    font-size:10px; font-weight:600; cursor:pointer; transition:color .2s;
-  }
-  .nav-btn.active { color:var(--accent); }
-  .nav-btn.disabled { opacity:.25; pointer-events:none; }
-  .nav-btn svg { width:22px; height:22px; }
-
-  /* Common UI */
-  .card { background:var(--surface); border-radius:12px; padding:14px; margin-bottom:12px; border:1px solid var(--border); }
-  .btn {
-    display:inline-flex; align-items:center; justify-content:center; gap:6px;
-    padding:10px 18px; border-radius:10px; border:none; font-size:14px;
-    font-weight:600; cursor:pointer; transition:all .2s; touch-action:manipulation;
-  }
-  .btn-primary { background:var(--accent); color:#fff; }
-  .btn-primary:active { background:var(--accent2); transform:scale(.97); }
-  .btn-secondary { background:var(--surface2); color:var(--text); }
-  .btn-secondary:active { background:var(--border); }
-  .btn-sm { padding:6px 12px; font-size:12px; border-radius:8px; }
-  .btn-danger { background:var(--red); color:#fff; }
-  .btn-block { width:100%; }
-
-  input, select {
-    background:var(--surface2); border:1px solid var(--border); color:var(--text);
-    padding:10px 12px; border-radius:8px; font-size:14px; width:100%; outline:none;
-  }
-  input:focus, select:focus { border-color:var(--accent); }
-  select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:32px; }
-  label { font-size:12px; color:var(--text2); margin-bottom:4px; display:block; font-weight:600; }
-
-  .section-title { font-size:16px; font-weight:700; margin-bottom:12px; }
-  .badge { display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:600; }
-  .badge-primary { background:var(--primary-muscle); color:#fff; }
-  .badge-secondary { background:var(--secondary-muscle); color:var(--text); }
-  .badge-kb { background:var(--accent); color:#fff; }
-  .badge-mat { background:var(--purple); color:#fff; }
-  .badge-diff { background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
-
-  .empty-state { text-align:center; padding:40px 20px; color:var(--text2); }
-  .empty-state svg { width:48px; height:48px; margin-bottom:12px; opacity:.5; }
-
-  /* Exercise list in builder */
-  .exercise-item {
-    display:flex; align-items:center; gap:10px; padding:10px;
-    border-radius:8px; cursor:pointer; transition:background .15s;
-  }
-  .exercise-item:active { background:var(--surface2); }
-  .exercise-info { flex:1; min-width:0; }
-  .exercise-name { font-size:14px; font-weight:600; }
-  .exercise-muscles { font-size:11px; color:var(--text2); margin-top:2px; }
-
-  /* Current workout */
-  .workout-item {
-    display:flex; align-items:center; gap:10px; padding:10px 0;
-    border-bottom:1px solid var(--border); transition:opacity .15s;
-  }
-  .workout-item:last-child { border-bottom:none; }
-  .workout-item.dragging { opacity:.4; }
-  .workout-item.drag-over { border-top:2px solid var(--accent); }
-  .workout-item.drag-over-bottom { border-bottom:2px solid var(--accent); }
-  .drag-handle { cursor:grab; color:var(--text2); touch-action:none; padding:4px; flex-shrink:0; }
-  .workout-item-info { flex:1; }
-  .workout-item-name { font-size:14px; font-weight:600; }
-  .workout-item-detail { font-size:12px; color:var(--text2); margin-top:2px; }
-  .workout-item-controls { display:flex; gap:6px; margin-top:4px; }
-  .val-btn {
-    padding:6px 10px; border-radius:6px; border:1px solid var(--border); background:var(--surface2);
-    color:var(--text); font-size:13px; font-weight:600; cursor:pointer; text-align:center; min-width:42px;
-  }
-  .val-btn span { font-size:9px; color:var(--text2); display:block; line-height:1; margin-bottom:2px; }
-  .val-btn.editing { border-color:var(--accent); }
-  .chip-picker {
-    display:none; position:absolute; left:0; right:0; top:100%; z-index:50;
-    background:var(--surface); border:1px solid var(--border); border-radius:8px;
-    padding:8px; margin-top:4px; box-shadow:0 4px 12px rgba(0,0,0,.4);
-  }
-  .chip-picker.show { display:flex; flex-wrap:wrap; gap:4px; justify-content:center; }
-  .chip {
-    padding:8px 14px; border-radius:6px; border:1px solid var(--border); background:var(--surface2);
-    color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all .15s;
-  }
-  .chip.active { border-color:var(--accent); color:var(--accent); background:var(--surface); }
-  .remove-btn { width:28px; height:28px; border-radius:50%; border:none; background:var(--red); color:#fff; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-
-  /* Search */
-  .search-wrap { position:relative; margin-bottom:12px; }
-  .search-wrap input { padding-left:36px; }
-  .search-wrap svg { position:absolute; left:10px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--text2); }
-
-  /* Toggle */
-  .toggle-group { display:flex; background:var(--surface2); border-radius:10px; padding:3px; margin-bottom:14px; }
-  .toggle-btn {
-    flex:1; padding:8px; text-align:center; border-radius:8px; border:none;
-    background:none; color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
-  }
-  .toggle-btn.active { background:var(--accent); color:#fff; }
-
-  /* Quick gen */
-  .focus-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
-  .focus-card {
-    padding:12px; border-radius:10px; text-align:center; cursor:pointer; border:2px solid var(--border);
-    background:var(--surface); transition:all .2s; font-size:13px; font-weight:600;
-  }
-  .focus-card.selected { border-color:var(--accent); background:var(--surface2); color:var(--accent); }
-  .focus-card-icon { display:none; }
-
-  /* Duration pills */
-  .duration-pills { display:flex; gap:8px; margin-bottom:14px; }
-  .duration-pill {
-    flex:1; padding:10px; text-align:center; border-radius:8px; cursor:pointer;
-    border:2px solid var(--border); background:var(--surface); font-size:13px; font-weight:600; transition:all .2s;
-  }
-  .duration-pill.selected { border-color:var(--accent); color:var(--accent); background:var(--surface2); }
-
-  /* SVG diagram */
-  .diagram-container { display:flex; justify-content:center; gap:8px; margin-bottom:16px; }
-  .body-view { text-align:center; }
-  .body-view h3 { font-size:12px; color:var(--text2); margin-bottom:6px; }
-  .body-svg { width:140px; height:320px; }
-  .body-svg .muscle { fill:var(--surface2); stroke:var(--border); stroke-width:1; transition:fill .3s; cursor:pointer; }
-  .body-svg .muscle.active-primary { fill:var(--primary-muscle); }
-  .body-svg .muscle.active-secondary { fill:var(--secondary-muscle); }
-  .body-svg .outline { fill:none; stroke:var(--text2); stroke-width:1.2; }
-
-  .muscle-legend { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:16px; }
-  .legend-item { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text2); }
-  .legend-dot { width:8px; height:8px; border-radius:50%; }
-
-  /* Muscle detail popup */
-  .muscle-popup {
-    display:none; position:fixed; bottom:0; left:0; right:0; background:var(--surface);
-    border-top-left-radius:16px; border-top-right-radius:16px; padding:20px;
-    box-shadow:0 -4px 20px rgba(0,0,0,.5); z-index:100; max-height:50vh; overflow-y:auto;
-  }
-  .muscle-popup.show { display:block; }
-  .muscle-popup h3 { margin-bottom:10px; }
-  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:99; }
-  .overlay.show { display:block; }
-
-  /* Log */
-  .log-entry {
-    padding:12px; margin-bottom:8px; background:var(--surface); border-radius:10px;
-    border:1px solid var(--border);
-  }
-  .log-date { font-size:13px; font-weight:700; color:var(--accent); }
-  .log-exercises { font-size:12px; color:var(--text2); margin-top:4px; }
-  .log-stats { font-size:11px; color:var(--text2); margin-top:6px; display:flex; gap:12px; }
-  .log-actions { display:flex; gap:6px; margin-top:8px; }
-
-  /* Calendar */
-  .calendar { margin-bottom:16px; }
-  .cal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; }
-  .cal-day-label { font-size:10px; color:var(--text2); padding:4px; }
-  .cal-day {
-    aspect-ratio:1; display:flex; align-items:center; justify-content:center;
-    font-size:12px; border-radius:8px; color:var(--text2);
-  }
-  .cal-day.has-workout { position:relative; }
-  .cal-day.has-workout::after {
-    content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%);
-    width:5px; height:5px; border-radius:50%; background:var(--accent);
-  }
-  .cal-day.today { background:var(--accent); color:#fff; font-weight:700; border-radius:50%; }
-  .cal-day.today.has-workout::after { background:#fff; }
-  .cal-day.selected { background:var(--surface2); color:var(--text); font-weight:700; border-radius:50%; }
-  .cal-day.selected.has-workout::after { background:var(--accent); }
-  .cal-day.today.selected { background:var(--accent); color:#fff; }
-  .cal-day.today.selected.has-workout::after { background:#fff; }
-  .cal-day[onclick] { cursor:pointer; }
-
-  /* Charts */
-  .chart-container { position:relative; height:180px; margin-bottom:16px; }
-  .chart-canvas { width:100%; height:100%; }
-
-  /* Insights */
-  .insight-card { margin-bottom:12px; }
-  .insight-card h3 { font-size:14px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-  .rank-list { list-style:none; }
-  .rank-item { display:flex; align-items:center; gap:8px; padding:6px 0; font-size:13px; }
-  .rank-num { width:22px; height:22px; border-radius:50%; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--accent); }
-
-  .suggestion-item {
-    display:flex; align-items:center; gap:10px; padding:8px; margin-bottom:6px;
-    background:var(--surface2); border-radius:8px; cursor:pointer;
-  }
-  .suggestion-item:active { background:var(--border); }
-
-  /* Heatmap controls */
-  .heatmap-controls { display:flex; gap:6px; margin-bottom:12px; }
-  .heatmap-btn {
-    padding:6px 12px; border-radius:6px; border:1px solid var(--border); background:var(--surface);
-    color:var(--text2); font-size:12px; font-weight:600; cursor:pointer;
-  }
-  .heatmap-btn.active { border-color:var(--accent); color:var(--accent); }
-
-  /* Modal */
-  .modal { display:none; position:fixed; inset:0; z-index:200; align-items:center; justify-content:center; }
-  .modal.show { display:flex; }
-  .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.6); }
-  .modal-content {
-    position:relative; background:var(--surface); border-radius:16px;
-    padding:20px; width:calc(100% - 32px); max-width:400px; max-height:80vh; overflow-y:auto;
-  }
-  .modal-content h2 { margin-bottom:14px; font-size:18px; }
-  .form-group { margin-bottom:12px; }
-
-  /* Timer progress dots */
-  .timer-dot {
-    width:10px; height:10px; border-radius:50%; background:var(--surface2); border:1px solid var(--border); transition:all .3s;
-  }
-  .timer-dot.done { background:var(--green); border-color:var(--green); }
-  .timer-dot.current { background:var(--accent); border-color:var(--accent); transform:scale(1.3); }
-
-  /* Settings weight chips */
-  .weight-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-  .weight-chip {
-    padding:6px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface2);
-    color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
-  }
-  .weight-chip.owned { border-color:var(--accent); color:var(--accent); background:var(--surface); }
-  .weight-chip.preferred { background:var(--accent); color:#fff; border-color:var(--accent); }
-
-  /* Nested kettlebell SVG */
-  .kb-nest-svg path { cursor:pointer; transition: opacity .15s, filter .15s; }
-  .kb-nest-svg path:hover { filter:brightness(1.4); }
-
-  /* Circuit mode toggle */
-  .circuit-toggle {
-    display:inline-flex; align-items:center; gap:6px;
-    padding:5px 10px; border-radius:8px; cursor:pointer;
-    font-size:12px; font-weight:600; color:var(--text2);
-    background:var(--surface2); border:1px solid var(--border);
-    transition:all .2s; user-select:none;
-  }
-  .circuit-toggle.active { background:var(--accent); color:#fff; border-color:var(--accent); }
-
-  /* Circuit timer exercise list */
-  .fs-circuit-list { text-align:left; font-size:14px; color:var(--text); line-height:1.9; max-width:300px; margin:0 auto; }
-  .fs-circuit-list .ex-name { font-weight:600; }
-  .fs-circuit-list .ex-detail { color:var(--text2); font-size:12px; }
-
-  /* Full-screen workout timer overlay */
-  .timer-fullscreen {
-    display:none; position:fixed; inset:0; z-index:300;
-    background:var(--bg); flex-direction:column; align-items:center;
-    opacity:0; transition:opacity .3s ease;
-    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
-    overflow-y:auto;
-  }
-  .timer-fullscreen.show { display:flex; }
-  .timer-fullscreen.visible { opacity:1; }
-
-  .fs-label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:1.5px; margin-top:12px; }
-  .fs-clock { font-size:min(20vw, 96px); font-weight:700; font-variant-numeric:tabular-nums; color:var(--accent); line-height:1.1; margin:8px 0 16px; }
-  .fs-exercise-name { font-size:22px; font-weight:700; text-align:center; }
-  .fs-exercise-detail { font-size:14px; color:var(--text2); margin-top:4px; text-align:center; }
-  .fs-illustration { display:none; }
-  .fs-upnext { font-size:14px; color:var(--text2); text-align:center; margin-bottom:16px; }
-  .fs-upnext strong { color:var(--text); }
-  .fs-progress { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
-  .fs-controls { display:flex; gap:10px; justify-content:center; margin-bottom:12px; }
-  .fs-controls .btn { min-width:80px; }
-  .fs-end { margin-bottom:12px; }
-</style>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="auth.css">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -345,10 +40,15 @@
     <h1>Kettle Bell Genie</h1>
     <div class="header-subtitle">Your Workouts, On Command</div>
   </div>
-  <button class="btn btn-sm btn-secondary" onclick="openSettings()" style="padding:6px 8px">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-  </button>
+  <div style="display:flex;align-items:center;gap:8px">
+    <button id="auth-signin-btn" class="btn btn-sm btn-secondary" onclick="signInWithGoogle()">Sign In</button>
+    <button id="auth-signout-btn" class="btn btn-sm btn-secondary" onclick="signOutUser()" style="display:none">Sign Out</button>
+    <button class="btn btn-sm btn-secondary" onclick="openSettings()" style="padding:6px 8px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    </button>
+  </div>
 </div>
+
 
 <!-- BUILD TAB -->
 <div class="tab-content">
@@ -415,73 +115,52 @@
         </div>
         <div class="focus-card" data-focus="upper" onclick="selectFocus(this)">
           <div class="focus-card-icon"><svg viewBox="0 0 80 80">
-            <!-- Upper body - torso, arms, shoulders detail -->
             <circle class="davinci" cx="40" cy="16" r="6"/>
             <line class="davinci" x1="40" y1="22" x2="40" y2="52"/>
-            <!-- Shoulder width -->
             <line class="davinci" x1="26" y1="30" x2="54" y2="30"/>
-            <!-- Arms with muscle curves -->
             <path class="davinci" d="M26,30 Q20,34 16,44 Q14,50 16,56"/>
             <path class="davinci" d="M54,30 Q60,34 64,44 Q66,50 64,56"/>
-            <!-- Deltoid arcs -->
             <path class="davinci-detail" d="M26,28 Q22,26 20,30 Q18,34 20,36"/>
             <path class="davinci-detail" d="M54,28 Q58,26 60,30 Q62,34 60,36"/>
-            <!-- Chest lines -->
             <path class="davinci-detail" d="M32,32 Q40,38 48,32"/>
             <path class="davinci-detail" d="M34,36 Q40,40 46,36"/>
-            <!-- Forearm lines -->
             <line class="davinci-detail" x1="16" y1="56" x2="14" y2="66"/>
             <line class="davinci-detail" x1="64" y1="56" x2="66" y2="66"/>
-            <!-- Faded lower -->
             <line class="davinci-detail" x1="36" y1="52" x2="34" y2="70" opacity="0.3"/>
             <line class="davinci-detail" x1="44" y1="52" x2="46" y2="70" opacity="0.3"/>
           </svg></div>Upper Body
         </div>
         <div class="focus-card" data-focus="lower" onclick="selectFocus(this)">
           <div class="focus-card-icon"><svg viewBox="0 0 80 80">
-            <!-- Lower body - hips, legs detail -->
-            <!-- Pelvis -->
             <path class="davinci" d="M26,14 Q32,10 40,10 Q48,10 54,14 L56,20 Q48,24 40,24 Q32,24 24,20 Z"/>
-            <!-- Quad muscles -->
             <path class="davinci" d="M30,22 Q28,36 26,50 Q25,58 28,66"/>
             <path class="davinci" d="M38,24 Q36,38 35,52 Q34,60 36,66"/>
             <path class="davinci" d="M42,24 Q44,38 45,52 Q46,60 44,66"/>
             <path class="davinci" d="M50,22 Q52,36 54,50 Q55,58 52,66"/>
-            <!-- Knee detail -->
             <ellipse class="davinci-detail" cx="32" cy="54" rx="5" ry="3"/>
             <ellipse class="davinci-detail" cx="48" cy="54" rx="5" ry="3"/>
-            <!-- Calves -->
             <path class="davinci" d="M28,66 Q30,72 30,78"/>
             <path class="davinci" d="M36,66 Q34,72 34,78"/>
             <path class="davinci" d="M44,66 Q46,72 46,78"/>
             <path class="davinci" d="M52,66 Q50,72 50,78"/>
-            <!-- Muscle line detail -->
             <line class="davinci-detail" x1="34" y1="28" x2="34" y2="48"/>
             <line class="davinci-detail" x1="46" y1="28" x2="46" y2="48"/>
           </svg></div>Lower Body
         </div>
         <div class="focus-card" data-focus="core" onclick="selectFocus(this)">
           <div class="focus-card-icon"><svg viewBox="0 0 80 80">
-            <!-- Core - zoomed torso with muscle detail -->
-            <!-- Ribcage outline -->
             <path class="davinci" d="M22,10 Q30,6 40,6 Q50,6 58,10 L60,16 Q58,28 56,36 L54,42 Q48,46 40,46 Q32,46 26,42 L24,36 Q22,28 20,16 Z"/>
-            <!-- Abs segments -->
             <line class="davinci" x1="40" y1="14" x2="40" y2="46"/>
             <path class="davinci-detail" d="M32,18 Q40,20 48,18"/>
             <path class="davinci-detail" d="M31,26 Q40,28 49,26"/>
             <path class="davinci-detail" d="M30,34 Q40,36 50,34"/>
             <path class="davinci-detail" d="M30,42 Q40,44 50,42"/>
-            <!-- Oblique lines -->
             <path class="davinci-detail" d="M22,14 Q24,22 26,32 Q28,40 30,46"/>
             <path class="davinci-detail" d="M58,14 Q56,22 54,32 Q52,40 50,46"/>
-            <!-- Pelvis hint -->
             <path class="davinci" d="M26,46 Q32,54 40,56 Q48,54 54,46"/>
-            <!-- Hip bones -->
             <path class="davinci-detail" d="M22,48 Q24,52 28,50"/>
             <path class="davinci-detail" d="M58,48 Q56,52 52,50"/>
-            <!-- Navel -->
             <ellipse class="davinci-detail" cx="40" cy="40" rx="2" ry="2.5"/>
-            <!-- Cross-hatch texture -->
             <line class="davinci-detail" x1="34" y1="20" x2="36" y2="24" opacity="0.3"/>
             <line class="davinci-detail" x1="44" y1="20" x2="46" y2="24" opacity="0.3"/>
             <line class="davinci-detail" x1="34" y1="28" x2="36" y2="32" opacity="0.3"/>
@@ -490,57 +169,40 @@
         </div>
         <div class="focus-card" data-focus="posterior" onclick="selectFocus(this)">
           <div class="focus-card-icon"><svg viewBox="0 0 80 80">
-            <!-- Posterior - back anatomy study -->
             <circle class="davinci" cx="40" cy="12" r="5"/>
-            <!-- Spine -->
             <line class="davinci" x1="40" y1="17" x2="40" y2="50"/>
-            <!-- Vertebrae marks -->
             <line class="davinci-detail" x1="38" y1="22" x2="42" y2="22"/>
             <line class="davinci-detail" x1="38" y1="27" x2="42" y2="27"/>
             <line class="davinci-detail" x1="38" y1="32" x2="42" y2="32"/>
             <line class="davinci-detail" x1="38" y1="37" x2="42" y2="37"/>
             <line class="davinci-detail" x1="38" y1="42" x2="42" y2="42"/>
-            <!-- Shoulder blades / scapulae -->
             <path class="davinci" d="M28,20 Q24,24 24,30 Q26,34 32,32 Q36,28 34,22 Z"/>
             <path class="davinci" d="M52,20 Q56,24 56,30 Q54,34 48,32 Q44,28 46,22 Z"/>
-            <!-- Lats -->
             <path class="davinci-detail" d="M30,32 Q26,38 24,44 Q28,48 34,46"/>
             <path class="davinci-detail" d="M50,32 Q54,38 56,44 Q52,48 46,46"/>
-            <!-- Glutes -->
             <path class="davinci" d="M30,50 Q28,56 30,62 Q36,64 40,60"/>
             <path class="davinci" d="M50,50 Q52,56 50,62 Q44,64 40,60"/>
-            <!-- Hamstrings -->
             <line class="davinci" x1="32" y1="62" x2="30" y2="76"/>
             <line class="davinci" x1="36" y1="62" x2="36" y2="76"/>
             <line class="davinci" x1="48" y1="62" x2="50" y2="76"/>
             <line class="davinci" x1="44" y1="62" x2="44" y2="76"/>
-            <!-- Erector spinae -->
             <path class="davinci-detail" d="M36,20 Q37,30 36,40 Q36,46 38,50"/>
             <path class="davinci-detail" d="M44,20 Q43,30 44,40 Q44,46 42,50"/>
           </svg></div>Posterior Chain
         </div>
         <div class="focus-card" data-focus="conditioning" onclick="selectFocus(this)">
           <div class="focus-card-icon"><svg viewBox="0 0 80 80">
-            <!-- Conditioning - dynamic figure in motion -->
             <circle class="davinci" cx="44" cy="12" r="5"/>
-            <!-- Torso leaning forward -->
             <line class="davinci" x1="44" y1="17" x2="38" y2="40"/>
-            <!-- Lead arm forward -->
             <path class="davinci" d="M42,24 Q50,28 56,22 Q60,18 62,20"/>
-            <!-- Trail arm back -->
             <path class="davinci" d="M42,24 Q34,22 28,28 Q24,32 22,30"/>
-            <!-- Lead leg forward -->
             <path class="davinci" d="M38,40 Q44,48 48,56 Q50,62 46,70"/>
-            <!-- Trail leg back -->
             <path class="davinci" d="M38,40 Q30,48 24,56 Q20,62 22,70"/>
-            <!-- Motion lines -->
             <line class="davinci-detail" x1="60" y1="14" x2="66" y2="12" opacity="0.4"/>
             <line class="davinci-detail" x1="60" y1="18" x2="66" y2="18" opacity="0.4"/>
             <line class="davinci-detail" x1="60" y1="22" x2="66" y2="24" opacity="0.4"/>
-            <!-- Muscle tension arcs -->
             <path class="davinci-detail" d="M40,30 Q36,34 38,38"/>
             <path class="davinci-detail" d="M44,44 Q48,48 48,54"/>
-            <!-- Ground line -->
             <line class="davinci-detail" x1="16" y1="72" x2="64" y2="72" stroke-dasharray="3,3"/>
           </svg></div>Conditioning
         </div>
@@ -600,6 +262,13 @@
 
   <!-- SAVED TAB -->
   <div class="tab-panel" id="tab-saved">
+    <div class="auth-gate" id="auth-gate-saved" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <h3>Sign in to save workouts</h3>
+      <p>Save your favorite workouts and access them from any device.</p>
+      <button class="btn btn-primary" onclick="signInWithGoogle()">Sign in with Google</button>
+    </div>
+    <div id="saved-content">
     <div class="section-title">Saved Workouts</div>
     <div id="saved-list"></div>
     <div id="saved-empty" class="empty-state">
@@ -630,6 +299,7 @@
       </div>
       <button class="btn btn-sm" style="width:100%;margin-top:12px;color:var(--red);background:none;border:1px solid var(--red);border-radius:8px" onclick="deleteFromEdit()">Delete Workout</button>
     </div>
+  </div><!-- /saved-content -->
   </div>
 
   <!-- DIAGRAM TAB -->
@@ -758,6 +428,13 @@
 
   <!-- LOG TAB -->
   <div class="tab-panel" id="tab-log">
+    <div class="auth-gate" id="auth-gate-log" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <h3>Sign in to track workouts</h3>
+      <p>Keep a log of every workout and track your progress over time.</p>
+      <button class="btn btn-primary" onclick="signInWithGoogle()">Sign in with Google</button>
+    </div>
+    <div id="log-content">
     <div class="section-title">Workout Log</div>
     <div class="calendar card" id="calendar"></div>
     <div id="log-list"></div>
@@ -765,10 +442,18 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       <p>No workouts logged yet</p>
     </div>
+    </div><!-- /log-content -->
   </div>
 
   <!-- INSIGHTS TAB -->
   <div class="tab-panel" id="tab-insights">
+    <div class="auth-gate" id="auth-gate-insights" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0"/></svg>
+      <h3>Sign in for insights</h3>
+      <p>See your top exercises, weekly volume, muscle coverage, and personalized suggestions.</p>
+      <button class="btn btn-primary" onclick="signInWithGoogle()">Sign in with Google</button>
+    </div>
+    <div id="insights-content">
     <div class="section-title">Insights</div>
 
     <div class="card insight-card">
@@ -801,6 +486,7 @@
         <div class="empty-state" style="padding:10px"><p>Log workouts to get suggestions</p></div>
       </div>
     </div>
+    </div><!-- /insights-content -->
   </div>
 </div>
 
@@ -871,7 +557,7 @@
     <h2>Settings</h2>
     <div class="form-group">
       <label>Experience Level</label>
-      <p style="font-size:11px; color:var(--text2); margin:0 0 8px; opacity:.7">Each level unlocks harder exercises on top of the previous</p>
+      <div id="difficulty-count" style="font-size:11px; color:var(--text2); margin:0 0 8px; opacity:.7"></div>
       <div class="toggle-group" id="difficulty-toggle">
         <button class="toggle-btn" onclick="setDifficulty('beginner')">Beginner</button>
         <button class="toggle-btn active" onclick="setDifficulty('intermediate')">Intermediate</button>
@@ -886,11 +572,13 @@
       </select>
     </div>
     <div class="form-group">
-      <label>Kettlebells You Own (tap to toggle)</label>
+      <label>Kettlebells You Own</label>
+      <p style="font-size:11px; color:var(--text2); margin:0 0 8px; opacity:.7">Tap to toggle</p>
       <div id="owned-weights"></div>
     </div>
     <div class="form-group">
-      <label>Preferred Weight (tap one you own)</label>
+      <label>Preferred Weight</label>
+      <p style="font-size:11px; color:var(--text2); margin:0 0 8px; opacity:.7">Tap the weight that you prefer to use for most exercises</p>
       <div class="weight-chips" id="preferred-weight"></div>
     </div>
     <div style="display:flex; gap:8px; margin-top:14px;">
@@ -899,1596 +587,24 @@
   </div>
 </div>
 
-<script>
-// ==================== EXERCISE DATABASE ====================
-const EXERCISES = [
-  // Swings
-  { id:'kb_swing', name:'Kettlebell Swing', category:'swing', equipment:'kettlebell', difficulty:'beginner',
-    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'] },
-  { id:'kb_swing_1h', name:'One-Hand Swing', category:'swing', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms','obliques'] },
-  { id:'kb_swing_alt', name:'Alternating Swing', category:'swing', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'] },
-
-  // Squats
-  { id:'kb_goblet', name:'Goblet Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['core','hamstrings'] },
-  { id:'kb_sumo', name:'Sumo Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings'] },
-  { id:'kb_cossack', name:'Cossack Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings','calves'] },
-  { id:'kb_front_squat', name:'Front Rack Squat', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes'], secondary:['core','shoulders','traps'] },
-
-  // Presses
-  { id:'kb_press', name:'Overhead Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','triceps'], secondary:['core','chest'] },
-  { id:'kb_push_press', name:'Push Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','triceps','quads'], secondary:['core','glutes'] },
-  { id:'kb_floor_press', name:'Floor Press', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['chest','triceps'], secondary:['shoulders'] },
-  { id:'kb_bottoms_up', name:'Bottoms-Up Press', category:'press', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','forearms'], secondary:['core','triceps'] },
-
-  // Pulls / Rows
-  { id:'kb_row', name:'Single-Arm Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['lats','biceps'], secondary:['core','forearms','traps'] },
-  { id:'kb_gorilla_row', name:'Gorilla Row', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['lats','biceps'], secondary:['core','forearms','traps','lower_back'] },
-  { id:'kb_high_pull', name:'High Pull', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','traps','hamstrings'], secondary:['glutes','core','biceps','forearms'] },
-  { id:'kb_upright_row', name:'Upright Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders','traps'], secondary:['biceps','forearms'] },
-
-  // Core
-  { id:'kb_turkish', name:'Turkish Get-Up', category:'core', equipment:'kettlebell', difficulty:'advanced',
-    primary:['core','shoulders'], secondary:['glutes','quads','triceps','hip_flexors','obliques'] },
-  { id:'kb_windmill', name:'Windmill', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['obliques','shoulders'], secondary:['hamstrings','hip_flexors','core'] },
-  { id:'kb_halo', name:'Halo', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders','core'], secondary:['triceps','forearms'] },
-  { id:'kb_russian_twist', name:'Russian Twist (KB)', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['obliques','abs'], secondary:['hip_flexors'] },
-  { id:'kb_pullover', name:'KB Pullover', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['lats','abs'], secondary:['chest','triceps'] },
-  { id:'kb_figure8', name:'Figure 8', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','obliques'], secondary:['forearms','quads','glutes'] },
-
-  // Carries
-  { id:'kb_farmer', name:'Farmer Carry', category:'carry', equipment:'kettlebell', difficulty:'beginner',
-    primary:['forearms','traps'], secondary:['core','shoulders','calves'] },
-  { id:'kb_rack_carry', name:'Rack Carry', category:'carry', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','shoulders'], secondary:['forearms','biceps','calves'] },
-  { id:'kb_overhead_carry', name:'Overhead Carry', category:'carry', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','core'], secondary:['triceps','forearms','calves','traps'] },
-  { id:'kb_suitcase', name:'Suitcase Carry', category:'carry', equipment:'kettlebell', difficulty:'beginner',
-    primary:['obliques','forearms'], secondary:['core','traps','calves'] },
-
-  // Complexes / Dynamic
-  { id:'kb_clean', name:'Kettlebell Clean', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','shoulders','traps'] },
-  { id:'kb_snatch', name:'Kettlebell Snatch', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','traps','forearms','quads'] },
-  { id:'kb_clean_press', name:'Clean & Press', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','forearms','traps'] },
-  { id:'kb_thruster', name:'Thruster', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','shoulders','glutes'], secondary:['core','triceps','hamstrings'] },
-  { id:'kb_lunge', name:'KB Lunge', category:'complex', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['hamstrings','core','calves'] },
-  { id:'kb_deadlift', name:'KB Deadlift', category:'complex', equipment:'kettlebell', difficulty:'beginner',
-    primary:['hamstrings','glutes','lower_back'], secondary:['core','forearms','quads'] },
-  { id:'kb_single_dl', name:'Single-Leg Deadlift', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['hamstrings','glutes'], secondary:['core','lower_back','calves'] },
-
-  // Mat / Bodyweight
-  { id:'mat_plank', name:'Plank', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['abs','core'], secondary:['shoulders','glutes'] },
-  { id:'mat_side_plank', name:'Side Plank', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['obliques'], secondary:['shoulders','core','hip_flexors'] },
-  { id:'mat_hollow', name:'Hollow Body Hold', category:'mat', equipment:'mat', difficulty:'intermediate',
-    primary:['abs','hip_flexors'], secondary:['core'] },
-  { id:'mat_deadbug', name:'Dead Bug', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['abs','core'], secondary:['hip_flexors'] },
-  { id:'mat_glute_bridge', name:'Glute Bridge', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['glutes'], secondary:['hamstrings','core'] },
-  { id:'mat_bird_dog', name:'Bird Dog', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['core','lower_back'], secondary:['glutes','shoulders'] },
-  { id:'mat_mountain_climber', name:'Mountain Climbers', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['core','hip_flexors'], secondary:['shoulders','quads','calves'] },
-  { id:'mat_superman', name:'Superman Hold', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['lower_back','glutes'], secondary:['hamstrings','traps'] },
-
-  // Legs (additional)
-  { id:'kb_split_squat', name:'Split Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['hamstrings','core'] },
-  { id:'kb_lateral_lunge', name:'Lateral Lunge', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','hip_flexors'], secondary:['hamstrings','core'] },
-  { id:'kb_step_up', name:'Step-Up', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['hamstrings','calves','core'] },
-  { id:'kb_curtsy_lunge', name:'Curtsy Lunge', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes'], secondary:['hip_flexors','core'] },
-  { id:'kb_bulgarian_split', name:'Bulgarian Split Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes'], secondary:['hamstrings','core','calves'] },
-  { id:'kb_squat_jump', name:'Squat Jump (KB)', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','calves'], secondary:['hamstrings','core'] },
-  { id:'kb_pistol_squat', name:'Pistol Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes','hip_flexors'], secondary:['hamstrings','calves','core'] },
-  { id:'kb_calf_raise', name:'Calf Raise (KB)', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['calves'], secondary:['quads'] },
-
-  // Arms
-  { id:'kb_bicep_curl', name:'KB Bicep Curl', category:'arms', equipment:'kettlebell', difficulty:'beginner',
-    primary:['biceps'], secondary:['forearms'] },
-  { id:'kb_tricep_ext', name:'KB Tricep Extension', category:'arms', equipment:'kettlebell', difficulty:'beginner',
-    primary:['triceps'], secondary:['shoulders'] },
-  { id:'kb_crush_curl', name:'Crush Curl', category:'arms', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['biceps','forearms'], secondary:['chest'] },
-  { id:'kb_skull_crusher', name:'KB Skull Crusher', category:'arms', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['triceps'], secondary:['chest','shoulders'] },
-  { id:'kb_hammer_curl', name:'Hammer Curl (KB)', category:'arms', equipment:'kettlebell', difficulty:'beginner',
-    primary:['biceps','forearms'], secondary:[] },
-
-  // Chest (additional)
-  { id:'kb_sa_floor_press', name:'Single-Arm Floor Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['chest','triceps'], secondary:['shoulders','core'] },
-  { id:'kb_push_up', name:'KB Push-Up', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['chest','triceps'], secondary:['shoulders','core'] },
-  { id:'kb_chest_fly', name:'KB Chest Fly', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['chest'], secondary:['shoulders'] },
-  { id:'kb_close_grip_press', name:'Close-Grip Floor Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['triceps','chest'], secondary:['shoulders'] },
-
-  // Shoulders (additional)
-  { id:'kb_lateral_raise', name:'Lateral Raise', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders'], secondary:['traps'] },
-  { id:'kb_front_raise', name:'Front Raise', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders'], secondary:['chest','core'] },
-  { id:'kb_arnold_press', name:'Arnold Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','triceps'], secondary:['chest','core'] },
-  { id:'kb_shrug', name:'KB Shrug', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['traps'], secondary:['shoulders','forearms'] },
-  { id:'kb_reverse_fly', name:'Bent-Over Reverse Fly', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','traps'], secondary:['lats','core'] },
-
-  // Back (additional)
-  { id:'kb_renegade_row', name:'Renegade Row', category:'pull', equipment:'kettlebell', difficulty:'advanced',
-    primary:['lats','core'], secondary:['biceps','forearms','shoulders'] },
-  { id:'kb_bent_row', name:'KB Bent-Over Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['lats','traps'], secondary:['biceps','forearms','lower_back'] },
-
-  // Core / Abs (additional)
-  { id:'kb_sit_up', name:'KB Sit-Up', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['abs'], secondary:['hip_flexors'] },
-  { id:'kb_side_bend', name:'KB Side Bend', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['obliques'], secondary:['core'] },
-  { id:'kb_plank_pull', name:'Plank Pull-Through', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','obliques'], secondary:['shoulders','lats'] },
-  { id:'kb_woodchop', name:'KB Woodchop', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['obliques','core'], secondary:['shoulders','glutes'] },
-  { id:'kb_leg_raise', name:'KB Leg Raise', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['abs','hip_flexors'], secondary:['core'] },
-  { id:'kb_v_up', name:'KB V-Up', category:'core', equipment:'kettlebell', difficulty:'advanced',
-    primary:['abs','hip_flexors'], secondary:['core'] },
-  { id:'kb_plank_drag', name:'Plank Drag', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','obliques'], secondary:['shoulders'] },
-  { id:'kb_crunch', name:'KB Crunch', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['abs'], secondary:['core'] },
-
-  // Cardio / Conditioning
-  { id:'kb_swing_high', name:'KB Swing (High Rep)', category:'cardio', equipment:'kettlebell', difficulty:'beginner',
-    primary:['glutes','hamstrings'], secondary:['core','shoulders','forearms'] },
-  { id:'kb_burpee', name:'KB Burpee', category:'cardio', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','chest','core'], secondary:['shoulders','triceps','glutes'] },
-  { id:'kb_man_maker', name:'Man Maker', category:'cardio', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','chest','quads'], secondary:['core','triceps','lats'] },
-  { id:'kb_long_cycle', name:'Long Cycle', category:'cardio', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','quads'] },
-  { id:'kb_half_snatch', name:'Half Snatch', category:'cardio', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','hamstrings'], secondary:['glutes','core','forearms'] },
-  { id:'kb_jump_squat', name:'KB Jump Squat', category:'cardio', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','calves'], secondary:['core','hamstrings'] },
-
-  // Full Body / Complexes (additional)
-  { id:'kb_clean_jerk', name:'Clean & Jerk', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','quads'] },
-  { id:'kb_jerk', name:'KB Jerk', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','triceps'], secondary:['core','quads','glutes'] },
-  { id:'kb_bent_press', name:'Bent Press', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','obliques'], secondary:['triceps','lats','core'] },
-  { id:'kb_double_clean', name:'Double Clean', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','traps'] },
-  { id:'kb_tactical_lunge', name:'Tactical Lunge', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes'], secondary:['hamstrings','core','shoulders'] },
-  { id:'kb_deck_squat', name:'Deck Squat', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes','core'], secondary:['hamstrings','hip_flexors'] },
-  { id:'kb_squat_press', name:'Squat to Press', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','shoulders'], secondary:['core','triceps'] },
-];
-
-const MUSCLE_NAMES = {
-  chest:'Chest', shoulders:'Shoulders', abs:'Abs', obliques:'Obliques',
-  biceps:'Biceps', triceps:'Triceps', forearms:'Forearms', quads:'Quads',
-  hamstrings:'Hamstrings', glutes:'Glutes', calves:'Calves', hip_flexors:'Hip Flexors',
-  lats:'Lats', traps:'Traps', lower_back:'Lower Back', core:'Core'
-};
-
-const MUSCLE_TO_SVG = {
-  chest: ['front-chest-l','front-chest-r'],
-  shoulders: ['front-shoulder-l','front-shoulder-r','back-reardelt-l','back-reardelt-r'],
-  abs: ['front-abs'],
-  obliques: ['front-oblique-l','front-oblique-r'],
-  biceps: ['front-bicep-l','front-bicep-r'],
-  triceps: ['back-tricep-l','back-tricep-r'],
-  forearms: ['front-forearm-l','front-forearm-r','back-forearm-l','back-forearm-r'],
-  quads: ['front-quad-l','front-quad-r'],
-  hamstrings: ['back-ham-l','back-ham-r'],
-  glutes: ['back-glute-l','back-glute-r'],
-  calves: ['front-calf-l','front-calf-r','back-calf-l','back-calf-r'],
-  hip_flexors: ['front-hipflexor-l','front-hipflexor-r'],
-  lats: ['back-lat-l','back-lat-r'],
-  traps: ['back-traps','back-traps-r'],
-  lower_back: ['back-lowerback'],
-  core: ['front-oblique-l','front-oblique-r']
-};
-
-// ==================== APP STATE ====================
-let currentWorkout = []; // [{exercise, sets, reps, weight}]
-let selectedFocus = new Set(['full']);
-let selectedDuration = 20;
-let buildMode = 'quick';
-let circuitMode = false;
-let calendarMonth = new Date();
-let selectedLogDate = null;
-let heatmapDays = 7;
-
-// Timer state
-let timerInterval = null;
-let timerSeconds = 0;
-let timerPaused = false;
-let timerCurrentEx = 0;
-let timerExAllotments = [];
-
-// ==================== STORAGE ====================
-function getWorkoutLogs() {
-  try { return JSON.parse(localStorage.getItem('kf_logs') || '[]'); }
-  catch { return []; }
-}
-function saveWorkoutLogs(logs) { localStorage.setItem('kf_logs', JSON.stringify(logs)); }
-
-// ==================== SETTINGS ====================
-const ALL_WEIGHTS = [8,12,16,20,24,28];
-const KG_TO_LB = {8:18,12:26,16:35,20:44,24:53,28:62};
-
-function getSettings() {
-  try {
-    return JSON.parse(localStorage.getItem('kf_settings') || '{}');
-  } catch { return {}; }
-}
-function saveSettings() {
-  const s = getSettings();
-  s.unit = document.getElementById('unit-pref').value;
-  localStorage.setItem('kf_settings', JSON.stringify(s));
-  renderSettingsChips();
-  updatePrefWeightDisplay();
-}
-function getOwnedWeights() { return getSettings().owned || []; }
-function getPreferredWeight() { return getSettings().preferred || null; }
-
-function getAvailableExercises() {
-  const diff = getSettings().difficulty || 'intermediate';
-  const allowed = diff === 'beginner' ? ['beginner']
-    : diff === 'intermediate' ? ['beginner','intermediate']
-    : ['beginner','intermediate','advanced'];
-  return EXERCISES.filter(ex => allowed.includes(ex.difficulty));
-}
-
-function setDifficulty(level) {
-  const s = getSettings();
-  s.difficulty = level;
-  localStorage.setItem('kf_settings', JSON.stringify(s));
-  document.querySelectorAll('#difficulty-toggle .toggle-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase() === level);
-  });
-  if (buildMode === 'manual') renderExerciseList();
-}
-
-function openSettings() {
-  document.getElementById('settings-modal').classList.add('show');
-  const s = getSettings();
-  document.getElementById('unit-pref').value = s.unit || 'kg';
-  const diff = s.difficulty || 'intermediate';
-  document.querySelectorAll('#difficulty-toggle .toggle-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase() === diff);
-  });
-  renderSettingsChips();
-}
-function closeSettings() {
-  document.getElementById('settings-modal').classList.remove('show');
-  updatePrefWeightDisplay();
-}
-
-function kettlebellPath(cx, cy, r) {
-  const a = 45 * Math.PI / 180;
-  const lx = cx - r * Math.sin(a);
-  const ly = cy - r * Math.cos(a);
-  const rx = cx + r * Math.sin(a);
-  const hh = r * 0.5;
-  return `M ${lx.toFixed(1)} ${ly.toFixed(1)} C ${(lx - r * 0.08).toFixed(1)} ${(ly - hh).toFixed(1)}, ${(rx + r * 0.08).toFixed(1)} ${(ly - hh).toFixed(1)}, ${rx.toFixed(1)} ${ly.toFixed(1)} A ${r} ${r} 0 1 1 ${lx.toFixed(1)} ${ly.toFixed(1)} Z`;
-}
-
-function renderSettingsChips() {
-  const s = getSettings();
-  const owned = s.owned || [];
-  const preferred = s.preferred || null;
-  const unit = s.unit || 'kg';
-  const formatWt = (kg) => unit === 'kg' ? `${kg} kg` : `${KG_TO_LB[kg]} lb`;
-
-  // --- Nested kettlebell SVG ---
-  const svgW = 300, svgH = 340;
-  const cx = svgW / 2, cy = svgH * 0.56;
-  const maxR = 118, minR = 22;
-  const n = ALL_WEIGHTS.length;
-  const reversed = [...ALL_WEIGHTS].reverse(); // 48 down to 8
-
-  let shapes = '';
-  let labels = '';
-
-  reversed.forEach((w, i) => {
-    const r = maxR - (maxR - minR) * (i / (n - 1));
-    const isOwned = owned.includes(w);
-    const path = kettlebellPath(cx, cy, r);
-
-    const fill = isOwned ? 'rgba(255,107,53,0.13)' : 'rgba(255,255,255,0.02)';
-    const stroke = isOwned ? 'var(--accent)' : 'var(--border)';
-    const sw = isOwned ? 2.2 : 1;
-
-    shapes += `<path d="${path}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" onclick="toggleOwnedWeight(${w})" />`;
-
-    // Place weight label at bottom of each ring
-    const bottomY = cy + r;
-    const nextR = i < n - 1 ? maxR - (maxR - minR) * ((i + 1) / (n - 1)) : 0;
-    const nextBottomY = cy + nextR;
-    const labelY = (bottomY + nextBottomY) / 2 + 3.5;
-    const textColor = isOwned ? 'var(--accent)' : 'var(--text2)';
-    const fontSize = i === n - 1 ? 10 : 8.5;
-    const fontWeight = isOwned ? 700 : 500;
-
-    labels += `<text x="${cx}" y="${labelY}" text-anchor="middle" fill="${textColor}" font-size="${fontSize}" font-weight="${fontWeight}" style="pointer-events:none">${formatWt(w)}</text>`;
-  });
-
-  const svg = `<svg class="kb-nest-svg" viewBox="0 0 ${svgW} ${svgH}" width="100%" style="max-width:280px;margin:8px auto;display:block">${shapes}${labels}</svg>`;
-  document.getElementById('owned-weights').innerHTML = svg;
-
-  // Preferred weight chips (unchanged)
-  document.getElementById('preferred-weight').innerHTML = owned.map(w =>
-    `<div class="weight-chip ${preferred === w ? 'preferred' : ''}" onclick="setPreferredWeight(${w})">${formatWt(w)}</div>`
-  ).join('');
-}
-
-function toggleOwnedWeight(w) {
-  const s = getSettings();
-  const owned = s.owned || [];
-  const idx = owned.indexOf(w);
-  if (idx >= 0) owned.splice(idx, 1); else owned.push(w);
-  owned.sort((a,b) => a-b);
-  s.owned = owned;
-  if (!owned.includes(s.preferred)) s.preferred = owned[0];
-  localStorage.setItem('kf_settings', JSON.stringify(s));
-  renderSettingsChips();
-}
-
-function setPreferredWeight(w) {
-  const s = getSettings();
-  s.preferred = w;
-  localStorage.setItem('kf_settings', JSON.stringify(s));
-  renderSettingsChips();
-}
-
-function updatePrefWeightDisplay() {
-  const s = getSettings();
-  const unit = s.unit || 'kg';
-  const w = s.preferred;
-  const el = document.getElementById('pref-weight-display');
-  if (!el) return;
-  if (!w) { el.textContent = 'None — select in Settings'; return; }
-  el.textContent = unit === 'kg' ? `${w} kg` : `${KG_TO_LB[w]} lb`;
-}
-
-// ==================== WORKOUT TIMER ====================
-function startWorkoutTimer() {
-  if (currentWorkout.length === 0) return;
-  timerSeconds = 0;
-  timerPaused = false;
-  timerCurrentEx = 0;
-
-  const totalSec = selectedDuration * 60;
-
-  if (circuitMode) {
-    // In circuit mode, timerCurrentEx tracks the current round (0-indexed)
-    const numRounds = parseInt(currentWorkout[0].sets) || 3;
-    timerExAllotments = Array(numRounds).fill(Math.round(totalSec / numRounds));
-  } else {
-    // Standard mode: per-exercise time allotments
-    const totalSets = currentWorkout.reduce((s,item) => s + (parseInt(item.sets)||3), 0);
-    timerExAllotments = currentWorkout.map(item => {
-      const sets = parseInt(item.sets) || 3;
-      return Math.round((sets / totalSets) * totalSec);
-    });
-  }
-
-  // Show fullscreen overlay with fade-in
-  const overlay = document.getElementById('timer-fullscreen');
-  overlay.classList.add('show');
-  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('visible')));
-
-  updateTimerDisplay();
-  renderTimerProgress();
-
-  if (timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    if (!timerPaused) {
-      timerSeconds++;
-      updateTimerDisplay();
-    }
-  }, 1000);
-}
-
-function getCircuitRoundLabel(roundIdx) {
-  const ordinals = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'];
-  return roundIdx < ordinals.length ? `${ordinals[roundIdx]} Set` : `Set ${roundIdx + 1}`;
-}
-
-function updateTimerDisplay() {
-  const min = Math.floor(timerSeconds / 60);
-  const sec = timerSeconds % 60;
-  document.getElementById('fs-clock').textContent =
-    `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-
-  if (circuitMode) {
-    // Circuit mode: show round label + all exercises
-    const numRounds = parseInt(currentWorkout[0].sets) || 3;
-    document.getElementById('fs-exercise-name').textContent = getCircuitRoundLabel(timerCurrentEx);
-
-    const allotSec = timerExAllotments[timerCurrentEx] || 0;
-    const allotMin = Math.floor(allotSec / 60);
-    const allotS = allotSec % 60;
-
-    let listHtml = `<div class="fs-circuit-list">`;
-    currentWorkout.forEach(item => {
-      const repsLabel = item.reps;
-      const wtLabel = item.weight === 'BW' ? '' : ` — ${item.weight}`;
-      listHtml += `<div><span class="ex-name">${item.exercise.name}</span> <span class="ex-detail">${repsLabel}${wtLabel}</span></div>`;
-    });
-    listHtml += `</div><div style="margin-top:8px;font-size:12px;color:var(--text2)">~${allotMin}:${String(allotS).padStart(2,'0')} per round</div>`;
-    document.getElementById('fs-exercise-detail').innerHTML = listHtml;
-
-    // Up Next
-    const upnextEl = document.getElementById('fs-upnext');
-    if (timerCurrentEx < numRounds - 1) {
-      upnextEl.innerHTML = `Up Next: <strong>${getCircuitRoundLabel(timerCurrentEx + 1)}</strong>`;
-    } else {
-      upnextEl.innerHTML = `<strong>Last set!</strong>`;
-    }
-  } else {
-    // Standard mode
-    if (currentWorkout[timerCurrentEx]) {
-      const item = currentWorkout[timerCurrentEx];
-      document.getElementById('fs-exercise-name').textContent = item.exercise.name;
-      const allotMin = Math.floor(timerExAllotments[timerCurrentEx] / 60);
-      const allotSec = timerExAllotments[timerCurrentEx] % 60;
-      document.getElementById('fs-exercise-detail').textContent =
-        `${item.sets} sets x ${item.reps} reps  |  ~${allotMin}:${String(allotSec).padStart(2,'0')} allotted`;
-    }
-
-    // Up Next
-    const upnextEl = document.getElementById('fs-upnext');
-    if (timerCurrentEx < currentWorkout.length - 1) {
-      const nextName = currentWorkout[timerCurrentEx + 1].exercise.name;
-      upnextEl.innerHTML = `Up Next: <strong>${nextName}</strong>`;
-    } else {
-      upnextEl.innerHTML = `<strong>Last exercise!</strong>`;
-    }
-  }
-
-  document.getElementById('fs-pause-btn').textContent = timerPaused ? 'Resume' : 'Pause';
-}
-
-function renderTimerProgress() {
-  const bar = document.getElementById('fs-progress');
-  const count = circuitMode ? (parseInt(currentWorkout[0].sets) || 3) : currentWorkout.length;
-  const dots = [];
-  for (let i = 0; i < count; i++) {
-    let cls = 'timer-dot';
-    if (i < timerCurrentEx) cls += ' done';
-    if (i === timerCurrentEx) cls += ' current';
-    dots.push(`<div class="${cls}"></div>`);
-  }
-  bar.innerHTML = dots.join('');
-}
-
-function timerTogglePause() { timerPaused = !timerPaused; updateTimerDisplay(); }
-function timerNextExercise() {
-  const max = circuitMode ? (parseInt(currentWorkout[0].sets) || 3) - 1 : currentWorkout.length - 1;
-  if (timerCurrentEx < max) { timerCurrentEx++; renderTimerProgress(); updateTimerDisplay(); }
-}
-function timerPrevExercise() {
-  if (timerCurrentEx > 0) { timerCurrentEx--; renderTimerProgress(); updateTimerDisplay(); }
-}
-
-function stopWorkoutTimer() {
-  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-  const overlay = document.getElementById('timer-fullscreen');
-  overlay.classList.remove('visible');
-  setTimeout(() => {
-    overlay.classList.remove('show');
-    openLogModal();
-  }, 300);
-}
-
-// ==================== TAB NAVIGATION ====================
-function updateMusclesTabState() {
-  const btn = document.querySelector('.nav-btn[data-tab="diagram"]');
-  const viewBtn = document.getElementById('view-muscles-btn');
-  if (currentWorkout.length === 0) {
-    btn.classList.add('disabled');
-    if (viewBtn) viewBtn.style.display = 'none';
-  } else {
-    btn.classList.remove('disabled');
-    if (viewBtn) viewBtn.style.display = '';
-  }
-}
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelector(`.nav-btn[data-tab="${tab}"]`).classList.add('active');
-  if (tab === 'saved') renderSavedWorkouts();
-  if (tab === 'diagram') updateDiagram();
-  if (tab === 'log') renderLog();
-  if (tab === 'insights') renderInsights();
-}
-
-// ==================== BUILD MODE ====================
-function setBuildMode(mode) {
-  buildMode = mode;
-  const modes = ['quick','manual'];
-  document.querySelectorAll('.toggle-group .toggle-btn').forEach((b,i) => {
-    b.classList.toggle('active', modes[i]===mode);
-  });
-  document.getElementById('quick-mode').style.display = mode==='quick' ? 'block' : 'none';
-  document.getElementById('manual-mode').style.display = mode==='manual' ? 'block' : 'none';
-  if (mode === 'manual') renderExerciseList();
-  if (mode === 'quick' && currentWorkout.length === 0) {
-    document.getElementById('quick-settings').style.display = 'block';
-    document.getElementById('quick-expand-bar').style.display = 'none';
-  }
-}
-
-function selectFocus(el) {
-  const f = el.dataset.focus;
-  if (selectedFocus.has(f)) { if (selectedFocus.size > 1) selectedFocus.delete(f); }
-  else selectedFocus.add(f);
-  document.querySelectorAll('.focus-card').forEach(c => c.classList.toggle('selected', selectedFocus.has(c.dataset.focus)));
-}
-function selectDuration(el) {
-  document.querySelectorAll('.duration-pill').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedDuration = parseInt(el.dataset.dur);
-}
-
-// ==================== QUICK GENERATE ====================
-function generateWorkout() {
-  loadedSavedId = null;
-  const s = getSettings();
-  const unit = s.unit || 'kg';
-  const prefKg = getPreferredWeight();
-  const weight = unit === 'kg' ? prefKg : KG_TO_LB[prefKg];
-  const focusMap = {
-    full: { muscles:['glutes','hamstrings','quads','shoulders','core','lats'], count:{15:4,20:5,30:7,45:9} },
-    upper: { muscles:['shoulders','chest','triceps','biceps','lats','traps','forearms'], count:{15:4,20:5,30:6,45:8} },
-    lower: { muscles:['glutes','hamstrings','quads','calves','hip_flexors'], count:{15:4,20:5,30:6,45:8} },
-    core: { muscles:['abs','obliques','core','lower_back','hip_flexors'], count:{15:4,20:5,30:6,45:8} },
-    posterior: { muscles:['glutes','hamstrings','lower_back','lats','traps','calves'], count:{15:4,20:5,30:6,45:8} },
-    conditioning: { muscles:['glutes','hamstrings','shoulders','core','quads'], count:{15:5,20:6,30:8,45:10} }
-  };
-  const targetMuscles = [...new Set([...selectedFocus].flatMap(f => focusMap[f].muscles))];
-  const avgCount = Math.round([...selectedFocus].reduce((s,f) => s + (focusMap[f].count[selectedDuration]||5), 0) / selectedFocus.size);
-  const targetCount = Math.min(avgCount + (selectedFocus.size > 1 ? 1 : 0), 10);
-
-  // Score exercises by relevance
-  let scored = getAvailableExercises().map(ex => {
-    let score = 0;
-    ex.primary.forEach(m => { if (targetMuscles.includes(m)) score += 3; });
-    ex.secondary.forEach(m => { if (targetMuscles.includes(m)) score += 1; });
-    if (selectedFocus.has('conditioning') && ['swing','complex','cardio'].includes(ex.category)) score += 2;
-    return { exercise: ex, score };
-  }).filter(s => s.score > 0).sort((a,b) => b.score - a.score);
-
-  // Pick exercises ensuring variety
-  const picked = [];
-  const usedCategories = new Set();
-  for (const s of scored) {
-    if (picked.length >= targetCount) break;
-    if (picked.length < targetCount - 1 && usedCategories.has(s.exercise.category)) continue;
-    picked.push(s.exercise);
-    usedCategories.add(s.exercise.category);
-  }
-  // Fill remaining if needed
-  if (picked.length < targetCount) {
-    for (const s of scored) {
-      if (picked.length >= targetCount) break;
-      if (!picked.includes(s.exercise)) picked.push(s.exercise);
-    }
-  }
-
-  // Assign sets/reps based on duration
-  const isConditioning = selectedFocus.has('conditioning');
-  currentWorkout = picked.map(ex => {
-    let sets, reps;
-    if (ex.equipment === 'mat') {
-      sets = selectedDuration >= 30 ? 3 : 2;
-      reps = ex.name.includes('Hold') || ex.name.includes('Plank') ? '30s' : '10';
-    } else if (isConditioning) {
-      sets = selectedDuration >= 30 ? 4 : 3;
-      reps = ex.category === 'swing' ? '15' : '10';
-    } else {
-      sets = selectedDuration >= 30 ? 4 : 3;
-      reps = ['swing','complex'].includes(ex.category) ? '12' : '8';
-    }
-    const wtLabel = unit === 'kg' ? `${weight} kg` : `${weight} lb`;
-    return { exercise: ex, sets, reps, weight: ex.equipment === 'mat' ? 'BW' : wtLabel };
-  });
-
-  renderCurrentWorkout();
-
-  // Show source subtitle
-  const srcEl = document.getElementById('workout-source');
-  const focusLabel = [...selectedFocus].map(f => f.charAt(0).toUpperCase() + f.slice(1)).join(' + ');
-  srcEl.textContent = currentWorkout.length + ' exercises \u00b7 ' + focusLabel + ' \u00b7 ' + selectedDuration + ' min';
-  srcEl.style.display = 'block';
-
-  // Collapse settings to show workout
-  document.getElementById('quick-settings').style.display = 'none';
-  document.getElementById('quick-expand-summary').textContent = focusLabel + ' \u00b7 ' + selectedDuration + ' min';
-  document.getElementById('quick-expand-bar').style.display = 'flex';
-  document.getElementById('saved-source-bar').style.display = 'none';
-}
-
-// ==================== MANUAL BUILD ====================
-function renderExerciseList() {
-  const search = (document.getElementById('exercise-search').value || '').toLowerCase();
-  const cat = document.getElementById('category-filter').value;
-  const sort = (document.getElementById('sort-filter') || {}).value || 'default';
-  const filtered = getAvailableExercises().filter(ex => {
-    if (cat !== 'all' && ex.category !== cat) return false;
-    if (search && !ex.name.toLowerCase().includes(search)) return false;
-    return true;
-  });
-  const diffOrder = {beginner:0, intermediate:1, advanced:2};
-  if (sort === 'alpha') filtered.sort((a,b) => a.name.localeCompare(b.name));
-  else if (sort === 'difficulty') filtered.sort((a,b) => diffOrder[a.difficulty] - diffOrder[b.difficulty] || a.name.localeCompare(b.name));
-  else if (sort === 'equipment') filtered.sort((a,b) => a.equipment.localeCompare(b.equipment) || a.name.localeCompare(b.name));
-  const el = document.getElementById('exercise-list');
-  el.innerHTML = filtered.map(ex => `
-    <div class="exercise-item" onclick="addExercise('${ex.id}')">
-      <div class="exercise-info">
-        <div class="exercise-name">${ex.name}</div>
-        <div class="exercise-muscles">
-          <span class="badge ${ex.equipment==='kettlebell'?'badge-kb':'badge-mat'}" style="margin-right:4px">${ex.equipment==='kettlebell'?'KB':'Mat'}</span>
-          <span class="badge badge-diff" style="margin-right:4px">${ex.difficulty.charAt(0).toUpperCase()+ex.difficulty.slice(1)}</span>
-          ${ex.primary.map(m => MUSCLE_NAMES[m]).join(', ')}
-        </div>
-      </div>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+<!-- Migration Modal -->
+<div class="modal" id="migration-modal">
+  <div class="modal-backdrop" onclick="skipMigration()"></div>
+  <div class="modal-content" style="max-width:340px;text-align:center">
+    <h2>Import Local Data?</h2>
+    <p id="migration-msg" style="font-size:13px;color:var(--text2);line-height:1.5">You have workout data saved on this device. Would you like to import it to your account?</p>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn btn-secondary" style="flex:1" onclick="skipMigration()">Skip</button>
+      <button class="btn btn-primary" style="flex:1" onclick="runMigration()">Import</button>
     </div>
-  `).join('');
-}
-function filterExercises() { renderExerciseList(); }
-
-function addExercise(id) {
-  const ex = EXERCISES.find(e => e.id === id);
-  if (!ex) return;
-  const s = getSettings();
-  const unit = s.unit || 'kg';
-  const prefKg = getPreferredWeight();
-  const wt = unit === 'kg' ? prefKg : KG_TO_LB[prefKg];
-  const wtLabel = unit === 'kg' ? `${wt} kg` : `${wt} lb`;
-  currentWorkout.push({
-    exercise: ex, sets: 3,
-    reps: ex.name.includes('Hold') || ex.name.includes('Plank') ? '30s' : '10',
-    weight: ex.equipment === 'mat' ? 'BW' : wtLabel
-  });
-  renderCurrentWorkout();
-}
-
-// ==================== CURRENT WORKOUT ====================
-function toggleCircuitMode() {
-  circuitMode = !circuitMode;
-  if (circuitMode && currentWorkout.length > 0) {
-    const targetSets = currentWorkout[0].sets;
-    currentWorkout.forEach(item => item.sets = targetSets);
-  }
-  renderCurrentWorkout();
-}
-
-function renderCurrentWorkout() {
-  const container = document.getElementById('current-workout');
-  const list = document.getElementById('workout-exercises');
-  if (currentWorkout.length === 0) {
-    container.style.display = 'none';
-    document.getElementById('workout-source').style.display = 'none';
-    updateMusclesTabState();
-    return;
-  }
-  container.style.display = 'block';
-  updateMusclesTabState();
-
-  // Update circuit toggle state
-  const circToggle = document.getElementById('circuit-toggle');
-  const circLabel = document.getElementById('circuit-rounds-label');
-  circToggle.classList.toggle('active', circuitMode);
-  if (circuitMode) {
-    circLabel.style.display = 'inline';
-    circLabel.textContent = `${currentWorkout[0].sets} rounds`;
-  } else {
-    circLabel.style.display = 'none';
-  }
-  const owned = getOwnedWeights();
-  const s = getSettings();
-  const unit = s.unit || 'kg';
-  const fmtWt = (kg) => unit==='kg' ? `${kg} kg` : `${KG_TO_LB[kg]} lb`;
-
-  list.innerHTML = currentWorkout.map((item, i) => `
-    <div class="workout-item" style="position:relative" draggable="true" data-idx="${i}" ontouchstart="dragTouchStart(event,${i})" ontouchmove="dragTouchMove(event)" ontouchend="dragTouchEnd(event,${i})" ondragstart="dragStart(event,${i})" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dragDrop(event,${i})" ondragend="dragEnd(event)">
-      <div class="drag-handle"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
-      <div class="workout-item-info" style="flex:1;min-width:0">
-        <div class="workout-item-name">${item.exercise.name}</div>
-      </div>
-      <div class="workout-item-controls">
-        <div class="val-btn" onclick="openPicker(${i},'sets')"><span>Sets</span>${item.sets}</div>
-        <div class="val-btn" onclick="openPicker(${i},'reps')"><span>Reps</span>${item.reps}</div>
-        <div class="val-btn" onclick="openPicker(${i},'weight')"><span>Wt</span>${item.weight}</div>
-        <button class="remove-btn" onclick="removeItem(${i})">&#215;</button>
-      </div>
-      <div class="chip-picker" id="picker-${i}"></div>
-    </div>
-  `).join('');
-}
-
-function updateItem(i, field, val) {
-  if (field === 'sets') {
-    const setVal = parseInt(val) || 1;
-    if (circuitMode) {
-      currentWorkout.forEach(item => item.sets = setVal);
-    } else {
-      currentWorkout[i].sets = setVal;
-    }
-  } else {
-    currentWorkout[i][field] = val;
-  }
-  renderCurrentWorkout();
-}
-function removeItem(i) { currentWorkout.splice(i, 1); renderCurrentWorkout(); }
-
-let activePicker = null;
-function openPicker(i, field) {
-  const id = `picker-${i}`;
-  // Close if same picker tapped again
-  if (activePicker === id) { closePickers(); return; }
-  closePickers();
-  const picker = document.getElementById(id);
-  if (!picker) return;
-  activePicker = id;
-
-  const owned = getOwnedWeights();
-  const s = getSettings();
-  const unit = s.unit || 'kg';
-  const fmtWt = (kg) => unit==='kg' ? `${kg} kg` : `${KG_TO_LB[kg]} lb`;
-  const item = currentWorkout[i];
-  let chips = '';
-
-  const isTimeBased = item.exercise.name.includes('Hold') || item.exercise.name.includes('Plank') || item.exercise.name.includes('Carry');
-  if (field === 'sets') {
-    chips = [2,3,4,5,6].map(v => `<div class="chip ${item.sets==v?'active':''}" onclick="event.stopPropagation();updateItem(${i},'sets',${v})">${v}</div>`).join('');
-  } else if (field === 'reps') {
-    const opts = isTimeBased ? ['20s','30s','45s','60s','90s'] : ['5','8','10','12','15','20'];
-    chips = opts.map(v => `<div class="chip ${item.reps==v?'active':''}" onclick="event.stopPropagation();updateItem(${i},'reps','${v}')">${v}</div>`).join('');
-  } else {
-    chips = item.exercise.equipment==='mat' ? '<div class="chip active">BW</div>' :
-      owned.map(w => `<div class="chip ${item.weight==fmtWt(w)?'active':''}" onclick="event.stopPropagation();updateItem(${i},'weight','${fmtWt(w)}')">${fmtWt(w)}</div>`).join('');
-  }
-  picker.innerHTML = chips;
-  picker.classList.add('show');
-}
-function closePickers() {
-  if (activePicker) { const el = document.getElementById(activePicker); if (el) el.classList.remove('show'); }
-  activePicker = null;
-}
-document.addEventListener('click', e => { if (!e.target.closest('.val-btn') && !e.target.closest('.chip-picker')) closePickers(); });
-
-// Drag reorder (desktop)
-let dragIdx = null;
-function dragStart(e, i) { dragIdx = i; e.currentTarget.classList.add('dragging'); }
-function dragOver(e) {
-  e.preventDefault();
-  const el = e.currentTarget;
-  const rect = el.getBoundingClientRect();
-  const midY = rect.top + rect.height / 2;
-  el.classList.toggle('drag-over', e.clientY < midY);
-  el.classList.toggle('drag-over-bottom', e.clientY >= midY);
-}
-function dragLeave(e) { e.currentTarget.classList.remove('drag-over', 'drag-over-bottom'); }
-function dragDrop(e, i) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over', 'drag-over-bottom');
-  if (dragIdx === null) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  let dropIdx = e.clientY >= rect.top + rect.height / 2 ? i + 1 : i;
-  if (dropIdx > dragIdx) dropIdx--;
-  if (dropIdx !== dragIdx) {
-    const item = currentWorkout.splice(dragIdx, 1)[0];
-    currentWorkout.splice(dropIdx, 0, item);
-    renderCurrentWorkout();
-  }
-}
-function dragEnd(e) { dragIdx = null; e.currentTarget.classList.remove('dragging', 'drag-over', 'drag-over-bottom'); }
-
-// Touch drag reorder (mobile)
-let touchDragIdx = null, touchClone = null, touchStartY = 0;
-function dragTouchStart(e, i) {
-  const handle = e.target.closest('.drag-handle');
-  if (!handle) return;
-  touchDragIdx = i;
-  touchStartY = e.touches[0].clientY;
-  const el = e.currentTarget;
-  el.classList.add('dragging');
-}
-function dragTouchMove(e) {
-  if (touchDragIdx === null) return;
-  e.preventDefault();
-  const y = e.touches[0].clientY;
-  const items = document.querySelectorAll('#workout-exercises .workout-item');
-  items.forEach(el => el.classList.remove('drag-over', 'drag-over-bottom'));
-  for (const el of items) {
-    const rect = el.getBoundingClientRect();
-    if (y > rect.top && y < rect.bottom) {
-      const midY = rect.top + rect.height / 2;
-      el.classList.toggle('drag-over', y < midY);
-      el.classList.toggle('drag-over-bottom', y >= midY);
-      break;
-    }
-  }
-}
-function dragTouchEnd(e, i) {
-  if (touchDragIdx === null) return;
-  const y = e.changedTouches[0].clientY;
-  const items = document.querySelectorAll('#workout-exercises .workout-item');
-  let dropIdx = touchDragIdx;
-  for (const el of items) {
-    const rect = el.getBoundingClientRect();
-    if (y > rect.top && y < rect.bottom) {
-      const idx = parseInt(el.dataset.idx);
-      const midY = rect.top + rect.height / 2;
-      dropIdx = y >= midY ? idx + 1 : idx;
-      break;
-    }
-  }
-  items.forEach(el => { el.classList.remove('dragging', 'drag-over', 'drag-over-bottom'); });
-  if (dropIdx > touchDragIdx) dropIdx--;
-  if (touchDragIdx !== dropIdx) {
-    const item = currentWorkout.splice(touchDragIdx, 1)[0];
-    currentWorkout.splice(dropIdx, 0, item);
-    renderCurrentWorkout();
-  }
-  touchDragIdx = null;
-}
-function clearWorkout() {
-  currentWorkout = [];
-  circuitMode = false;
-  loadedSavedId = null;
-  renderCurrentWorkout();
-  document.getElementById('saved-source-bar').style.display = 'none';
-  if (buildMode === 'quick') {
-    document.getElementById('quick-settings').style.display = 'block';
-    document.getElementById('quick-expand-bar').style.display = 'none';
-  }
-}
-
-function toggleQuickSettings() {
-  const settings = document.getElementById('quick-settings');
-  const bar = document.getElementById('quick-expand-bar');
-  const isHidden = settings.style.display === 'none';
-  settings.style.display = isHidden ? 'block' : 'none';
-  bar.style.display = isHidden ? 'none' : 'flex';
-}
-
-// ==================== MUSCLE DIAGRAM ====================
-function updateDiagram() {
-  // Clear all
-  document.querySelectorAll('.muscle').forEach(m => {
-    m.classList.remove('active-primary','active-secondary');
-  });
-
-  const hasWorkout = currentWorkout.length > 0;
-  document.getElementById('diagram-workout-summary').style.display = hasWorkout ? 'block' : 'none';
-
-  if (!hasWorkout) {
-    document.getElementById('muscle-legend').innerHTML = '';
-    document.getElementById('diagram-summary-list').innerHTML = '';
-    return;
-  }
-
-  // Workout summary
-  document.getElementById('diagram-summary-list').innerHTML = currentWorkout.map(item =>
-    `<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;"><span style="font-weight:600">${item.exercise.name}</span><span style="color:var(--text2)">${item.sets}×${item.reps}</span></div>`
-  ).join('');
-
-  // Collect activated muscles
-  const primaryMuscles = new Set();
-  const secondaryMuscles = new Set();
-  currentWorkout.forEach(item => {
-    item.exercise.primary.forEach(m => primaryMuscles.add(m));
-    item.exercise.secondary.forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
-  });
-
-  // Apply to SVG
-  primaryMuscles.forEach(m => {
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.add('active-primary');
-    });
-  });
-  secondaryMuscles.forEach(m => {
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
-      const el = document.getElementById(id);
-      if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary');
-    });
-  });
-
-  // Build legend
-  const legend = document.getElementById('muscle-legend');
-  let html = '';
-  primaryMuscles.forEach(m => {
-    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
-  });
-  secondaryMuscles.forEach(m => {
-    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
-  });
-  legend.innerHTML = html;
-}
-
-// Muscle click handler
-document.addEventListener('click', e => {
-  const muscle = e.target.closest('.muscle');
-  if (!muscle) return;
-  const muscleKey = muscle.dataset.muscle;
-  if (!muscleKey || currentWorkout.length === 0) return;
-
-  const exercises = currentWorkout.filter(item =>
-    item.exercise.primary.includes(muscleKey) || item.exercise.secondary.includes(muscleKey)
-  );
-
-  document.getElementById('popup-muscle-name').textContent = MUSCLE_NAMES[muscleKey] || muscleKey;
-  const list = document.getElementById('popup-exercises');
-  if (exercises.length === 0) {
-    list.innerHTML = '<p style="color:var(--text2);font-size:13px">No exercises in current workout target this muscle.</p>';
-  } else {
-    list.innerHTML = exercises.map(item => `
-      <div style="padding:6px 0;border-bottom:1px solid var(--border)">
-        <div style="font-weight:600;font-size:14px">${item.exercise.name}</div>
-        <div style="font-size:12px;color:var(--text2)">${item.sets} sets x ${item.reps} reps @ ${item.weight}
-          &mdash; <span class="badge badge-${item.exercise.primary.includes(muscleKey)?'primary':'secondary'}">${item.exercise.primary.includes(muscleKey)?'Primary':'Secondary'}</span>
-        </div>
-      </div>
-    `).join('');
-  }
-  document.getElementById('overlay').classList.add('show');
-  document.getElementById('muscle-popup').classList.add('show');
-});
-
-function closeMusclePopup() {
-  document.getElementById('overlay').classList.remove('show');
-  document.getElementById('muscle-popup').classList.remove('show');
-}
-
-// ==================== WORKOUT LOGGING ====================
-let logStarred = false;
-function openLogModal() {
-  if (currentWorkout.length === 0) return;
-  logStarred = false;
-  document.getElementById('star-icon').style.fill = 'none';
-  document.getElementById('save-name-group').style.display = 'none';
-  document.getElementById('save-name').value = '';
-  document.getElementById('log-date').value = new Date().toISOString().slice(0,10);
-  const notesEl = document.getElementById('log-notes');
-  if (notesEl) notesEl.value = '';
-  const summary = document.getElementById('log-exercise-summary');
-  summary.innerHTML = '<label>Exercises</label>' + currentWorkout.map(item =>
-    `<div style="font-size:13px;padding:4px 0">${item.exercise.name} &mdash; ${item.sets}x${item.reps} @ ${item.weight}</div>`
-  ).join('');
-  document.getElementById('log-modal').classList.add('show');
-}
-function toggleStar() {
-  logStarred = !logStarred;
-  document.getElementById('star-icon').style.fill = logStarred ? 'var(--accent)' : 'none';
-  document.getElementById('save-name-group').style.display = logStarred ? 'block' : 'none';
-  if (logStarred) document.getElementById('save-name').focus();
-}
-function closeLogModal() { document.getElementById('log-modal').classList.remove('show'); }
-
-function saveWorkoutLog() {
-  const date = document.getElementById('log-date').value;
-  const notesEl = document.getElementById('log-notes');
-  const notes = notesEl ? notesEl.value : '';
-  if (!date) return;
-
-  const exerciseData = currentWorkout.map(item => ({
-    id: item.exercise.id, name: item.exercise.name,
-    sets: item.sets, reps: item.reps, weight: item.weight,
-    primary: item.exercise.primary, secondary: item.exercise.secondary
-  }));
-
-  const log = { id: Date.now().toString(36), date, notes, starred: logStarred, exercises: exerciseData, savedId: loadedSavedId || null };
-  const logs = getWorkoutLogs();
-  logs.push(log);
-  logs.sort((a,b) => b.date.localeCompare(a.date));
-  saveWorkoutLogs(logs);
-
-  if (logStarred) {
-    const customName = (document.getElementById('save-name').value || '').trim();
-    const workoutName = customName || `${formatDate(date)} Workout`;
-    const saved = getSavedWorkouts();
-    saved.push({ id: Date.now().toString(36), name: workoutName, exercises: exerciseData, created: date });
-    saveSavedWorkouts(saved);
-  }
-
-  closeLogModal();
-  currentWorkout = [];
-  renderCurrentWorkout();
-  switchTab('log');
-}
-
-// ==================== SAVED WORKOUTS ====================
-function getSavedWorkouts() {
-  try { return JSON.parse(localStorage.getItem('kf_saved') || '[]'); }
-  catch { return []; }
-}
-function saveSavedWorkouts(w) { localStorage.setItem('kf_saved', JSON.stringify(w)); }
-
-function renderSavedWorkouts() {
-  const saved = getSavedWorkouts();
-  const list = document.getElementById('saved-list');
-  const empty = document.getElementById('saved-empty');
-  list.style.display = '';
-  if (saved.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
-  empty.style.display = 'none';
-  const logs = getWorkoutLogs();
-  list.innerHTML = saved.map(w => {
-    const useCount = countSavedUsage(w.id, logs);
-    const useText = useCount === 0 ? 'Never used' : useCount === 1 ? 'Used 1 time' : `Used ${useCount} times`;
-    return `
-    <div class="card" style="cursor:pointer" onclick="openSavedEdit('${w.id}')">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="flex:1;min-width:0">
-          <div style="font-size:14px;font-weight:600">${w.name}</div>
-          <div style="font-size:12px;color:var(--text2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${w.exercises.map(e=>e.name).join(', ')}</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px">${useText}</div>
-        </div>
-        <button class="btn btn-sm btn-primary" style="margin-left:10px;flex-shrink:0" onclick="event.stopPropagation();loadSavedWorkout('${w.id}')">Load</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-let loadedSavedId = null;
-
-function loadSavedWorkout(id) {
-  const saved = getSavedWorkouts();
-  const w = saved.find(s => s.id === id);
-  if (!w) return;
-  loadedSavedId = id;
-  currentWorkout = w.exercises.map(e => {
-    const exercise = EXERCISES.find(ex => ex.id === e.id) || {
-      id:e.id, name:e.name, category:'complex', equipment:'kettlebell',
-      difficulty:'intermediate', primary:e.primary||[], secondary:e.secondary||[]
-    };
-    return { exercise, sets:e.sets, reps:e.reps, weight:e.weight };
-  });
-  renderCurrentWorkout();
-
-  // Show source subtitle under Current Workout
-  const srcEl = document.getElementById('workout-source');
-  srcEl.textContent = w.exercises.length + ' exercises from "' + w.name + '"';
-  srcEl.style.display = 'block';
-
-  // Collapse generate settings and show saved source bar
-  document.getElementById('quick-settings').style.display = 'none';
-  document.getElementById('quick-expand-bar').style.display = 'none';
-  document.getElementById('saved-source-name').textContent = w.name;
-  document.getElementById('saved-source-bar').style.display = 'flex';
-
-  // Switch to Build tab to show the loaded workout
-  switchTab('build');
-}
-
-function editLoadedSaved() {
-  if (loadedSavedId) {
-    switchTab('saved');
-    openSavedEdit(loadedSavedId);
-  }
-}
-
-function toggleSavedList() {
-  // No-op — saved workouts now have their own tab
-}
-
-function countSavedUsage(savedId, logs) {
-  return (logs || getWorkoutLogs()).filter(l => l.savedId === savedId).length;
-}
-
-function deleteSaved(id) {
-  saveSavedWorkouts(getSavedWorkouts().filter(s => s.id !== id));
-  renderSavedWorkouts();
-}
-
-// ==================== EDIT SAVED WORKOUT ====================
-let editingSavedId = null;
-let editingSavedExercises = [];
-
-function openSavedEdit(id) {
-  const saved = getSavedWorkouts();
-  const w = saved.find(s => s.id === id);
-  if (!w) return;
-  editingSavedId = id;
-  editingSavedExercises = w.exercises.map(e => ({...e}));
-
-  document.getElementById('saved-edit-name').value = w.name;
-  document.getElementById('saved-edit-notes').value = w.notes || '';
-
-  const logs = getWorkoutLogs();
-  const useCount = countSavedUsage(id, logs);
-  const useText = useCount === 0 ? 'Never used' : useCount === 1 ? 'Used 1 time' : `Used ${useCount} times`;
-  document.getElementById('saved-edit-usage').textContent = useText;
-
-  renderSavedEditExercises();
-
-  document.getElementById('saved-list').style.display = 'none';
-  document.getElementById('saved-empty').style.display = 'none';
-  document.getElementById('saved-edit').style.display = 'block';
-}
-
-function closeSavedEdit() {
-  document.getElementById('saved-edit').style.display = 'none';
-  document.getElementById('saved-list').style.display = '';
-  editingSavedId = null;
-  editingSavedExercises = [];
-  renderSavedWorkouts();
-}
-
-function renderSavedEditExercises() {
-  const el = document.getElementById('saved-edit-exercises');
-  el.innerHTML = editingSavedExercises.map((e, i) => `
-    <div class="workout-item" style="position:relative" draggable="true" data-eidx="${i}"
-      ondragstart="editDragStart(event,${i})" ondragover="editDragOver(event)" ondragleave="editDragLeave(event)" ondrop="editDragDrop(event,${i})" ondragend="editDragEnd(event)"
-      ontouchstart="editTouchStart(event,${i})" ontouchmove="editTouchMove(event)" ontouchend="editTouchEnd(event,${i})">
-      <div class="drag-handle"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:14px;font-weight:600">${e.name}</div>
-        <div style="font-size:12px;color:var(--text2)">${e.sets}x${e.reps} @ ${e.weight}</div>
-      </div>
-      <button class="remove-btn" onclick="editRemoveExercise(${i})">&#215;</button>
-    </div>
-  `).join('');
-}
-
-function editRemoveExercise(i) {
-  editingSavedExercises.splice(i, 1);
-  renderSavedEditExercises();
-}
-
-// Drag reorder for edit screen (desktop)
-let editDragIdx = null;
-function editDragStart(e, i) { editDragIdx = i; e.currentTarget.classList.add('dragging'); }
-function editDragOver(e) {
-  e.preventDefault();
-  const el = e.currentTarget;
-  const rect = el.getBoundingClientRect();
-  const midY = rect.top + rect.height / 2;
-  el.classList.toggle('drag-over', e.clientY < midY);
-  el.classList.toggle('drag-over-bottom', e.clientY >= midY);
-}
-function editDragLeave(e) { e.currentTarget.classList.remove('drag-over', 'drag-over-bottom'); }
-function editDragDrop(e, i) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over', 'drag-over-bottom');
-  if (editDragIdx === null) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  let dropIdx = e.clientY >= rect.top + rect.height / 2 ? i + 1 : i;
-  if (dropIdx > editDragIdx) dropIdx--;
-  if (dropIdx !== editDragIdx) {
-    const item = editingSavedExercises.splice(editDragIdx, 1)[0];
-    editingSavedExercises.splice(dropIdx, 0, item);
-    renderSavedEditExercises();
-  }
-}
-function editDragEnd(e) { editDragIdx = null; e.currentTarget.classList.remove('dragging', 'drag-over', 'drag-over-bottom'); }
-
-// Touch drag reorder for edit screen (mobile)
-let editTouchIdx = null;
-function editTouchStart(e, i) {
-  if (!e.target.closest('.drag-handle')) return;
-  editTouchIdx = i;
-  e.currentTarget.classList.add('dragging');
-}
-function editTouchMove(e) {
-  if (editTouchIdx === null) return;
-  e.preventDefault();
-  const y = e.touches[0].clientY;
-  const items = document.querySelectorAll('#saved-edit-exercises .workout-item');
-  items.forEach(el => el.classList.remove('drag-over', 'drag-over-bottom'));
-  for (const el of items) {
-    const rect = el.getBoundingClientRect();
-    if (y > rect.top && y < rect.bottom) {
-      const midY = rect.top + rect.height / 2;
-      el.classList.toggle('drag-over', y < midY);
-      el.classList.toggle('drag-over-bottom', y >= midY);
-      break;
-    }
-  }
-}
-function editTouchEnd(e, i) {
-  if (editTouchIdx === null) return;
-  const y = e.changedTouches[0].clientY;
-  const items = document.querySelectorAll('#saved-edit-exercises .workout-item');
-  let dropIdx = editTouchIdx;
-  for (const el of items) {
-    const rect = el.getBoundingClientRect();
-    if (y > rect.top && y < rect.bottom) {
-      const idx = parseInt(el.dataset.eidx);
-      const midY = rect.top + rect.height / 2;
-      dropIdx = y >= midY ? idx + 1 : idx;
-      break;
-    }
-  }
-  items.forEach(el => { el.classList.remove('dragging', 'drag-over', 'drag-over-bottom'); });
-  if (dropIdx > editTouchIdx) dropIdx--;
-  if (editTouchIdx !== dropIdx) {
-    const item = editingSavedExercises.splice(editTouchIdx, 1)[0];
-    editingSavedExercises.splice(dropIdx, 0, item);
-    renderSavedEditExercises();
-  }
-  editTouchIdx = null;
-}
-
-function saveSavedEdit() {
-  const saved = getSavedWorkouts();
-  const w = saved.find(s => s.id === editingSavedId);
-  if (!w) return;
-  w.name = document.getElementById('saved-edit-name').value.trim() || w.name;
-  w.notes = document.getElementById('saved-edit-notes').value.trim();
-  w.exercises = editingSavedExercises;
-  saveSavedWorkouts(saved);
-  closeSavedEdit();
-}
-
-function loadFromEdit() {
-  loadSavedWorkout(editingSavedId);
-  document.getElementById('saved-edit').style.display = 'none';
-}
-
-function deleteFromEdit() {
-  const id = editingSavedId;
-  deleteSaved(id);
-  document.getElementById('saved-edit').style.display = 'none';
-  editingSavedId = null;
-  editingSavedExercises = [];
-  renderSavedWorkouts();
-}
-
-// ==================== LOG DISPLAY ====================
-function renderLog() {
-  const logs = getWorkoutLogs();
-  renderCalendar(logs);
-
-  const list = document.getElementById('log-list');
-  const empty = document.getElementById('log-empty');
-  if (logs.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
-
-  const filtered = selectedLogDate ? logs.filter(l => l.date === selectedLogDate) : logs;
-  if (filtered.length === 0) { list.innerHTML = '<div class="empty-state"><p>No workouts on this date</p></div>'; empty.style.display = 'none'; return; }
-  empty.style.display = 'none';
-
-  list.innerHTML = filtered.map(log => {
-    const totalSets = log.exercises.reduce((s,e) => s + (parseInt(e.sets)||0), 0);
-    return `
-    <div class="log-entry">
-      <div class="log-date">${log.starred?'<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>':''}${formatDate(log.date)}</div>
-      <div class="log-exercises">${log.exercises.map(e => e.name).join(', ')}</div>
-      <div class="log-stats">
-        <span>${log.exercises.length} exercises</span>
-        <span>${totalSets} total sets</span>
-        ${log.notes ? `<span>${log.notes}</span>` : ''}
-      </div>
-      <div class="log-actions">
-        <button class="btn btn-sm btn-secondary" onclick="reloadWorkout('${log.id}')">Reload</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteLog('${log.id}')">Delete</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function reloadWorkout(logId) {
-  const logs = getWorkoutLogs();
-  const log = logs.find(l => l.id === logId);
-  if (!log) return;
-  currentWorkout = log.exercises.map(e => {
-    const exercise = EXERCISES.find(ex => ex.id === e.id) || {
-      id: e.id, name: e.name, category: 'complex', equipment: 'kettlebell',
-      difficulty: 'intermediate', primary: e.primary || [], secondary: e.secondary || []
-    };
-    return { exercise, sets: e.sets, reps: e.reps, weight: e.weight };
-  });
-  renderCurrentWorkout();
-  switchTab('build');
-}
-
-function deleteLog(logId) {
-  const logs = getWorkoutLogs().filter(l => l.id !== logId);
-  saveWorkoutLogs(logs);
-  renderLog();
-}
-
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-}
-
-// ==================== CALENDAR ====================
-function renderCalendar(logs) {
-  const el = document.getElementById('calendar');
-  const year = calendarMonth.getFullYear();
-  const month = calendarMonth.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date();
-
-  const workoutDates = new Set(logs.map(l => l.date));
-  const monthName = calendarMonth.toLocaleDateString('en-US', { month:'long', year:'numeric' });
-
-  let html = `
-    <div class="cal-header">
-      <button class="btn btn-sm btn-secondary" onclick="changeMonth(-1)">&larr;</button>
-      <span style="font-weight:600;font-size:14px">${monthName}</span>
-      <button class="btn btn-sm btn-secondary" onclick="changeMonth(1)">&rarr;</button>
-    </div>
-    <div class="cal-grid">
-      <div class="cal-day-label">S</div><div class="cal-day-label">M</div><div class="cal-day-label">T</div>
-      <div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div>
-  `;
-  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day"></div>';
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday = today.getFullYear()===year && today.getMonth()===month && today.getDate()===d;
-    const hasW = workoutDates.has(dateStr);
-    const isSel = selectedLogDate === dateStr;
-    html += `<div class="cal-day${hasW?' has-workout':''}${isToday?' today':''}${isSel?' selected':''}" onclick="selectLogDate('${dateStr}')">${d}</div>`;
-  }
-  html += '</div>';
-  el.innerHTML = html;
-}
-function selectLogDate(dateStr) {
-  selectedLogDate = selectedLogDate === dateStr ? null : dateStr;
-  renderLog();
-}
-function changeMonth(dir) {
-  calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + dir, 1);
-  selectedLogDate = null;
-  renderLog();
-}
-
-// ==================== INSIGHTS ====================
-function renderInsights() {
-  const logs = getWorkoutLogs();
-  renderTopExercises(logs);
-  renderVolumeChart(logs);
-  renderHeatmap(logs);
-  renderSuggestions(logs);
-}
-
-function renderTopExercises(logs) {
-  const counts = {};
-  logs.forEach(log => log.exercises.forEach(e => { counts[e.name] = (counts[e.name]||0) + 1; }));
-  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,5);
-  const el = document.getElementById('top-exercises');
-  if (sorted.length === 0) {
-    el.innerHTML = '<li class="empty-state" style="padding:10px"><p>Log workouts to see your top exercises</p></li>';
-    return;
-  }
-  el.innerHTML = sorted.map(([name, count], i) =>
-    `<li class="rank-item"><span class="rank-num">${i+1}</span><span style="flex:1">${name}</span><span style="color:var(--text2);font-size:12px">${count}x</span></li>`
-  ).join('');
-}
-
-function renderVolumeChart(logs) {
-  const canvas = document.getElementById('volume-chart');
-  const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-  const W = rect.width, H = rect.height;
-
-  // Get last 8 weeks of data
-  const weeks = [];
-  const now = new Date();
-  for (let i = 7; i >= 0; i--) {
-    const weekStart = new Date(now);
-    weekStart.setDate(now.getDate() - (now.getDay() + i*7));
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
-    const startStr = weekStart.toISOString().slice(0,10);
-    const endStr = weekEnd.toISOString().slice(0,10);
-    const weekLogs = logs.filter(l => l.date >= startStr && l.date <= endStr);
-    const totalSets = weekLogs.reduce((s, log) => s + log.exercises.reduce((s2,e) => s2 + (parseInt(e.sets)||0), 0), 0);
-    weeks.push({ label: `${weekStart.getMonth()+1}/${weekStart.getDate()}`, count: weekLogs.length, sets: totalSets });
-  }
-
-  ctx.clearRect(0,0,W,H);
-  const pad = { top:20, right:10, bottom:30, left:35 };
-  const chartW = W - pad.left - pad.right;
-  const chartH = H - pad.top - pad.bottom;
-  const maxSets = Math.max(...weeks.map(w => w.sets), 10);
-  const barW = chartW / weeks.length * 0.6;
-  const gap = chartW / weeks.length;
-
-  // Grid lines
-  ctx.strokeStyle = '#2a2a3e';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.top + chartH - (chartH * i / 4);
-    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
-    ctx.fillStyle = '#8888a0'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText(Math.round(maxSets * i / 4), pad.left - 5, y + 3);
-  }
-
-  // Bars
-  weeks.forEach((w, i) => {
-    const x = pad.left + i * gap + (gap - barW) / 2;
-    const h = (w.sets / maxSets) * chartH;
-    const y = pad.top + chartH - h;
-
-    const grad = ctx.createLinearGradient(x, y, x, pad.top + chartH);
-    grad.addColorStop(0, '#ff6b35');
-    grad.addColorStop(1, '#ff6b3533');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.roundRect(x, y, barW, h, [4,4,0,0]);
-    ctx.fill();
-
-    // Workout count on top
-    if (w.count > 0) {
-      ctx.fillStyle = '#e8e8f0'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText(w.count + 'w', x + barW/2, y - 5);
-    }
-
-    // Week label
-    ctx.fillStyle = '#8888a0'; ctx.font = '10px sans-serif';
-    ctx.fillText(w.label, x + barW/2, H - pad.bottom + 15);
-  });
-
-  // Y axis label
-  ctx.save(); ctx.translate(10, pad.top + chartH/2); ctx.rotate(-Math.PI/2);
-  ctx.fillStyle = '#8888a0'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('Total Sets', 0, 0);
-  ctx.restore();
-}
-
-function renderHeatmap(logs) {
-  const container = document.getElementById('heatmap-diagram');
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - heatmapDays);
-  const cutoffStr = cutoff.toISOString().slice(0,10);
-  const recentLogs = logs.filter(l => l.date >= cutoffStr);
-
-  // Count muscle frequency
-  const freq = {};
-  recentLogs.forEach(log => {
-    log.exercises.forEach(e => {
-      (e.primary||[]).forEach(m => { freq[m] = (freq[m]||0) + 2; });
-      (e.secondary||[]).forEach(m => { freq[m] = (freq[m]||0) + 1; });
-    });
-  });
-
-  const maxFreq = Math.max(...Object.values(freq), 1);
-
-  // Clone the SVGs
-  container.innerHTML = '';
-  ['svg-front','svg-back'].forEach(svgId => {
-    const orig = document.getElementById(svgId);
-    const clone = orig.cloneNode(true);
-    clone.removeAttribute('id');
-    clone.querySelectorAll('.muscle').forEach(m => {
-      m.classList.remove('active-primary','active-secondary');
-      const muscle = m.dataset.muscle;
-      if (muscle && freq[muscle]) {
-        const intensity = freq[muscle] / maxFreq;
-        const alpha = 0.2 + intensity * 0.8;
-        m.style.fill = `rgba(255,107,53,${alpha})`;
-      }
-    });
-    const wrap = document.createElement('div');
-    wrap.className = 'body-view';
-    wrap.appendChild(clone);
-    container.appendChild(wrap);
-  });
-}
-
-function setHeatmapRange(btn, days) {
-  document.querySelectorAll('.heatmap-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  heatmapDays = days;
-  renderInsights();
-}
-
-function renderSuggestions(logs) {
-  const el = document.getElementById('suggestions-list');
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 7);
-  const cutoffStr = cutoff.toISOString().slice(0,10);
-  const recentLogs = logs.filter(l => l.date >= cutoffStr);
-
-  // Find muscles worked recently
-  const recentMuscles = new Set();
-  recentLogs.forEach(log => {
-    log.exercises.forEach(e => {
-      (e.primary||[]).forEach(m => recentMuscles.add(m));
-    });
-  });
-
-  // Find muscles NOT worked
-  const allMuscles = Object.keys(MUSCLE_NAMES);
-  const neglected = allMuscles.filter(m => !recentMuscles.has(m) && m !== 'core');
-
-  if (neglected.length === 0 && logs.length > 0) {
-    el.innerHTML = '<div style="padding:10px;font-size:13px;color:var(--green)">Great coverage! You\'ve hit all muscle groups in the last 7 days.</div>';
-    return;
-  }
-  if (logs.length === 0) {
-    el.innerHTML = '<div class="empty-state" style="padding:10px"><p>Log workouts to get suggestions</p></div>';
-    return;
-  }
-
-  // Find exercises that target neglected muscles
-  const suggestions = [];
-  const usedIds = new Set();
-  neglected.forEach(muscle => {
-    const exs = EXERCISES.filter(e => e.primary.includes(muscle) && !usedIds.has(e.id));
-    if (exs.length > 0) {
-      const ex = exs[Math.floor(Math.random() * exs.length)];
-      usedIds.add(ex.id);
-      suggestions.push({ exercise: ex, reason: MUSCLE_NAMES[muscle] });
-    }
-  });
-
-  el.innerHTML = `<div style="font-size:12px;color:var(--text2);margin-bottom:8px">You haven't targeted these muscles in 7+ days:</div>` +
-    suggestions.slice(0,5).map(s => `
-      <div class="suggestion-item" onclick="addExercise('${s.exercise.id}');switchTab('build')">
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:600">${s.exercise.name}</div>
-          <div style="font-size:11px;color:var(--text2)">Targets: ${s.reason}</div>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-      </div>
-    `).join('');
-}
-
-// ==================== INIT ====================
-updatePrefWeightDisplay();
-renderExerciseList();
-renderLog();
-updateMusclesTabState();
-</script>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script src="firebase-config.js"></script>
+<script src="firebase-sync.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
