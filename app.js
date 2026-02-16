@@ -245,6 +245,7 @@ let timerSeconds = 0;
 let timerPaused = false;
 let timerCurrentEx = 0;
 let timerExAllotments = [];
+let timerExStartSec = 0;
 
 // ==================== SETTINGS ====================
 const ALL_WEIGHTS = [8,12,16,20,24,28];
@@ -396,6 +397,7 @@ function startWorkoutTimer() {
   timerSeconds = 0;
   timerPaused = false;
   timerCurrentEx = 0;
+  timerExStartSec = 0;
 
   const totalSec = selectedDuration * 60;
 
@@ -440,8 +442,13 @@ function updateTimerDisplay() {
   document.getElementById('fs-clock').textContent =
     `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 
+  const fsLabel = document.getElementById('fs-label');
+  const fsIllust = document.querySelector('.fs-illustration');
   if (circuitMode) {
     // Circuit mode: show round label + all exercises
+    fsIllust.style.display = 'none';
+    fsLabel.innerHTML = '&#x21bb; Circuit Mode';
+    fsLabel.classList.add('fs-label-circuit');
     const numRounds = parseInt(currentWorkout[0].sets) || 3;
     document.getElementById('fs-exercise-name').textContent = getCircuitRoundLabel(timerCurrentEx);
 
@@ -453,10 +460,16 @@ function updateTimerDisplay() {
     currentWorkout.forEach(item => {
       const repsLabel = item.reps;
       const wtLabel = item.weight === 'BW' ? '' : ` — ${item.weight}`;
-      listHtml += `<div><span class="ex-name">${item.exercise.name}</span> <span class="ex-detail">${repsLabel}${wtLabel}</span></div>`;
+      listHtml += `<div><span class="ex-name">${item.exercise.name}</span> <span class="ex-detail">${repsLabel} reps${wtLabel}</span></div>`;
     });
-    listHtml += `</div><div style="margin-top:8px;font-size:12px;color:var(--text2)">~${allotMin}:${String(allotS).padStart(2,'0')} per round</div>`;
+    listHtml += `</div>`;
     document.getElementById('fs-exercise-detail').innerHTML = listHtml;
+    const elapsedInRound = timerSeconds - timerExStartSec;
+    const remaining = Math.max(0, allotSec - elapsedInRound);
+    const remMin = Math.floor(remaining / 60);
+    const remS = remaining % 60;
+    document.getElementById('fs-exercise-allotment').textContent =
+      `${String(remMin).padStart(2,'0')}:${String(remS).padStart(2,'0')} remaining`;
 
     // Up Next
     const upnextEl = document.getElementById('fs-upnext');
@@ -467,13 +480,21 @@ function updateTimerDisplay() {
     }
   } else {
     // Standard mode
+    fsIllust.style.display = '';
+    fsLabel.textContent = 'Workout Timer';
+    fsLabel.classList.remove('fs-label-circuit');
     if (currentWorkout[timerCurrentEx]) {
       const item = currentWorkout[timerCurrentEx];
       document.getElementById('fs-exercise-name').textContent = item.exercise.name;
-      const allotMin = Math.floor(timerExAllotments[timerCurrentEx] / 60);
-      const allotSec = timerExAllotments[timerCurrentEx] % 60;
+      const wtLabel = item.weight === 'BW' ? '' : `  —  ${item.weight}`;
       document.getElementById('fs-exercise-detail').textContent =
-        `${item.sets} sets x ${item.reps} reps  |  ~${allotMin}:${String(allotSec).padStart(2,'0')} allotted`;
+        `${item.sets} sets x ${item.reps} reps${wtLabel}`;
+      const elapsedInEx = timerSeconds - timerExStartSec;
+      const remaining = Math.max(0, timerExAllotments[timerCurrentEx] - elapsedInEx);
+      const remMin = Math.floor(remaining / 60);
+      const remSec = remaining % 60;
+      document.getElementById('fs-exercise-allotment').textContent =
+        `${String(remMin).padStart(2,'0')}:${String(remSec).padStart(2,'0')} remaining`;
     }
 
     // Up Next
@@ -505,11 +526,33 @@ function renderTimerProgress() {
 function timerTogglePause() { timerPaused = !timerPaused; updateTimerDisplay(); }
 function timerNextExercise() {
   const max = circuitMode ? (parseInt(currentWorkout[0].sets) || 3) - 1 : currentWorkout.length - 1;
-  if (timerCurrentEx < max) { timerCurrentEx++; renderTimerProgress(); updateTimerDisplay(); }
+  if (timerCurrentEx < max) { timerCurrentEx++; timerExStartSec = timerSeconds; renderTimerProgress(); updateTimerDisplay(); }
 }
 function timerPrevExercise() {
-  if (timerCurrentEx > 0) { timerCurrentEx--; renderTimerProgress(); updateTimerDisplay(); }
+  if (timerCurrentEx > 0) { timerCurrentEx--; timerExStartSec = timerSeconds; renderTimerProgress(); updateTimerDisplay(); }
 }
+
+// Swipe gestures during workout
+(function() {
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const overlay = document.getElementById('timer-fullscreen');
+    if (!overlay.classList.contains('show')) return;
+    const dx = startX - e.changedTouches[0].clientX;
+    const dy = startY - e.changedTouches[0].clientY;
+    // Use the dominant axis
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 50) timerNextExercise();
+    } else {
+      if (dy > 80 && !circuitMode) overlay.classList.add('illust-expanded');
+      if (dy < -80) overlay.classList.remove('illust-expanded');
+    }
+  });
+})();
 
 function stopWorkoutTimer() {
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }

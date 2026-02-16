@@ -1,5 +1,44 @@
 # Session Log
 
+## Session 4 — Feb 15, 2026
+
+### Major: Firebase Auth + Firestore Integration
+- Split single `index.html` (2494 lines) into 6 files: `index.html`, `style.css`, `auth.css`, `app.js`, `firebase-config.js`, `firebase-sync.js`
+- Added Firebase compat SDK via CDN (app, auth, firestore)
+- Google Sign-In with popup + redirect fallback for mobile Safari
+- Sign In / Sign Out buttons in header (no avatar/name — clean and simple)
+- Auth gating on Saved, Log, and Insights tabs — show sign-in prompt when signed out
+- Firestore CRUD with in-memory caching for logs, saved workouts, and settings
+- Offline persistence enabled (`synchronizeTabs: true`)
+- localStorage-to-Firestore migration modal on first sign-in
+- End Workout shows toast prompt instead of log modal when signed out
+
+### Bug Fixes
+- Generate tab now resets after ending a workout (was staying collapsed)
+- Log date defaults to local today instead of UTC (was showing tomorrow at night)
+- Core muscle mapping no longer incorrectly highlights obliques on diagram (mapped `core` to `front-abs` instead of `front-oblique`)
+
+### Settings Improvements
+- Default unit preference changed to lbs
+- Dynamic exercise count below Experience Level toggle ("71 of 86 exercises available")
+- Removed static description text, replaced with dynamic count
+- Subtitle text added under Kettlebells You Own and Preferred Weight sections
+- Compact kettlebell SVG (reduced height/width/margin)
+
+### Enhancements Logged (#17–21)
+17. Log page — workout duration + estimated calories burned
+18. Insights page — user-customizable card order
+19. Workout queue — create and schedule workouts for later
+20. Insights charts — sets by muscle group, total weight moved, total time, Apple Watch integration
+21. Exercise visibility — show locked exercises grayed out for lower difficulty levels
+
+### Committed & Pushed
+- Commit `bc4f617` pushed to `main` on GitHub
+- Firebase project: `kettlebell-genie`
+- API key restricted to `localhost:8080`, `kettlebell-genie.firebaseapp.com`, `zack0liver.github.io`
+
+---
+
 ## Session 3 — Feb 13, 2026
 
 ### Completed

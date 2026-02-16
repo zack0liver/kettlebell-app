@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <title>Kettle Bell Genie</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=10">
 <link rel="stylesheet" href="auth.css">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -20,19 +20,27 @@
 
 <!-- Full-Screen Workout Timer Overlay -->
 <div class="timer-fullscreen" id="timer-fullscreen">
-  <div class="fs-label">Workout Timer</div>
+  <div class="fs-label" id="fs-label">Workout Timer</div>
   <div class="fs-clock" id="fs-clock">00:00</div>
   <div class="fs-exercise-name" id="fs-exercise-name"></div>
   <div class="fs-exercise-detail" id="fs-exercise-detail"></div>
-  <div class="fs-illustration"></div>
+  <div class="fs-exercise-allotment" id="fs-exercise-allotment"></div>
+  <div class="fs-illustration">
+    <svg viewBox="0 0 200 200" width="100%" style="max-width:160px;opacity:0.18">
+      <path d="M 67.0 67.0 C 61.3 32.0, 138.7 32.0, 133.0 67.0 A 70 70 0 1 1 67.0 67.0 Z" fill="none" stroke="var(--accent)" stroke-width="3"/>
+    </svg>
+    <div class="fs-illustration-label">Illustrations in development</div>
+  </div>
   <div class="fs-upnext" id="fs-upnext"></div>
   <div class="fs-progress" id="fs-progress"></div>
   <div class="fs-controls">
     <button class="btn btn-secondary" onclick="timerPrevExercise()">Prev</button>
-    <button class="btn btn-primary" id="fs-pause-btn" onclick="timerTogglePause()">Pause</button>
     <button class="btn btn-secondary" onclick="timerNextExercise()">Next</button>
   </div>
-  <button class="btn btn-danger fs-end" onclick="stopWorkoutTimer()">End Workout</button>
+  <div class="fs-bottom-controls">
+    <button class="btn btn-primary" id="fs-pause-btn" onclick="timerTogglePause()">Pause</button>
+    <button class="btn btn-danger" onclick="stopWorkoutTimer()">End Workout</button>
+  </div>
 </div>
 
 <div class="header">
