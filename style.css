@@ -78,7 +78,7 @@
   .badge-secondary { background:var(--secondary-muscle); color:var(--text); }
   .badge-kb { background:var(--accent); color:#fff; }
   .badge-mat { background:var(--purple); color:#fff; }
-  .badge-sb { background:#e85d04; color:#fff; }
+  .badge-sb { background:#0891b2; color:#fff; }
   .badge-mb { background:#2d6a4f; color:#fff; }
   .badge-diff { background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
 
