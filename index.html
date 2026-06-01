@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <title>Kettle Bell Genie</title>
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 <link rel="stylesheet" href="auth.css">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -93,6 +93,8 @@
         <span style="font-size:12px; color:var(--accent); font-weight:600">Edit</span>
       </div>
       <div id="quick-settings">
+      <label>What do you have today?</label>
+      <div class="gear-row" id="gear-row" style="margin-bottom:16px"></div>
       <label>Focus Area</label>
       <div class="focus-grid">
         <div class="focus-card selected" data-focus="full" onclick="selectFocus(this)">
@@ -259,6 +261,7 @@
           </select>
         </div>
       </div>
+      <div class="equip-chips" id="equip-chips"></div>
       <div id="exercise-list"></div>
     </div>
 
@@ -614,6 +617,6 @@
 
 <script src="firebase-config.js"></script>
 <script src="firebase-sync.js"></script>
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

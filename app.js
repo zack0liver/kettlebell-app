@@ -278,6 +278,13 @@ const EXERCISE_ILLUSTRATIONS = {
   mat_superman: 'illustrations/mat_glute_bridge.svg', mat_bird_dog: 'illustrations/mat_glute_bridge.svg',
 };
 
+const GEAR_ICONS = {
+  kettlebell: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="22" r="8"/><path d="M11 16 L11 12 Q11 8 16 8 Q21 8 21 12 L21 16"/></svg>`,
+  mat: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="16" cy="8" r="4"/><line x1="16" y1="12" x2="16" y2="21"/><line x1="10" y1="16" x2="22" y2="16"/><rect x="5" y="25" width="22" height="4" rx="2"/></svg>`,
+  slam_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="16" cy="14" r="10"/><path d="M8 27 Q16 23 24 27"/><path d="M16 2 L16 4 M23.5 4.5 L22 6.5 M27 11 L25 12"/></svg>`,
+  medicine_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="16" cy="16" r="12"/><path d="M10 6 Q16 14 22 6"/><path d="M10 26 Q16 18 22 26"/></svg>`,
+};
+
 const WEEKLY_WORKOUTS = [
   { name:'Full Body Blitz', focus:'Full Body', duration:20,
     exercises:[{id:'kb_swing',sets:3,reps:'12'},{id:'kb_goblet',sets:3,reps:'10'},{id:'kb_press',sets:3,reps:'8'},{id:'kb_row',sets:3,reps:'10'},{id:'mat_plank',sets:3,reps:'30s'}] },
@@ -314,6 +321,8 @@ let circuitMode = false;
 let calendarMonth = new Date();
 let selectedLogDate = null;
 let heatmapDays = 7;
+let selectedEquipment = new Set(['kettlebell', 'mat']); // gear shelf state for Generate
+let equipmentFilter = 'all'; // equipment chip filter for Manual Build
 
 // Timer state
 let timerInterval = null;
@@ -385,6 +394,8 @@ function openSettings() {
 function closeSettings() {
   document.getElementById('settings-modal').classList.remove('show');
   updatePrefWeightDisplay();
+  initGearShelf();
+  renderEquipChips();
 }
 
 function kettlebellPath(cx, cy, r) {
@@ -731,7 +742,7 @@ function setBuildMode(mode) {
   });
   document.getElementById('quick-mode').style.display = mode==='quick' ? 'block' : 'none';
   document.getElementById('manual-mode').style.display = mode==='manual' ? 'block' : 'none';
-  if (mode === 'manual') renderExerciseList();
+  if (mode === 'manual') { renderEquipChips(); renderExerciseList(); }
   if (mode === 'quick' && currentWorkout.length === 0) {
     document.getElementById('quick-settings').style.display = 'block';
     document.getElementById('quick-expand-bar').style.display = 'none';
@@ -769,8 +780,8 @@ function generateWorkout() {
   const avgCount = Math.round([...selectedFocus].reduce((s,f) => s + (focusMap[f].count[selectedDuration]||5), 0) / selectedFocus.size);
   const targetCount = Math.min(avgCount + (selectedFocus.size > 1 ? 1 : 0), 10);
 
-  // Score exercises by relevance
-  let scored = getAvailableExercises().map(ex => {
+  // Score exercises by relevance, filtered to selected equipment
+  let scored = getAvailableExercises().filter(ex => selectedEquipment.has(ex.equipment)).map(ex => {
     let score = 0;
     ex.primary.forEach(m => { if (targetMuscles.includes(m)) score += 3; });
     ex.secondary.forEach(m => { if (targetMuscles.includes(m)) score += 1; });
@@ -834,6 +845,7 @@ function renderExerciseList() {
   const cat = document.getElementById('category-filter').value;
   const sort = (document.getElementById('sort-filter') || {}).value || 'default';
   const filtered = getAvailableExercises().filter(ex => {
+    if (equipmentFilter !== 'all' && ex.equipment !== equipmentFilter) return false;
     if (cat !== 'all' && ex.category !== cat) return false;
     if (search && !ex.name.toLowerCase().includes(search)) return false;
     return true;
@@ -1757,6 +1769,75 @@ function renderSuggestions(logs) {
     `).join('');
 }
 
+// ==================== GEAR SHELF (Generate) ====================
+function initGearShelf() {
+  const s = getSettings();
+  const extraEq = s.extraEquipment || [];
+  const saved = (s.lastEquipment || ['kettlebell', 'mat']).filter(eq =>
+    eq === 'kettlebell' || eq === 'mat' ||
+    (eq === 'slam_ball' && extraEq.includes('slam_ball')) ||
+    (eq === 'medicine_ball' && extraEq.includes('medicine_ball'))
+  );
+  selectedEquipment = new Set(saved.length ? saved : ['kettlebell', 'mat']);
+  renderGearShelf();
+}
+
+function renderGearShelf() {
+  const el = document.getElementById('gear-row');
+  if (!el) return;
+  const s = getSettings();
+  const extraEq = s.extraEquipment || [];
+  const items = [
+    { id:'kettlebell', label:'Kettlebell' },
+    { id:'mat', label:'Mat / BW' },
+    ...(extraEq.includes('slam_ball') ? [{ id:'slam_ball', label:'Slam Ball' }] : []),
+    ...(extraEq.includes('medicine_ball') ? [{ id:'medicine_ball', label:'Med Ball' }] : []),
+  ];
+  el.innerHTML = items.map(item => `
+    <div class="gear-item${selectedEquipment.has(item.id) ? ' active' : ''}" data-eq="${item.id}" onclick="toggleGearEquipment('${item.id}')">
+      ${GEAR_ICONS[item.id]}
+      <span>${item.label}</span>
+    </div>
+  `).join('');
+}
+
+function toggleGearEquipment(eq) {
+  if (selectedEquipment.has(eq)) {
+    if (selectedEquipment.size > 1) selectedEquipment.delete(eq);
+  } else {
+    selectedEquipment.add(eq);
+  }
+  const s = getSettings();
+  s.lastEquipment = [...selectedEquipment];
+  saveSettingsToStorage(s);
+  document.querySelectorAll('.gear-item').forEach(el => {
+    el.classList.toggle('active', selectedEquipment.has(el.dataset.eq));
+  });
+}
+
+// ==================== EQUIPMENT CHIPS (Manual Build) ====================
+function renderEquipChips() {
+  const el = document.getElementById('equip-chips');
+  if (!el) return;
+  const extraEq = (getSettings().extraEquipment || []);
+  const chips = [
+    { id:'all', label:'All' },
+    { id:'kettlebell', label:'KB' },
+    { id:'mat', label:'Mat' },
+    ...(extraEq.includes('slam_ball') ? [{ id:'slam_ball', label:'SB' }] : []),
+    ...(extraEq.includes('medicine_ball') ? [{ id:'medicine_ball', label:'MB' }] : []),
+  ];
+  el.innerHTML = chips.map(c => `
+    <div class="equip-chip${equipmentFilter === c.id ? ' active' : ''}" data-eq="${c.id}" onclick="setEquipmentFilter('${c.id}')">${c.label}</div>
+  `).join('');
+}
+
+function setEquipmentFilter(eq) {
+  equipmentFilter = eq;
+  document.querySelectorAll('.equip-chip').forEach(c => c.classList.toggle('active', c.dataset.eq === eq));
+  renderExerciseList();
+}
+
 // ==================== WORKOUT OF THE WEEK ====================
 function getWeeklyWorkout() {
   const now = new Date();
@@ -1807,6 +1888,8 @@ function loadWeeklyWorkout() {
 
 // ==================== INIT ====================
 updatePrefWeightDisplay();
+initGearShelf();
+renderEquipChips();
 renderExerciseList();
 renderLog();
 updateMusclesTabState();
