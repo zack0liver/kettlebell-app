@@ -201,6 +201,30 @@ const EXERCISES = [
     primary:['quads','glutes','core'], secondary:['hamstrings','hip_flexors'] },
   { id:'kb_squat_press', name:'Squat to Press', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
     primary:['quads','glutes','shoulders'], secondary:['core','triceps'] },
+
+  // Slam Ball
+  { id:'sb_overhead_slam', name:'Overhead Slam', category:'cardio', equipment:'slam_ball', difficulty:'beginner',
+    primary:['shoulders','core'], secondary:['lats','quads','glutes'] },
+  { id:'sb_rotational_slam', name:'Rotational Slam', category:'cardio', equipment:'slam_ball', difficulty:'intermediate',
+    primary:['obliques','core'], secondary:['shoulders','glutes'] },
+  { id:'sb_squat_slam', name:'Squat to Slam', category:'complex', equipment:'slam_ball', difficulty:'intermediate',
+    primary:['quads','glutes','shoulders'], secondary:['core','hamstrings'] },
+  { id:'sb_wall_ball', name:'Wall Ball', category:'cardio', equipment:'slam_ball', difficulty:'beginner',
+    primary:['quads','shoulders'], secondary:['glutes','core','calves'] },
+  { id:'sb_russian_twist', name:'SB Russian Twist', category:'core', equipment:'slam_ball', difficulty:'beginner',
+    primary:['obliques','abs'], secondary:['hip_flexors','core'] },
+
+  // Medicine Ball
+  { id:'mb_russian_twist', name:'MB Russian Twist', category:'core', equipment:'medicine_ball', difficulty:'beginner',
+    primary:['obliques','abs'], secondary:['hip_flexors'] },
+  { id:'mb_woodchop', name:'MB Wood Chop', category:'core', equipment:'medicine_ball', difficulty:'intermediate',
+    primary:['obliques','core'], secondary:['shoulders','glutes'] },
+  { id:'mb_chest_pass', name:'MB Chest Pass', category:'press', equipment:'medicine_ball', difficulty:'beginner',
+    primary:['chest','triceps'], secondary:['shoulders','core'] },
+  { id:'mb_squat', name:'MB Squat', category:'squat', equipment:'medicine_ball', difficulty:'beginner',
+    primary:['quads','glutes'], secondary:['core','hamstrings'] },
+  { id:'mb_crunch', name:'MB Crunch', category:'core', equipment:'medicine_ball', difficulty:'beginner',
+    primary:['abs'], secondary:['core','hip_flexors'] },
 ];
 
 const MUSCLE_NAMES = {
@@ -228,6 +252,58 @@ const MUSCLE_TO_SVG = {
   lower_back: ['back-lowerback'],
   core: ['front-abs']
 };
+
+const EXERCISE_ILLUSTRATIONS = {
+  kb_swing: 'illustrations/kb_swing.svg', kb_swing_1h: 'illustrations/kb_swing.svg',
+  kb_swing_alt: 'illustrations/kb_swing.svg', kb_swing_high: 'illustrations/kb_swing.svg',
+  kb_goblet: 'illustrations/kb_goblet.svg', kb_sumo: 'illustrations/kb_goblet.svg',
+  kb_front_squat: 'illustrations/kb_goblet.svg',
+  kb_press: 'illustrations/kb_press.svg', kb_push_press: 'illustrations/kb_press.svg',
+  kb_arnold_press: 'illustrations/kb_press.svg', kb_lateral_raise: 'illustrations/kb_press.svg',
+  kb_row: 'illustrations/kb_row.svg', kb_bent_row: 'illustrations/kb_row.svg',
+  kb_gorilla_row: 'illustrations/kb_row.svg', kb_upright_row: 'illustrations/kb_row.svg',
+  kb_turkish: 'illustrations/kb_turkish.svg',
+  mat_plank: 'illustrations/mat_plank.svg', mat_side_plank: 'illustrations/mat_plank.svg',
+  mat_hollow: 'illustrations/mat_plank.svg', mat_deadbug: 'illustrations/mat_plank.svg',
+  mat_mountain_climber: 'illustrations/mat_plank.svg',
+  kb_deadlift: 'illustrations/kb_deadlift.svg', kb_single_dl: 'illustrations/kb_deadlift.svg',
+  kb_lunge: 'illustrations/kb_lunge.svg', kb_lateral_lunge: 'illustrations/kb_lunge.svg',
+  kb_tactical_lunge: 'illustrations/kb_lunge.svg', kb_curtsy_lunge: 'illustrations/kb_lunge.svg',
+  kb_split_squat: 'illustrations/kb_lunge.svg',
+  kb_farmer: 'illustrations/kb_farmer.svg', kb_rack_carry: 'illustrations/kb_farmer.svg',
+  kb_overhead_carry: 'illustrations/kb_farmer.svg', kb_suitcase: 'illustrations/kb_farmer.svg',
+  kb_bicep_curl: 'illustrations/kb_bicep_curl.svg', kb_hammer_curl: 'illustrations/kb_bicep_curl.svg',
+  kb_crush_curl: 'illustrations/kb_bicep_curl.svg',
+  mat_glute_bridge: 'illustrations/mat_glute_bridge.svg',
+  mat_superman: 'illustrations/mat_glute_bridge.svg', mat_bird_dog: 'illustrations/mat_glute_bridge.svg',
+};
+
+const WEEKLY_WORKOUTS = [
+  { name:'Full Body Blitz', focus:'Full Body', duration:20,
+    exercises:[{id:'kb_swing',sets:3,reps:'12'},{id:'kb_goblet',sets:3,reps:'10'},{id:'kb_press',sets:3,reps:'8'},{id:'kb_row',sets:3,reps:'10'},{id:'mat_plank',sets:3,reps:'30s'}] },
+  { name:'Posterior Power', focus:'Posterior Chain', duration:20,
+    exercises:[{id:'kb_deadlift',sets:4,reps:'8'},{id:'kb_swing',sets:3,reps:'15'},{id:'kb_bent_row',sets:3,reps:'10'},{id:'mat_glute_bridge',sets:3,reps:'15'},{id:'kb_farmer',sets:3,reps:'40s'}] },
+  { name:'Upper Body Strength', focus:'Upper Body', duration:25,
+    exercises:[{id:'kb_press',sets:4,reps:'8'},{id:'kb_row',sets:4,reps:'10'},{id:'kb_floor_press',sets:3,reps:'10'},{id:'kb_bicep_curl',sets:3,reps:'12'},{id:'kb_tricep_ext',sets:3,reps:'12'},{id:'kb_shrug',sets:3,reps:'15'}] },
+  { name:'Leg Day', focus:'Lower Body', duration:25,
+    exercises:[{id:'kb_goblet',sets:4,reps:'12'},{id:'kb_deadlift',sets:3,reps:'10'},{id:'kb_lunge',sets:3,reps:'10'},{id:'kb_split_squat',sets:3,reps:'10'},{id:'mat_glute_bridge',sets:3,reps:'15'},{id:'kb_calf_raise',sets:3,reps:'20'}] },
+  { name:'Core Crusher', focus:'Core', duration:20,
+    exercises:[{id:'kb_turkish',sets:2,reps:'3'},{id:'mat_plank',sets:3,reps:'45s'},{id:'kb_russian_twist',sets:3,reps:'20'},{id:'kb_woodchop',sets:3,reps:'10'},{id:'kb_windmill',sets:3,reps:'8'}] },
+  { name:'Conditioning Circuit', focus:'Conditioning', duration:20,
+    exercises:[{id:'kb_swing',sets:4,reps:'20'},{id:'kb_goblet',sets:3,reps:'15'},{id:'kb_clean',sets:3,reps:'8'},{id:'kb_thruster',sets:3,reps:'8'},{id:'kb_burpee',sets:3,reps:'10'}] },
+  { name:'Strength & Flow', focus:'Full Body', duration:30,
+    exercises:[{id:'kb_clean_press',sets:3,reps:'6'},{id:'kb_deadlift',sets:4,reps:'6'},{id:'kb_gorilla_row',sets:3,reps:'10'},{id:'kb_goblet',sets:3,reps:'10'},{id:'kb_swing',sets:3,reps:'15'},{id:'mat_bird_dog',sets:3,reps:'10'}] },
+  { name:'Carry & Stabilize', focus:'Carries & Core', duration:20,
+    exercises:[{id:'kb_farmer',sets:3,reps:'40s'},{id:'kb_rack_carry',sets:3,reps:'30s'},{id:'kb_overhead_carry',sets:3,reps:'20s'},{id:'kb_suitcase',sets:3,reps:'30s'},{id:'mat_plank',sets:3,reps:'45s'}] },
+  { name:'Swing & Snatch', focus:'Posterior Chain', duration:25,
+    exercises:[{id:'kb_swing',sets:4,reps:'15'},{id:'kb_swing_1h',sets:3,reps:'10'},{id:'kb_snatch',sets:3,reps:'5'},{id:'kb_deadlift',sets:3,reps:'8'},{id:'mat_glute_bridge',sets:3,reps:'15'}] },
+  { name:'Press & Pull', focus:'Upper Body', duration:25,
+    exercises:[{id:'kb_press',sets:4,reps:'8'},{id:'kb_renegade_row',sets:3,reps:'8'},{id:'kb_push_press',sets:3,reps:'8'},{id:'kb_high_pull',sets:3,reps:'10'},{id:'kb_tricep_ext',sets:3,reps:'12'}] },
+  { name:'Hip Hinge Focus', focus:'Posterior Chain', duration:20,
+    exercises:[{id:'kb_deadlift',sets:4,reps:'8'},{id:'kb_single_dl',sets:3,reps:'8'},{id:'kb_swing',sets:3,reps:'15'},{id:'kb_gorilla_row',sets:3,reps:'10'},{id:'mat_superman',sets:3,reps:'10'}] },
+  { name:'Squat Variations', focus:'Lower Body', duration:25,
+    exercises:[{id:'kb_goblet',sets:4,reps:'12'},{id:'kb_front_squat',sets:3,reps:'8'},{id:'kb_split_squat',sets:3,reps:'10'},{id:'kb_bulgarian_split',sets:3,reps:'8'},{id:'kb_cossack',sets:2,reps:'8'}] },
+];
 
 // ==================== APP STATE ====================
 let currentWorkout = []; // [{exercise, sets, reps, weight}]
@@ -262,11 +338,18 @@ function getOwnedWeights() { return getSettings().owned || []; }
 function getPreferredWeight() { return getSettings().preferred || null; }
 
 function getAvailableExercises() {
-  const diff = getSettings().difficulty || 'intermediate';
+  const s = getSettings();
+  const diff = s.difficulty || 'intermediate';
   const allowed = diff === 'beginner' ? ['beginner']
     : diff === 'intermediate' ? ['beginner','intermediate']
     : ['beginner','intermediate','advanced'];
-  return EXERCISES.filter(ex => allowed.includes(ex.difficulty));
+  const extraEq = s.extraEquipment || [];
+  return EXERCISES.filter(ex => {
+    if (!allowed.includes(ex.difficulty)) return false;
+    if (ex.equipment === 'slam_ball' && !extraEq.includes('slam_ball')) return false;
+    if (ex.equipment === 'medicine_ball' && !extraEq.includes('medicine_ball')) return false;
+    return true;
+  });
 }
 
 function updateDifficultyCount(level) {
@@ -305,12 +388,23 @@ function closeSettings() {
 }
 
 function kettlebellPath(cx, cy, r) {
-  const a = 45 * Math.PI / 180;
+  const a = 52 * Math.PI / 180;
   const lx = cx - r * Math.sin(a);
   const ly = cy - r * Math.cos(a);
   const rx = cx + r * Math.sin(a);
-  const hh = r * 0.5;
-  return `M ${lx.toFixed(1)} ${ly.toFixed(1)} C ${(lx - r * 0.08).toFixed(1)} ${(ly - hh).toFixed(1)}, ${(rx + r * 0.08).toFixed(1)} ${(ly - hh).toFixed(1)}, ${rx.toFixed(1)} ${ly.toFixed(1)} A ${r} ${r} 0 1 1 ${lx.toFixed(1)} ${ly.toFixed(1)} Z`;
+  const handleH = r * 0.5;
+  const cornerR = Math.min(r * 0.13, 9);
+  const topY = ly - handleH;
+  return [
+    `M ${lx.toFixed(1)} ${ly.toFixed(1)}`,
+    `L ${lx.toFixed(1)} ${(topY + cornerR).toFixed(1)}`,
+    `Q ${lx.toFixed(1)} ${topY.toFixed(1)} ${(lx + cornerR).toFixed(1)} ${topY.toFixed(1)}`,
+    `L ${(rx - cornerR).toFixed(1)} ${topY.toFixed(1)}`,
+    `Q ${rx.toFixed(1)} ${topY.toFixed(1)} ${rx.toFixed(1)} ${(topY + cornerR).toFixed(1)}`,
+    `L ${rx.toFixed(1)} ${ly.toFixed(1)}`,
+    `A ${r} ${r} 0 1 1 ${lx.toFixed(1)} ${ly.toFixed(1)}`,
+    'Z'
+  ].join(' ');
 }
 
 function renderSettingsChips() {
@@ -350,16 +444,37 @@ function renderSettingsChips() {
     const fontSize = i === n - 1 ? 10 : 8.5;
     const fontWeight = isOwned ? 700 : 500;
 
-    labels += `<text x="${cx}" y="${labelY}" text-anchor="middle" fill="${textColor}" font-size="${fontSize}" font-weight="${fontWeight}" style="pointer-events:none">${formatWt(w)}</text>`;
+    labels += `<text x="${cx}" y="${labelY}" text-anchor="middle" fill="${textColor}" font-size="${fontSize}" font-weight="${fontWeight}" style="cursor:pointer" onclick="toggleOwnedWeight(${w})">${formatWt(w)}</text>`;
   });
 
   const svg = `<svg class="kb-nest-svg" viewBox="0 0 ${svgW} ${svgH}" width="100%" style="max-width:260px;margin:0 auto;display:block">${shapes}${labels}</svg>`;
   document.getElementById('owned-weights').innerHTML = svg;
 
-  // Preferred weight chips (unchanged)
+  // Preferred weight chips
   document.getElementById('preferred-weight').innerHTML = owned.map(w =>
     `<div class="weight-chip ${preferred === w ? 'preferred' : ''}" onclick="setPreferredWeight(${w})">${formatWt(w)}</div>`
   ).join('');
+
+  // Extra equipment toggles
+  const extraEq = s.extraEquipment || [];
+  const extraEquipEl = document.getElementById('extra-equipment-toggles');
+  if (extraEquipEl) {
+    const sbCount = EXERCISES.filter(e => e.equipment === 'slam_ball').length;
+    const mbCount = EXERCISES.filter(e => e.equipment === 'medicine_ball').length;
+    extraEquipEl.innerHTML = [
+      { id:'slam_ball', name:'Slam Ball', count:sbCount },
+      { id:'medicine_ball', name:'Medicine Ball', count:mbCount }
+    ].map(eq => {
+      const active = extraEq.includes(eq.id);
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:8px;border:1px solid ${active ? 'var(--accent)' : 'var(--border)'};margin-bottom:6px">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:${active ? 'var(--accent)' : 'var(--text)'}">${eq.name}</div>
+          <div style="font-size:11px;color:var(--text2)">${eq.count} exercises</div>
+        </div>
+        <div class="eq-toggle${active ? ' active' : ''}" onclick="toggleExtraEquipment('${eq.id}')">${active ? 'On' : 'Off'}</div>
+      </div>`;
+    }).join('');
+  }
 }
 
 function toggleOwnedWeight(w) {
@@ -379,6 +494,17 @@ function setPreferredWeight(w) {
   s.preferred = w;
   saveSettingsToStorage(s);
   renderSettingsChips();
+}
+
+function toggleExtraEquipment(eq) {
+  const s = getSettings();
+  const extra = s.extraEquipment || [];
+  const idx = extra.indexOf(eq);
+  if (idx >= 0) extra.splice(idx, 1); else extra.push(eq);
+  s.extraEquipment = extra;
+  saveSettingsToStorage(s);
+  renderSettingsChips();
+  if (buildMode === 'manual') renderExerciseList();
 }
 
 function updatePrefWeightDisplay() {
@@ -485,6 +611,10 @@ function updateTimerDisplay() {
     fsLabel.classList.remove('fs-label-circuit');
     if (currentWorkout[timerCurrentEx]) {
       const item = currentWorkout[timerCurrentEx];
+      const illustPath = EXERCISE_ILLUSTRATIONS[item.exercise.id];
+      fsIllust.innerHTML = illustPath
+        ? `<img src="${illustPath}" width="150" height="150" style="opacity:0.88" alt="">`
+        : `<svg viewBox="0 0 200 200" width="120" style="opacity:0.1"><path d="M 67 67 C 61.3 32 138.7 32 133 67 A 70 70 0 1 1 67 67 Z" fill="none" stroke="var(--accent)" stroke-width="3"/></svg>`;
       document.getElementById('fs-exercise-name').textContent = item.exercise.name;
       const wtLabel = item.weight === 'BW' ? '' : `  —  ${item.weight}`;
       document.getElementById('fs-exercise-detail').textContent =
@@ -680,7 +810,7 @@ function generateWorkout() {
       reps = ['swing','complex'].includes(ex.category) ? '12' : '8';
     }
     const wtLabel = unit === 'kg' ? `${weight} kg` : `${weight} lb`;
-    return { exercise: ex, sets, reps, weight: ex.equipment === 'mat' ? 'BW' : wtLabel };
+    return { exercise: ex, sets, reps, weight: ['mat','slam_ball','medicine_ball'].includes(ex.equipment) ? 'BW' : wtLabel };
   });
 
   renderCurrentWorkout();
@@ -712,13 +842,17 @@ function renderExerciseList() {
   if (sort === 'alpha') filtered.sort((a,b) => a.name.localeCompare(b.name));
   else if (sort === 'difficulty') filtered.sort((a,b) => diffOrder[a.difficulty] - diffOrder[b.difficulty] || a.name.localeCompare(b.name));
   else if (sort === 'equipment') filtered.sort((a,b) => a.equipment.localeCompare(b.equipment) || a.name.localeCompare(b.name));
+  const savedExIds = new Set(getSavedWorkouts().flatMap(w => w.exercises.map(e => e.id)));
+  const eqBadge = { kettlebell:'badge-kb', mat:'badge-mat', slam_ball:'badge-sb', medicine_ball:'badge-mb' };
+  const eqLabel = { kettlebell:'KB', mat:'Mat', slam_ball:'SB', medicine_ball:'MB' };
+
   const el = document.getElementById('exercise-list');
   el.innerHTML = filtered.map(ex => `
     <div class="exercise-item" onclick="addExercise('${ex.id}')">
       <div class="exercise-info">
-        <div class="exercise-name">${ex.name}</div>
+        <div class="exercise-name">${savedExIds.has(ex.id) ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" style="vertical-align:-1px;margin-right:3px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' : ''}${ex.name}</div>
         <div class="exercise-muscles">
-          <span class="badge ${ex.equipment==='kettlebell'?'badge-kb':'badge-mat'}" style="margin-right:4px">${ex.equipment==='kettlebell'?'KB':'Mat'}</span>
+          <span class="badge ${eqBadge[ex.equipment]||'badge-mat'}" style="margin-right:4px">${eqLabel[ex.equipment]||ex.equipment}</span>
           <span class="badge badge-diff" style="margin-right:4px">${ex.difficulty.charAt(0).toUpperCase()+ex.difficulty.slice(1)}</span>
           ${ex.primary.map(m => MUSCLE_NAMES[m]).join(', ')}
         </div>
@@ -740,7 +874,7 @@ function addExercise(id) {
   currentWorkout.push({
     exercise: ex, sets: 3,
     reps: ex.name.includes('Hold') || ex.name.includes('Plank') ? '30s' : '10',
-    weight: ex.equipment === 'mat' ? 'BW' : wtLabel
+    weight: ['mat','slam_ball','medicine_ball'].includes(ex.equipment) ? 'BW' : wtLabel
   });
   renderCurrentWorkout();
 }
@@ -1623,8 +1757,57 @@ function renderSuggestions(logs) {
     `).join('');
 }
 
+// ==================== WORKOUT OF THE WEEK ====================
+function getWeeklyWorkout() {
+  const now = new Date();
+  const weekNum = Math.floor((now - new Date(now.getFullYear(), 0, 1)) / (7 * 24 * 60 * 60 * 1000));
+  return WEEKLY_WORKOUTS[weekNum % WEEKLY_WORKOUTS.length];
+}
+
+function renderWorkoutOfTheWeek() {
+  const el = document.getElementById('wotw-card');
+  if (!el) return;
+  const wotw = getWeeklyWorkout();
+  const weekNum = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 1)) / (7 * 24 * 60 * 60 * 1000)) + 1;
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;font-weight:700">&#x2728; Week ${weekNum} Pick</div>
+        <div style="font-size:15px;font-weight:700">${wotw.name}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px">${wotw.focus} &middot; ~${wotw.duration} min &middot; ${wotw.exercises.length} exercises</div>
+      </div>
+      <button class="btn btn-sm btn-primary" style="flex-shrink:0" onclick="loadWeeklyWorkout()">Load</button>
+    </div>
+  `;
+}
+
+function loadWeeklyWorkout() {
+  const wotw = getWeeklyWorkout();
+  const s = getSettings();
+  const unit = s.unit || 'lb';
+  const prefKg = getPreferredWeight();
+  const wt = prefKg ? (unit === 'kg' ? prefKg : KG_TO_LB[prefKg]) : null;
+  const wtLabel = wt ? (unit === 'kg' ? `${wt} kg` : `${wt} lb`) : '—';
+  loadedSavedId = null;
+  currentWorkout = wotw.exercises.map(e => {
+    const exercise = EXERCISES.find(ex => ex.id === e.id);
+    if (!exercise) return null;
+    return { exercise, sets:e.sets, reps:e.reps, weight:['mat','slam_ball','medicine_ball'].includes(exercise.equipment) ? 'BW' : wtLabel };
+  }).filter(Boolean);
+  renderCurrentWorkout();
+  const srcEl = document.getElementById('workout-source');
+  srcEl.textContent = `${currentWorkout.length} exercises · ${wotw.focus} · ${wotw.duration} min`;
+  srcEl.style.display = 'block';
+  document.getElementById('quick-settings').style.display = 'none';
+  document.getElementById('quick-expand-bar').style.display = 'none';
+  document.getElementById('saved-source-bar').style.display = 'none';
+  setBuildMode('quick');
+  showToast(`Loaded: ${wotw.name}`);
+}
+
 // ==================== INIT ====================
 updatePrefWeightDisplay();
 renderExerciseList();
 renderLog();
 updateMusclesTabState();
+renderWorkoutOfTheWeek();
