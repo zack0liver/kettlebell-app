@@ -78,6 +78,8 @@
   .badge-secondary { background:var(--secondary-muscle); color:var(--text); }
   .badge-kb { background:var(--accent); color:#fff; }
   .badge-mat { background:var(--purple); color:#fff; }
+  .badge-sb { background:#e85d04; color:#fff; }
+  .badge-mb { background:#2d6a4f; color:#fff; }
   .badge-diff { background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
 
   .empty-state { text-align:center; padding:40px 20px; color:var(--text2); }
@@ -265,9 +267,23 @@
   .weight-chip.owned { border-color:var(--accent); color:var(--accent); background:var(--surface); }
   .weight-chip.preferred { background:var(--accent); color:#fff; border-color:var(--accent); }
 
+  /* Workout of the Week card */
+  .wotw-card {
+    background:linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border:1px solid var(--accent); border-radius:12px; padding:14px; cursor:default;
+  }
+
+  /* Equipment toggle */
+  .eq-toggle {
+    padding:5px 14px; border-radius:6px; font-size:12px; font-weight:600;
+    background:var(--surface); border:1px solid var(--border); color:var(--text2); cursor:pointer; transition:all .2s;
+  }
+  .eq-toggle.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+
   /* Nested kettlebell SVG */
   .kb-nest-svg path { cursor:pointer; transition: opacity .15s, filter .15s; }
   .kb-nest-svg path:hover { filter:brightness(1.4); }
+  .kb-nest-svg text { cursor:pointer; }
 
   /* Circuit mode toggle */
   .circuit-toggle {
