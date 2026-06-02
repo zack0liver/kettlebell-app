@@ -753,7 +753,7 @@ function timerPrevExercise() {
   }
 }
 
-// Swipe gestures during workout
+// Tap/swipe gestures during workout
 (function() {
   let startX = 0, startY = 0;
   document.addEventListener('touchstart', e => {
@@ -765,12 +765,16 @@ function timerPrevExercise() {
     if (!overlay.classList.contains('show')) return;
     const dx = startX - e.changedTouches[0].clientX;
     const dy = startY - e.changedTouches[0].clientY;
-    // Use the dominant axis
-    if (Math.abs(dx) > Math.abs(dy)) {
-      if (dx > 50) timerNextExercise();
-    } else {
-      if (dy > 80 && !circuitMode) overlay.classList.add('illust-expanded');
-      if (dy < -80) overlay.classList.remove('illust-expanded');
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 20) {
+      // Tap: toggle desc panel (ignore taps on buttons)
+      if (!circuitMode && !e.target.closest('button')) {
+        e.preventDefault();
+        overlay.classList.toggle('illust-expanded');
+      }
+    } else if (Math.abs(dx) > Math.abs(dy) && dx > 50) {
+      // Swipe left: next exercise
+      timerNextExercise();
     }
   });
 })();
