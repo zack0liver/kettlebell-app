@@ -281,7 +281,7 @@ const EXERCISE_ILLUSTRATIONS = {
 const GEAR_ICONS = {
   kettlebell: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="22" r="8"/><path d="M11 16 L11 12 Q11 8 16 8 Q21 8 21 12 L21 16"/></svg>`,
   mat: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="13" r="3"/><line x1="8" y1="14" x2="28" y2="14"/><line x1="11" y1="14" x2="11" y2="22"/><line x1="16" y1="14" x2="16" y2="22"/><line x1="28" y1="14" x2="28" y2="22"/><rect x="3" y="22" width="26" height="3" rx="1.5"/></svg>`,
-  slam_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="11" r="10"/><line x1="1" y1="22" x2="31" y2="22" stroke-width="2.5"/><line x1="9" y1="23" x2="6" y2="30"/><line x1="16" y1="22" x2="16" y2="30"/><line x1="23" y1="23" x2="26" y2="30"/></svg>`,
+  slam_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="19" cy="19" r="11"/><line x1="3" y1="2" x2="8" y2="7"/><line x1="1" y1="7" x2="7" y2="13"/><line x1="1" y1="12" x2="6" y2="17"/></svg>`,
   medicine_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="16" cy="16" r="12"/><path d="M10 6 Q16 14 22 6"/><path d="M10 26 Q16 18 22 26"/></svg>`,
 };
 
