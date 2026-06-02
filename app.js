@@ -348,30 +348,6 @@ const MUSCLE_TO_SVG = {
   core: ['front-abs']
 };
 
-const EXERCISE_ILLUSTRATIONS = {
-  kb_swing: 'illustrations/kb_swing.svg', kb_swing_1h: 'illustrations/kb_swing.svg',
-  kb_swing_alt: 'illustrations/kb_swing.svg', kb_swing_high: 'illustrations/kb_swing.svg',
-  kb_goblet: 'illustrations/kb_goblet.svg', kb_sumo: 'illustrations/kb_goblet.svg',
-  kb_front_squat: 'illustrations/kb_goblet.svg',
-  kb_press: 'illustrations/kb_press.svg', kb_push_press: 'illustrations/kb_press.svg',
-  kb_arnold_press: 'illustrations/kb_press.svg', kb_lateral_raise: 'illustrations/kb_press.svg',
-  kb_row: 'illustrations/kb_row.svg', kb_bent_row: 'illustrations/kb_row.svg',
-  kb_gorilla_row: 'illustrations/kb_row.svg', kb_upright_row: 'illustrations/kb_row.svg',
-  kb_turkish: 'illustrations/kb_turkish.svg',
-  mat_plank: 'illustrations/mat_plank.svg', mat_side_plank: 'illustrations/mat_plank.svg',
-  mat_hollow: 'illustrations/mat_plank.svg', mat_deadbug: 'illustrations/mat_plank.svg',
-  mat_mountain_climber: 'illustrations/mat_plank.svg',
-  kb_deadlift: 'illustrations/kb_deadlift.svg', kb_single_dl: 'illustrations/kb_deadlift.svg',
-  kb_lunge: 'illustrations/kb_lunge.svg', kb_lateral_lunge: 'illustrations/kb_lunge.svg',
-  kb_tactical_lunge: 'illustrations/kb_lunge.svg', kb_curtsy_lunge: 'illustrations/kb_lunge.svg',
-  kb_split_squat: 'illustrations/kb_lunge.svg',
-  kb_farmer: 'illustrations/kb_farmer.svg', kb_rack_carry: 'illustrations/kb_farmer.svg',
-  kb_overhead_carry: 'illustrations/kb_farmer.svg', kb_suitcase: 'illustrations/kb_farmer.svg',
-  kb_bicep_curl: 'illustrations/kb_bicep_curl.svg', kb_hammer_curl: 'illustrations/kb_bicep_curl.svg',
-  kb_crush_curl: 'illustrations/kb_bicep_curl.svg',
-  mat_glute_bridge: 'illustrations/mat_glute_bridge.svg',
-  mat_superman: 'illustrations/mat_glute_bridge.svg', mat_bird_dog: 'illustrations/mat_glute_bridge.svg',
-};
 
 const GEAR_ICONS = {
   kettlebell: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="22" r="8"/><path d="M11 16 L11 12 Q11 8 16 8 Q21 8 21 12 L21 16"/></svg>`,
@@ -675,10 +651,12 @@ function updateTimerDisplay() {
     `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 
   const fsLabel = document.getElementById('fs-label');
-  const fsIllust = document.querySelector('.fs-illustration');
+  const fsDescPanel = document.getElementById('fs-desc-panel');
+  const fsSwipeHint = document.querySelector('.fs-swipe-hint');
   if (circuitMode) {
-    // Circuit mode: show round label + all exercises
-    fsIllust.style.display = 'none';
+    // Circuit mode: hide desc panel and swipe hint
+    if (fsDescPanel) fsDescPanel.style.visibility = 'hidden';
+    if (fsSwipeHint) fsSwipeHint.style.display = 'none';
     fsLabel.innerHTML = '&#x21bb; Circuit Mode';
     fsLabel.classList.add('fs-label-circuit');
     const numRounds = parseInt(currentWorkout[0].sets) || 3;
@@ -712,15 +690,14 @@ function updateTimerDisplay() {
     }
   } else {
     // Standard mode
-    fsIllust.style.display = '';
+    if (fsDescPanel) fsDescPanel.style.visibility = '';
+    if (fsSwipeHint) fsSwipeHint.style.display = '';
     fsLabel.textContent = 'Workout Timer';
     fsLabel.classList.remove('fs-label-circuit');
     if (currentWorkout[timerCurrentEx]) {
       const item = currentWorkout[timerCurrentEx];
-      const illustPath = EXERCISE_ILLUSTRATIONS[item.exercise.id];
-      fsIllust.innerHTML = illustPath
-        ? `<img src="${illustPath}" width="150" height="150" style="opacity:0.88" alt="">`
-        : `<svg viewBox="0 0 200 200" width="120" style="opacity:0.1"><path d="M 67 67 C 61.3 32 138.7 32 133 67 A 70 70 0 1 1 67 67 Z" fill="none" stroke="var(--accent)" stroke-width="3"/></svg>`;
+      document.getElementById('fs-desc-name').textContent = item.exercise.name;
+      document.getElementById('fs-desc-text').textContent = item.exercise.desc || '';
       document.getElementById('fs-exercise-name').textContent = item.exercise.name;
       const wtLabel = item.weight === 'BW' ? '' : `  —  ${item.weight}`;
       document.getElementById('fs-exercise-detail').textContent =
@@ -762,10 +739,18 @@ function renderTimerProgress() {
 function timerTogglePause() { timerPaused = !timerPaused; updateTimerDisplay(); }
 function timerNextExercise() {
   const max = circuitMode ? (parseInt(currentWorkout[0].sets) || 3) - 1 : currentWorkout.length - 1;
-  if (timerCurrentEx < max) { timerCurrentEx++; timerExStartSec = timerSeconds; renderTimerProgress(); updateTimerDisplay(); }
+  if (timerCurrentEx < max) {
+    timerCurrentEx++; timerExStartSec = timerSeconds;
+    document.getElementById('timer-fullscreen').classList.remove('illust-expanded');
+    renderTimerProgress(); updateTimerDisplay();
+  }
 }
 function timerPrevExercise() {
-  if (timerCurrentEx > 0) { timerCurrentEx--; timerExStartSec = timerSeconds; renderTimerProgress(); updateTimerDisplay(); }
+  if (timerCurrentEx > 0) {
+    timerCurrentEx--; timerExStartSec = timerSeconds;
+    document.getElementById('timer-fullscreen').classList.remove('illust-expanded');
+    renderTimerProgress(); updateTimerDisplay();
+  }
 }
 
 // Swipe gestures during workout

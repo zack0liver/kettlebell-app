@@ -337,8 +337,11 @@
   .fs-exercise-name { font-size:48px; font-weight:700; text-align:center; margin-top:12px; }
   .fs-exercise-detail { font-size:24px; color:var(--text2); margin-top:8px; text-align:center; }
   .fs-exercise-allotment { font-size:24px; color:var(--text2); margin-top:4px; text-align:center; font-variant-numeric:tabular-nums; }
-  .fs-illustration { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
-  .fs-illustration-label { font-size:12px; color:var(--text2); opacity:0.5; margin-top:4px; letter-spacing:0.5px; }
+  .fs-swipe-hint { font-size:11px; color:var(--text2); opacity:0.35; letter-spacing:1px; text-transform:uppercase; margin-top:6px; transition:opacity .3s; }
+  .fs-desc-panel { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:calc(100% - 48px); max-width:400px; background:var(--card); border-radius:16px; padding:24px 24px 20px; opacity:0; pointer-events:none; transition:opacity .3s; text-align:center; }
+  .fs-desc-name { font-size:20px; font-weight:700; margin-bottom:12px; }
+  .fs-desc-text { font-size:16px; line-height:1.6; color:var(--text2); }
+  .fs-desc-dismiss { font-size:10px; color:var(--text2); opacity:0.35; letter-spacing:1px; text-transform:uppercase; margin-top:16px; }
   .fs-upnext { font-size:16px; margin-top:8px; color:var(--text2); text-align:center; margin-bottom:16px; }
   .fs-upnext strong { color:var(--text); }
   .fs-progress { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
@@ -346,13 +349,13 @@
   .fs-controls, .fs-bottom-controls { display:flex; gap:10px; justify-content:center; margin-bottom:10px; width:100%; max-width:320px; }
   .fs-controls .btn, .fs-bottom-controls .btn { flex:1; font-size:18px; padding:14px 0; }
 
-  /* Illustration expanded state (swipe up) */
+  /* Description panel expanded state (swipe up) */
   .illust-expanded .fs-label,
   .illust-expanded .fs-clock,
   .illust-expanded .fs-exercise-name,
   .illust-expanded .fs-exercise-detail,
   .illust-expanded .fs-exercise-allotment,
+  .illust-expanded .fs-swipe-hint,
   .illust-expanded .fs-upnext,
   .illust-expanded .fs-progress { opacity:0; pointer-events:none; transition:opacity .3s; }
-  .illust-expanded .fs-illustration { transform:translate(-50%,-50%) scale(2); transition:transform .3s, opacity .3s; opacity:1; }
-  .timer-fullscreen .fs-illustration { transition:transform .3s, opacity .3s; }
+  .illust-expanded .fs-desc-panel { opacity:1; pointer-events:auto; }
