@@ -21,6 +21,7 @@
 19. Workout queue — create a workout now and schedule it for later today or later in the week, with reminders to complete queued workouts
 20. Insights charts — add toggle views for sets by muscle group, total weight moved, and total time; future integration with Apple Watch data (heart rate, calories, activity rings)
 21. Exercise visibility by difficulty — indicate to beginner/intermediate users that more exercises exist at higher levels. One idea: in Manual Build search, show locked exercises grayed out with their difficulty badge but don't allow adding them to the workout
+22. Auth-gate the exercise database — move the EXERCISES array out of app.js and into Firestore, requiring sign-in to fetch it. Prevents the full exercise list from being downloaded by anyone who can access the site. Tradeoff: adds friction for new users browsing before creating an account; exercises are still extractable via DevTools Network tab by a signed-in user, but the bar is meaningfully higher than a public static file.
 
 ---
 
