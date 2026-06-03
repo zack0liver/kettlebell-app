@@ -343,7 +343,7 @@
   .fs-exercise-detail { font-size:24px; color:var(--text2); margin-top:8px; text-align:center; }
   .fs-exercise-allotment { font-size:24px; color:var(--text2); margin-top:4px; text-align:center; font-variant-numeric:tabular-nums; }
   .fs-swipe-hint { font-size:11px; color:var(--text2); opacity:0.35; letter-spacing:1px; text-transform:uppercase; margin-top:6px; transition:opacity .3s; }
-  .fs-desc-panel { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:calc(100% - 48px); max-width:400px; background:var(--card); border-radius:16px; padding:24px 24px 20px; opacity:0; pointer-events:none; transition:opacity .3s; text-align:center; }
+  .fs-desc-panel { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:calc(100% - 48px); max-width:400px; background:var(--card); border-radius:16px; padding:24px 24px 20px; opacity:0; pointer-events:none; transition:opacity .15s; text-align:center; }
   .fs-desc-name { font-size:20px; font-weight:700; margin-bottom:12px; }
   .fs-desc-text { font-size:16px; line-height:1.6; color:var(--text2); }
   .fs-desc-dismiss { font-size:10px; color:var(--text2); opacity:0.35; letter-spacing:1px; text-transform:uppercase; margin-top:16px; }
@@ -362,5 +362,5 @@
   .illust-expanded .fs-exercise-allotment,
   .illust-expanded .fs-swipe-hint,
   .illust-expanded .fs-upnext,
-  .illust-expanded .fs-progress { opacity:0; pointer-events:none; transition:opacity .3s; }
+  .illust-expanded .fs-progress { opacity:0; pointer-events:none; transition:opacity .15s; }
   .illust-expanded .fs-desc-panel { opacity:1; pointer-events:auto; }
