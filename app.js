@@ -586,6 +586,7 @@ function toggleExtraEquipment(eq) {
   s.extraEquipment = extra;
   saveSettingsToStorage(s);
   renderSettingsChips();
+  renderEquipChips();
   if (buildMode === 'manual') renderExerciseList();
 }
 

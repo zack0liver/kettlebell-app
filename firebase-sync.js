@@ -104,7 +104,10 @@ function refreshCurrentTab() {
   if (tab === 'saved' && typeof renderSavedWorkouts === 'function') renderSavedWorkouts();
   if (tab === 'log' && typeof renderLog === 'function') renderLog();
   if (tab === 'insights' && typeof renderInsights === 'function') renderInsights();
-  // Reload settings into the form
+  // Re-sync gear shelf and equipment chips from (possibly just-loaded) settings
+  if (typeof initGearShelf === 'function') initGearShelf();
+  if (typeof renderEquipChips === 'function') renderEquipChips();
+  if (typeof renderExerciseList === 'function') renderExerciseList();
   if (typeof loadSettings === 'function') loadSettings();
 }
 
