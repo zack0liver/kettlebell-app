@@ -16,10 +16,12 @@
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html, body { height:100%; overflow:hidden; }
+  html { background:#0f0f13; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     background: var(--bg); color: var(--text);
     display:flex; flex-direction:column;
+    max-width:480px; margin:0 auto;
   }
   /* Header */
   .header {
@@ -322,7 +324,10 @@
 
   /* Full-screen workout timer overlay */
   .timer-fullscreen {
-    display:none; position:fixed; inset:0; z-index:300;
+    display:none; position:fixed; top:0; bottom:0;
+    left:50%; transform:translateX(-50%);
+    width:100%; max-width:480px;
+    z-index:300;
     background:var(--bg); flex-direction:column; align-items:center;
     opacity:0; transition:opacity .3s ease;
     padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
