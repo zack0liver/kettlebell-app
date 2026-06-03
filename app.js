@@ -399,6 +399,7 @@ let equipmentFilter = 'all'; // equipment chip filter for Manual Build
 let timerInterval = null;
 let timerSeconds = 0;
 let timerPaused = false;
+let logDuration = 0;
 let timerCurrentEx = 0;
 let timerExAllotments = [];
 let timerExStartSec = 0;
@@ -782,6 +783,7 @@ function timerPrevExercise() {
 
 function stopWorkoutTimer() {
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  logDuration = timerSeconds;
   const overlay = document.getElementById('timer-fullscreen');
   overlay.classList.remove('visible');
   setTimeout(() => {
@@ -1279,7 +1281,12 @@ function openLogModal() {
   const notesEl = document.getElementById('log-notes');
   if (notesEl) notesEl.value = '';
   const summary = document.getElementById('log-exercise-summary');
-  summary.innerHTML = '<label>Exercises</label>' + currentWorkout.map(item =>
+  const durMin = Math.floor(logDuration / 60);
+  const durSec = logDuration % 60;
+  const durLabel = logDuration > 0
+    ? `<div style="font-size:12px;color:var(--text2);margin-bottom:8px">Duration: <strong style="color:var(--text)">${durMin}:${String(durSec).padStart(2,'0')}</strong></div>`
+    : '';
+  summary.innerHTML = durLabel + '<label>Exercises</label>' + currentWorkout.map(item =>
     `<div style="font-size:13px;padding:4px 0">${item.exercise.name} &mdash; ${item.sets}x${item.reps} @ ${item.weight}</div>`
   ).join('');
   document.getElementById('log-modal').classList.add('show');
@@ -1304,7 +1311,7 @@ function saveWorkoutLog() {
     primary: item.exercise.primary, secondary: item.exercise.secondary
   }));
 
-  const log = { id: Date.now().toString(36), date, notes, starred: logStarred, exercises: exerciseData, savedId: loadedSavedId || null };
+  const log = { id: Date.now().toString(36), date, notes, starred: logStarred, duration: logDuration || null, exercises: exerciseData, savedId: loadedSavedId || null };
   const logs = getWorkoutLogs();
   logs.push(log);
   logs.sort((a,b) => b.date.localeCompare(a.date));
@@ -1570,6 +1577,9 @@ function renderLog() {
 
   list.innerHTML = filtered.map(log => {
     const totalSets = log.exercises.reduce((s,e) => s + (parseInt(e.sets)||0), 0);
+    const durStr = log.duration > 0
+      ? (() => { const m = Math.floor(log.duration/60), s = log.duration%60; return `${m}:${String(s).padStart(2,'0')}`; })()
+      : null;
     return `
     <div class="log-entry">
       <div class="log-date">${log.starred?'<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>':''}${formatDate(log.date)}</div>
@@ -1577,6 +1587,7 @@ function renderLog() {
       <div class="log-stats">
         <span>${log.exercises.length} exercises</span>
         <span>${totalSets} total sets</span>
+        ${durStr ? `<span>&#9201; ${durStr}</span>` : ''}
         ${log.notes ? `<span>${log.notes}</span>` : ''}
       </div>
       <div class="log-actions">
