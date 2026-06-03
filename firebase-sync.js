@@ -76,6 +76,10 @@ auth.onAuthStateChanged(async function(user) {
     // Remove loading spinners
     document.querySelectorAll('.auth-loading').forEach(el => el.remove());
 
+    // Re-sync gear shelf and equipment chips now that Firestore settings are loaded
+    if (typeof initGearShelf === 'function') initGearShelf();
+    if (typeof renderEquipChips === 'function') renderEquipChips();
+
     // Check for local data to migrate
     if (!wasSignedIn) {
       checkMigration();
