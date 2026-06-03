@@ -389,8 +389,7 @@ let selectedFocus = new Set(['full']);
 let selectedDuration = 20;
 let buildMode = 'quick';
 let circuitMode = false;
-let calendarMonth = new Date();
-let selectedLogDate = null;
+let logFilter = 'all';
 let heatmapDays = 7;
 let selectedEquipment = new Set(['kettlebell', 'mat']); // gear shelf state for Generate
 let equipmentFilter = 'all'; // equipment chip filter for Manual Build
@@ -1563,16 +1562,38 @@ function deleteFromEdit() {
 }
 
 // ==================== LOG DISPLAY ====================
+function filterLogsByPill(logs) {
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+  if (logFilter === 'starred') return logs.filter(l => l.starred);
+  if (logFilter === 'week') {
+    const day = today.getDay();
+    const weekStart = new Date(today); weekStart.setDate(today.getDate() - day);
+    const weekStartStr = weekStart.toISOString().slice(0, 10);
+    return logs.filter(l => l.date >= weekStartStr && l.date <= todayStr);
+  }
+  if (logFilter === 'month') {
+    const monthStr = todayStr.slice(0, 7);
+    return logs.filter(l => l.date.slice(0, 7) === monthStr);
+  }
+  return logs;
+}
+
+function setLogFilter(filter) {
+  logFilter = filter;
+  document.querySelectorAll('.log-pill').forEach(p => p.classList.toggle('active', p.dataset.filter === filter));
+  renderLog();
+}
+
 function renderLog() {
   const logs = getWorkoutLogs();
-  renderCalendar(logs);
-
   const list = document.getElementById('log-list');
   const empty = document.getElementById('log-empty');
   if (logs.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
 
-  const filtered = selectedLogDate ? logs.filter(l => l.date === selectedLogDate) : logs;
-  if (filtered.length === 0) { list.innerHTML = '<div class="empty-state"><p>No workouts on this date</p></div>'; empty.style.display = 'none'; return; }
+  const filtered = filterLogsByPill(logs);
+  const emptyMessages = { week:'No workouts this week', month:'No workouts this month', starred:'No starred workouts', all:'' };
+  if (filtered.length === 0) { list.innerHTML = `<div class="empty-state"><p>${emptyMessages[logFilter] || 'No workouts'}</p></div>`; empty.style.display = 'none'; return; }
   empty.style.display = 'none';
 
   list.innerHTML = filtered.map(log => {
@@ -1626,47 +1647,6 @@ function formatDate(dateStr) {
 }
 
 // ==================== CALENDAR ====================
-function renderCalendar(logs) {
-  const el = document.getElementById('calendar');
-  const year = calendarMonth.getFullYear();
-  const month = calendarMonth.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date();
-
-  const workoutDates = new Set(logs.map(l => l.date));
-  const monthName = calendarMonth.toLocaleDateString('en-US', { month:'long', year:'numeric' });
-
-  let html = `
-    <div class="cal-header">
-      <button class="btn btn-sm btn-secondary" onclick="changeMonth(-1)">&larr;</button>
-      <span style="font-weight:600;font-size:14px">${monthName}</span>
-      <button class="btn btn-sm btn-secondary" onclick="changeMonth(1)">&rarr;</button>
-    </div>
-    <div class="cal-grid">
-      <div class="cal-day-label">S</div><div class="cal-day-label">M</div><div class="cal-day-label">T</div>
-      <div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div>
-  `;
-  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day"></div>';
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday = today.getFullYear()===year && today.getMonth()===month && today.getDate()===d;
-    const hasW = workoutDates.has(dateStr);
-    const isSel = selectedLogDate === dateStr;
-    html += `<div class="cal-day${hasW?' has-workout':''}${isToday?' today':''}${isSel?' selected':''}" onclick="selectLogDate('${dateStr}')">${d}</div>`;
-  }
-  html += '</div>';
-  el.innerHTML = html;
-}
-function selectLogDate(dateStr) {
-  selectedLogDate = selectedLogDate === dateStr ? null : dateStr;
-  renderLog();
-}
-function changeMonth(dir) {
-  calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + dir, 1);
-  selectedLogDate = null;
-  renderLog();
-}
 
 // ==================== INSIGHTS ====================
 function renderInsights() {
