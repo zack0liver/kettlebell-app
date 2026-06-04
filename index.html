@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <title>Kettle Bell Genie</title>
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 <link rel="stylesheet" href="auth.css">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -322,6 +322,13 @@
       </button>
       <div class="section-title" style="margin-bottom:0;flex:1">Muscle Activation</div>
     </div>
+    <div class="log-filter-pills" id="diagram-filter-pills" style="margin-bottom:12px;">
+      <div class="diagram-pill log-pill active" data-filter="current" onclick="setDiagramFilter('current')">Current Workout</div>
+      <div class="diagram-pill log-pill" data-filter="all" onclick="setDiagramFilter('all')">All</div>
+      <div class="diagram-pill log-pill" data-filter="week" onclick="setDiagramFilter('week')">This Week</div>
+      <div class="diagram-pill log-pill" data-filter="month" onclick="setDiagramFilter('month')">This Month</div>
+      <div class="diagram-pill log-pill" data-filter="starred" onclick="setDiagramFilter('starred')">Starred</div>
+    </div>
     <div id="diagram-context" style="font-size:13px; color:var(--text2); margin-bottom:14px;">Tap a muscle group to see which exercises activate it.</div>
 
     <div class="diagram-container">
@@ -625,8 +632,8 @@
 <!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
-<script src="firebase-config.js?v=19"></script>
-<script src="firebase-sync.js?v=19"></script>
-<script src="app.js?v=19"></script>
+<script src="firebase-config.js?v=20"></script>
+<script src="firebase-sync.js?v=20"></script>
+<script src="app.js?v=20"></script>
 </body>
 </html>

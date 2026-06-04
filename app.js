@@ -390,6 +390,7 @@ let selectedDuration = 20;
 let buildMode = 'quick';
 let circuitMode = false;
 let logFilter = 'all';
+let diagramFilter = 'current';
 let heatmapDays = 7;
 let selectedEquipment = new Set(['kettlebell', 'mat']); // gear shelf state for Generate
 let equipmentFilter = 'all'; // equipment chip filter for Manual Build
@@ -799,13 +800,8 @@ function stopWorkoutTimer() {
 function updateMusclesTabState() {
   const btn = document.querySelector('.nav-btn[data-tab="diagram"]');
   const viewBtn = document.getElementById('view-muscles-btn');
-  if (currentWorkout.length === 0) {
-    btn.classList.add('disabled');
-    if (viewBtn) viewBtn.style.display = 'none';
-  } else {
-    btn.classList.remove('disabled');
-    if (viewBtn) viewBtn.style.display = '';
-  }
+  btn.classList.remove('disabled');
+  if (viewBtn) viewBtn.style.display = currentWorkout.length > 0 ? '' : 'none';
 }
 
 function switchTab(tab) {
@@ -1179,57 +1175,65 @@ function toggleQuickSettings() {
 }
 
 // ==================== MUSCLE DIAGRAM ====================
+function setDiagramFilter(filter) {
+  diagramFilter = filter;
+  document.querySelectorAll('.diagram-pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.filter === filter));
+  updateDiagram();
+}
+
 function updateDiagram() {
-  // Clear all
-  document.querySelectorAll('.muscle').forEach(m => {
-    m.classList.remove('active-primary','active-secondary');
-  });
+  document.querySelectorAll('.muscle').forEach(m =>
+    m.classList.remove('active-primary','active-secondary'));
 
-  const hasWorkout = currentWorkout.length > 0;
-  document.getElementById('diagram-workout-summary').style.display = hasWorkout ? 'block' : 'none';
+  const summaryCard = document.getElementById('diagram-workout-summary');
+  let exercises = [];
+  let summaryHtml = '';
 
-  if (!hasWorkout) {
-    document.getElementById('muscle-legend').innerHTML = '';
-    document.getElementById('diagram-summary-list').innerHTML = '';
-    return;
+  if (diagramFilter === 'current') {
+    if (currentWorkout.length === 0) {
+      summaryCard.style.display = 'none';
+      document.getElementById('muscle-legend').innerHTML = '';
+      document.getElementById('diagram-summary-list').innerHTML = '';
+      return;
+    }
+    exercises = currentWorkout.map(item => item.exercise);
+    summaryHtml = currentWorkout.map(item =>
+      `<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;"><span style="font-weight:600">${item.exercise.name}</span><span style="color:var(--text2)">${item.sets}×${item.reps}</span></div>`
+    ).join('');
+    summaryCard.style.display = 'block';
+  } else {
+    const logs = filterLogsByKey(getWorkoutLogs(), diagramFilter);
+    if (logs.length === 0) {
+      summaryCard.style.display = 'none';
+      document.getElementById('muscle-legend').innerHTML = '';
+      document.getElementById('diagram-summary-list').innerHTML = '';
+      return;
+    }
+    exercises = logs.flatMap(log => log.exercises || []);
+    const labels = { all:'all time', week:'this week', month:'this month', starred:'starred workouts' };
+    summaryHtml = `<div style="font-size:12px;color:var(--text2)">${logs.length} workout${logs.length !== 1 ? 's' : ''} — ${labels[diagramFilter]}</div>`;
+    summaryCard.style.display = 'block';
   }
 
-  // Workout summary
-  document.getElementById('diagram-summary-list').innerHTML = currentWorkout.map(item =>
-    `<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;"><span style="font-weight:600">${item.exercise.name}</span><span style="color:var(--text2)">${item.sets}×${item.reps}</span></div>`
-  ).join('');
+  document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
 
-  // Collect activated muscles
   const primaryMuscles = new Set();
   const secondaryMuscles = new Set();
-  currentWorkout.forEach(item => {
-    item.exercise.primary.forEach(m => primaryMuscles.add(m));
-    item.exercise.secondary.forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
+  exercises.forEach(ex => {
+    (ex.primary || []).forEach(m => primaryMuscles.add(m));
+    (ex.secondary || []).forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
   });
 
-  // Apply to SVG
-  primaryMuscles.forEach(m => {
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.add('active-primary');
-    });
-  });
-  secondaryMuscles.forEach(m => {
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
-      const el = document.getElementById(id);
-      if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary');
-    });
-  });
+  primaryMuscles.forEach(m =>
+    (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('active-primary'); }));
+  secondaryMuscles.forEach(m =>
+    (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary'); }));
 
-  // Build legend
   const legend = document.getElementById('muscle-legend');
   let html = '';
-  primaryMuscles.forEach(m => {
-    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
-  });
-  secondaryMuscles.forEach(m => {
-    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
-  });
+  primaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+  secondaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
   legend.innerHTML = html;
 }
 
@@ -1238,22 +1242,48 @@ document.addEventListener('click', e => {
   const muscle = e.target.closest('.muscle');
   if (!muscle) return;
   const muscleKey = muscle.dataset.muscle;
-  if (!muscleKey || currentWorkout.length === 0) return;
+  if (!muscleKey) return;
 
-  const exercises = currentWorkout.filter(item =>
-    item.exercise.primary.includes(muscleKey) || item.exercise.secondary.includes(muscleKey)
-  );
+  let matchingExercises = [];
+  let noDataMsg = '';
+
+  if (diagramFilter === 'current') {
+    if (currentWorkout.length === 0) return;
+    matchingExercises = currentWorkout
+      .filter(item => item.exercise.primary.includes(muscleKey) || item.exercise.secondary.includes(muscleKey))
+      .map(item => ({
+        name: item.exercise.name,
+        detail: `${item.sets} sets × ${item.reps} reps @ ${item.weight}`,
+        isPrimary: item.exercise.primary.includes(muscleKey)
+      }));
+    noDataMsg = 'No exercises in current workout target this muscle.';
+  } else {
+    const logs = filterLogsByKey(getWorkoutLogs(), diagramFilter);
+    if (logs.length === 0) return;
+    const seen = new Set();
+    logs.forEach(log => {
+      (log.exercises || []).forEach(ex => {
+        const isPrimary = (ex.primary || []).includes(muscleKey);
+        const isSecondary = (ex.secondary || []).includes(muscleKey);
+        if ((isPrimary || isSecondary) && !seen.has(ex.name)) {
+          seen.add(ex.name);
+          matchingExercises.push({ name: ex.name, detail: null, isPrimary });
+        }
+      });
+    });
+    noDataMsg = 'No logged exercises target this muscle.';
+  }
 
   document.getElementById('popup-muscle-name').textContent = MUSCLE_NAMES[muscleKey] || muscleKey;
   const list = document.getElementById('popup-exercises');
-  if (exercises.length === 0) {
-    list.innerHTML = '<p style="color:var(--text2);font-size:13px">No exercises in current workout target this muscle.</p>';
+  if (matchingExercises.length === 0) {
+    list.innerHTML = `<p style="color:var(--text2);font-size:13px">${noDataMsg}</p>`;
   } else {
-    list.innerHTML = exercises.map(item => `
+    list.innerHTML = matchingExercises.map(item => `
       <div style="padding:6px 0;border-bottom:1px solid var(--border)">
-        <div style="font-weight:600;font-size:14px">${item.exercise.name}</div>
-        <div style="font-size:12px;color:var(--text2)">${item.sets} sets x ${item.reps} reps @ ${item.weight}
-          &mdash; <span class="badge badge-${item.exercise.primary.includes(muscleKey)?'primary':'secondary'}">${item.exercise.primary.includes(muscleKey)?'Primary':'Secondary'}</span>
+        <div style="font-weight:600;font-size:14px">${item.name}</div>
+        <div style="font-size:12px;color:var(--text2)">${item.detail ? item.detail + ' &mdash; ' : ''}
+          <span class="badge badge-${item.isPrimary ? 'primary' : 'secondary'}">${item.isPrimary ? 'Primary' : 'Secondary'}</span>
         </div>
       </div>
     `).join('');
@@ -1562,22 +1592,22 @@ function deleteFromEdit() {
 }
 
 // ==================== LOG DISPLAY ====================
-function filterLogsByPill(logs) {
+function filterLogsByKey(logs, key) {
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
-  if (logFilter === 'starred') return logs.filter(l => l.starred);
-  if (logFilter === 'week') {
-    const day = today.getDay();
-    const weekStart = new Date(today); weekStart.setDate(today.getDate() - day);
-    const weekStartStr = weekStart.toISOString().slice(0, 10);
-    return logs.filter(l => l.date >= weekStartStr && l.date <= todayStr);
+  if (key === 'starred') return logs.filter(l => l.starred);
+  if (key === 'week') {
+    const weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+    return logs.filter(l => l.date >= weekStart.toISOString().slice(0, 10) && l.date <= todayStr);
   }
-  if (logFilter === 'month') {
+  if (key === 'month') {
     const monthStr = todayStr.slice(0, 7);
     return logs.filter(l => l.date.slice(0, 7) === monthStr);
   }
   return logs;
 }
+
+function filterLogsByPill(logs) { return filterLogsByKey(logs, logFilter); }
 
 function setLogFilter(filter) {
   logFilter = filter;
