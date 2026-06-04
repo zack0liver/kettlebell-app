@@ -16,10 +16,12 @@
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html, body { height:100%; overflow:hidden; }
+  html { background:#0f0f13; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     background: var(--bg); color: var(--text);
     display:flex; flex-direction:column;
+    max-width:480px; margin:0 auto;
   }
   /* Header */
   .header {
@@ -193,27 +195,14 @@
   .log-stats { font-size:11px; color:var(--text2); margin-top:6px; display:flex; gap:12px; }
   .log-actions { display:flex; gap:6px; margin-top:8px; }
 
-  /* Calendar */
-  .calendar { margin-bottom:16px; }
-  .cal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; }
-  .cal-day-label { font-size:10px; color:var(--text2); padding:4px; }
-  .cal-day {
-    aspect-ratio:1; display:flex; align-items:center; justify-content:center;
-    font-size:12px; border-radius:8px; color:var(--text2);
+  /* Log filter pills */
+  .log-filter-pills { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+  .log-pill {
+    padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer;
+    background:var(--surface2); color:var(--text2); border:1px solid var(--border);
+    transition:all .15s; user-select:none;
   }
-  .cal-day.has-workout { position:relative; }
-  .cal-day.has-workout::after {
-    content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%);
-    width:5px; height:5px; border-radius:50%; background:var(--accent);
-  }
-  .cal-day.today { background:var(--accent); color:#fff; font-weight:700; border-radius:50%; }
-  .cal-day.today.has-workout::after { background:#fff; }
-  .cal-day.selected { background:var(--surface2); color:var(--text); font-weight:700; border-radius:50%; }
-  .cal-day.selected.has-workout::after { background:var(--accent); }
-  .cal-day.today.selected { background:var(--accent); color:#fff; }
-  .cal-day.today.selected.has-workout::after { background:#fff; }
-  .cal-day[onclick] { cursor:pointer; }
+  .log-pill.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
   /* Charts */
   .chart-container { position:relative; height:180px; margin-bottom:16px; }
@@ -267,6 +256,26 @@
   .weight-chip.owned { border-color:var(--accent); color:var(--accent); background:var(--surface); }
   .weight-chip.preferred { background:var(--accent); color:#fff; border-color:var(--accent); }
 
+  /* Gear shelf (Generate) */
+  .gear-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .gear-item {
+    flex:1; min-width:64px; padding:10px 6px 8px; border-radius:10px; text-align:center;
+    border:2px solid var(--border); background:var(--surface); cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    font-size:11px; font-weight:600; color:var(--text2); transition:all .2s; user-select:none;
+  }
+  .gear-item.active { border-color:var(--accent); color:var(--accent); background:var(--surface2); }
+  .gear-item:active { transform:scale(.96); }
+
+  /* Equipment chips (Manual Build) */
+  .equip-chips { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .equip-chip {
+    padding:5px 14px; border-radius:20px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text2); font-size:12px; font-weight:600;
+    cursor:pointer; transition:all .15s; user-select:none;
+  }
+  .equip-chip.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+
   /* Workout of the Week card */
   .wotw-card {
     background:linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
@@ -302,7 +311,10 @@
 
   /* Full-screen workout timer overlay */
   .timer-fullscreen {
-    display:none; position:fixed; inset:0; z-index:300;
+    display:none; position:fixed; top:0; bottom:0;
+    left:50%; transform:translateX(-50%);
+    width:100%; max-width:480px;
+    z-index:300;
     background:var(--bg); flex-direction:column; align-items:center;
     opacity:0; transition:opacity .3s ease;
     padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
@@ -317,8 +329,11 @@
   .fs-exercise-name { font-size:48px; font-weight:700; text-align:center; margin-top:12px; }
   .fs-exercise-detail { font-size:24px; color:var(--text2); margin-top:8px; text-align:center; }
   .fs-exercise-allotment { font-size:24px; color:var(--text2); margin-top:4px; text-align:center; font-variant-numeric:tabular-nums; }
-  .fs-illustration { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
-  .fs-illustration-label { font-size:12px; color:var(--text2); opacity:0.5; margin-top:4px; letter-spacing:0.5px; }
+  .fs-swipe-hint { font-size:11px; color:var(--text2); opacity:0.35; letter-spacing:1px; text-transform:uppercase; margin-top:6px; transition:opacity .3s; }
+  .fs-desc-panel { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:calc(100% - 48px); max-width:400px; background:var(--card); border-radius:16px; padding:24px 24px 20px; opacity:0; pointer-events:none; transition:opacity .15s; text-align:center; }
+  .fs-desc-name { font-size:20px; font-weight:700; margin-bottom:12px; }
+  .fs-desc-text { font-size:16px; line-height:1.6; color:var(--text2); }
+  .fs-desc-dismiss { font-size:10px; color:var(--text2); opacity:0.35; letter-spacing:1px; text-transform:uppercase; margin-top:16px; }
   .fs-upnext { font-size:16px; margin-top:8px; color:var(--text2); text-align:center; margin-bottom:16px; }
   .fs-upnext strong { color:var(--text); }
   .fs-progress { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
@@ -326,13 +341,13 @@
   .fs-controls, .fs-bottom-controls { display:flex; gap:10px; justify-content:center; margin-bottom:10px; width:100%; max-width:320px; }
   .fs-controls .btn, .fs-bottom-controls .btn { flex:1; font-size:18px; padding:14px 0; }
 
-  /* Illustration expanded state (swipe up) */
+  /* Description panel expanded state (swipe up) */
   .illust-expanded .fs-label,
   .illust-expanded .fs-clock,
   .illust-expanded .fs-exercise-name,
   .illust-expanded .fs-exercise-detail,
   .illust-expanded .fs-exercise-allotment,
+  .illust-expanded .fs-swipe-hint,
   .illust-expanded .fs-upnext,
-  .illust-expanded .fs-progress { opacity:0; pointer-events:none; transition:opacity .3s; }
-  .illust-expanded .fs-illustration { transform:translate(-50%,-50%) scale(2); transition:transform .3s, opacity .3s; opacity:1; }
-  .timer-fullscreen .fs-illustration { transition:transform .3s, opacity .3s; }
+  .illust-expanded .fs-progress { opacity:0; pointer-events:none; transition:opacity .15s; }
+  .illust-expanded .fs-desc-panel { opacity:1; pointer-events:auto; }
