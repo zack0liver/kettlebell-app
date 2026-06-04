@@ -2,229 +2,324 @@
 const EXERCISES = [
   // Swings
   { id:'kb_swing', name:'Kettlebell Swing', category:'swing', equipment:'kettlebell', difficulty:'beginner',
-    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'] },
+    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'],
+    desc:'The hinge, not the squat — drive your hips back explosively then snap them forward to send the bell floating to chest height. Glutes and hamstrings do the heavy lifting while your core locks everything in place.' },
   { id:'kb_swing_1h', name:'One-Hand Swing', category:'swing', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms','obliques'] },
+    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms','obliques'],
+    desc:'Same hip-hinge power as the two-hand swing, but now one arm holds the bell while the other fights to keep your torso from spiraling. Your obliques and lats quietly pick up a second job.' },
   { id:'kb_swing_alt', name:'Alternating Swing', category:'swing', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'] },
+    primary:['glutes','hamstrings'], secondary:['core','lower_back','shoulders','forearms'],
+    desc:'At the top of each swing you hand the bell off mid-air like a hot potato — sounds casual, but your grip, core, and shoulders are working every single pass.' },
 
   // Squats
   { id:'kb_goblet', name:'Goblet Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['core','hamstrings'] },
+    primary:['quads','glutes'], secondary:['core','hamstrings'],
+    desc:'Hold the bell by the horns at chest height and squat until your elbows graze your inner thighs. The front-loaded weight pulls you forward, so your core works overtime just to keep you upright.' },
   { id:'kb_sumo', name:'Sumo Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings'] },
+    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings'],
+    desc:'Wide stance, toes out, bell hanging between your legs — then sit straight down like royalty. The extra hip width recruits more inner thigh and glute than a standard squat.' },
   { id:'kb_cossack', name:'Cossack Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings','calves'] },
+    primary:['quads','glutes','hip_flexors'], secondary:['core','hamstrings','calves'],
+    desc:'A side-to-side squat that takes your hips somewhere they\'ve likely never been — one leg drops deep while the other extends straight. Demands serious hip flexor and adductor range of motion, and will expose every tightness you\'ve been ignoring.' },
   { id:'kb_front_squat', name:'Front Rack Squat', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes'], secondary:['core','shoulders','traps'] },
+    primary:['quads','glutes'], secondary:['core','shoulders','traps'],
+    desc:'The bell rests on your forearm in the rack position, meaning your shoulder and upper back must stay vertical the entire squat or the bell wins. Legs and core, plus a crash course in positional strength.' },
 
   // Presses
   { id:'kb_press', name:'Overhead Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','triceps'], secondary:['core','chest'] },
+    primary:['shoulders','triceps'], secondary:['core','chest'],
+    desc:'From the rack, press the bell straight overhead until your arm is locked out and your bicep brushes your ear. The shoulder complex drives the lift while your core braces to keep any back arch from sneaking in.' },
   { id:'kb_push_press', name:'Push Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','triceps','quads'], secondary:['core','glutes'] },
+    primary:['shoulders','triceps','quads'], secondary:['core','glutes'],
+    desc:'A slight leg dip loads the drive, then your legs punch upward to give the bell a head start — your shoulders finish the job overhead. More weight than a strict press, same finishing position.' },
   { id:'kb_floor_press', name:'Floor Press', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['chest','triceps'], secondary:['shoulders'] },
+    primary:['chest','triceps'], secondary:['shoulders'],
+    desc:'The floor\'s built-in stop removes the bottom stretch of a bench press, forcing your triceps and chest to work from a dead start. Easier on the shoulders too, since your elbows can\'t drop below parallel.' },
   { id:'kb_bottoms_up', name:'Bottoms-Up Press', category:'press', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','forearms'], secondary:['core','triceps'] },
+    primary:['shoulders','forearms'], secondary:['core','triceps'],
+    desc:'The bell is flipped upside down and balanced on your fist — press it overhead without dropping it. Your wrist, forearm, and rotator cuff scramble to stabilize the load the entire way up.' },
 
   // Pulls / Rows
   { id:'kb_row', name:'Single-Arm Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['lats','biceps'], secondary:['core','forearms','traps'] },
+    primary:['lats','biceps'], secondary:['core','forearms','traps'],
+    desc:'Brace on a bench or your thigh, then pull the bell from full arm extension to your hip. Your lat is the prime mover; your bicep and forearm are happy passengers.' },
   { id:'kb_gorilla_row', name:'Gorilla Row', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['lats','biceps'], secondary:['core','forearms','traps','lower_back'] },
+    primary:['lats','biceps'], secondary:['core','forearms','traps','lower_back'],
+    desc:'Both bells on the floor in a wide hip hinge — row one while the other anchors you, then switch. The alternating rhythm creates a constant anti-rotation demand that standard rows never touch.' },
   { id:'kb_high_pull', name:'High Pull', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','traps','hamstrings'], secondary:['glutes','core','biceps','forearms'] },
+    primary:['shoulders','traps','hamstrings'], secondary:['glutes','core','biceps','forearms'],
+    desc:'Explode the bell out of a swing and redirect the momentum upward, driving your elbow high past your ear. Traps and posterior shoulder get a power stimulus that standard rows simply can\'t deliver.' },
   { id:'kb_upright_row', name:'Upright Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders','traps'], secondary:['biceps','forearms'] },
+    primary:['shoulders','traps'], secondary:['biceps','forearms'],
+    desc:'Pull the bell straight up along your body until your elbows reach shoulder height. Your mid-deltoids and upper traps feel every inch — keep your wrists below your elbows throughout.' },
 
   // Core
   { id:'kb_turkish', name:'Turkish Get-Up', category:'core', equipment:'kettlebell', difficulty:'advanced',
-    primary:['core','shoulders'], secondary:['glutes','quads','triceps','hip_flexors','obliques'] },
+    primary:['core','shoulders'], secondary:['glutes','quads','triceps','hip_flexors','obliques'],
+    desc:'The world\'s longest single rep — from flat on your back to standing with the bell overhead, then every step reversed. Every joint, stabilizer, and balance reflex you own gets tested before you set it down.' },
   { id:'kb_windmill', name:'Windmill', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['obliques','shoulders'], secondary:['hamstrings','hip_flexors','core'] },
+    primary:['obliques','shoulders'], secondary:['hamstrings','hip_flexors','core'],
+    desc:'Hold the bell overhead and hinge sideways until your free hand touches the floor while the bell stays locked above you. Your obliques, rotator cuff, and hamstrings negotiate a three-way deal the whole way down.' },
   { id:'kb_halo', name:'Halo', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders','core'], secondary:['triceps','forearms'] },
+    primary:['shoulders','core'], secondary:['triceps','forearms'],
+    desc:'Circle the bell slowly around your head while keeping your torso completely still. Your shoulders and core work in constant opposition to keep the rotation smooth and controlled.' },
   { id:'kb_russian_twist', name:'Russian Twist (KB)', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['obliques','abs'], secondary:['hip_flexors'] },
+    primary:['obliques','abs'], secondary:['hip_flexors'],
+    desc:'Feet off the floor if you dare, torso tilted back, swinging the bell side to side past each hip. Your obliques are doing most of the work; your hip flexors are just complaining about it.' },
   { id:'kb_pullover', name:'KB Pullover', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['lats','abs'], secondary:['chest','triceps'] },
+    primary:['lats','abs'], secondary:['chest','triceps'],
+    desc:'Lie flat and arc the bell from your chest up over your head toward the floor, then pull it back. Your lats get a full stretch-to-contraction sweep while your abs fight to keep your lower back from leaving the mat.' },
   { id:'kb_figure8', name:'Figure 8', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','obliques'], secondary:['forearms','quads','glutes'] },
+    primary:['core','obliques'], secondary:['forearms','quads','glutes'],
+    desc:'Pass the bell between and around your legs in a continuous figure-8 pattern while staying in a deep hip hinge. Your core and obliques brace the whole time while your forearms question every life choice.' },
 
   // Carries
   { id:'kb_farmer', name:'Farmer Carry', category:'carry', equipment:'kettlebell', difficulty:'beginner',
-    primary:['forearms','traps'], secondary:['core','shoulders','calves'] },
+    primary:['forearms','traps'], secondary:['core','shoulders','calves'],
+    desc:'Pick up heavy bells and walk. Your grip, traps, and core are bracing for every step while your gait tries not to look like a penguin. One of the best bang-for-your-time full-body exercises there is.' },
   { id:'kb_rack_carry', name:'Rack Carry', category:'carry', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','shoulders'], secondary:['forearms','biceps','calves'] },
+    primary:['core','shoulders'], secondary:['forearms','biceps','calves'],
+    desc:'Bell resting on your forearm in the rack position as you walk — your core fights lateral tilt on every step and your shoulder stabilizes the load at chest height. Your calves also do more than they expected.' },
   { id:'kb_overhead_carry', name:'Overhead Carry', category:'carry', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','core'], secondary:['triceps','forearms','calves','traps'] },
+    primary:['shoulders','core'], secondary:['triceps','forearms','calves','traps'],
+    desc:'Walk with the bell locked overhead and arm straight. Your rotator cuff, core, and glutes team up to keep the bell from drifting and your spine from folding with every step.' },
   { id:'kb_suitcase', name:'Suitcase Carry', category:'carry', equipment:'kettlebell', difficulty:'beginner',
-    primary:['obliques','forearms'], secondary:['core','traps','calves'] },
+    primary:['obliques','forearms'], secondary:['core','traps','calves'],
+    desc:'One bell at your side like an actual suitcase — except you\'re not allowed to lean toward it. Your obliques on the unloaded side work hard to keep your torso upright the entire walk.' },
 
   // Complexes / Dynamic
   { id:'kb_clean', name:'Kettlebell Clean', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','shoulders','traps'] },
+    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','shoulders','traps'],
+    desc:'Swing the bell and guide it into the rack position in one smooth arc — no banging the forearm. Your hips snap forward first, then your arm redirects the momentum into a clean, quiet catch.' },
   { id:'kb_snatch', name:'Kettlebell Snatch', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','traps','forearms','quads'] },
+    primary:['shoulders','hamstrings','glutes'], secondary:['core','traps','forearms','quads'],
+    desc:'The bell travels from below your hips to a locked-out position overhead in one fluid motion. Ballistic, technical, and humbling until the timing clicks — then it\'s the most satisfying rep in kettlebell training.' },
   { id:'kb_clean_press', name:'Clean & Press', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','forearms','traps'] },
+    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','forearms','traps'],
+    desc:'Hip drive delivers the bell to the rack, then your shoulder takes it the rest of the way overhead in one continuous sequence. Two movements, one tempo, every muscle involved.' },
   { id:'kb_thruster', name:'Thruster', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','shoulders','glutes'], secondary:['core','triceps','hamstrings'] },
+    primary:['quads','shoulders','glutes'], secondary:['core','triceps','hamstrings'],
+    desc:'Squat with the bell at your shoulder, then use the upward leg drive to launch it overhead without pausing between squat and press. Your lungs will file a formal complaint around rep 6.' },
   { id:'kb_lunge', name:'KB Lunge', category:'complex', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['hamstrings','core','calves'] },
+    primary:['quads','glutes'], secondary:['hamstrings','core','calves'],
+    desc:'Step forward into a deep lunge with the bell at your side or in the rack. One quad gets the bulk of the burn on the way down; your glute powers the push back to standing.' },
   { id:'kb_deadlift', name:'KB Deadlift', category:'complex', equipment:'kettlebell', difficulty:'beginner',
-    primary:['hamstrings','glutes','lower_back'], secondary:['core','forearms','quads'] },
+    primary:['hamstrings','glutes','lower_back'], secondary:['core','forearms','quads'],
+    desc:'Hinge at the hips, grip the bell on the floor, then drive through your heels until your hips lock out fully. Your hamstrings and glutes are the engine; your lower back is bracing, not lifting.' },
   { id:'kb_single_dl', name:'Single-Leg Deadlift', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['hamstrings','glutes'], secondary:['core','lower_back','calves'] },
+    primary:['hamstrings','glutes'], secondary:['core','lower_back','calves'],
+    desc:'Stand on one leg, hinge forward with the bell hanging, and let your free leg float behind as a counterbalance. Every small balance stabilizer on the standing leg works overtime to keep you from tipping.' },
 
   // Mat / Bodyweight
   { id:'mat_plank', name:'Plank', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['abs','core'], secondary:['shoulders','glutes'] },
+    primary:['abs','core'], secondary:['shoulders','glutes'],
+    desc:'Hold a rigid push-up position without moving — sounds easy until thirty seconds in. Your abs, obliques, and glutes co-contract to keep your spine from sagging like a hammock.' },
   { id:'mat_side_plank', name:'Side Plank', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['obliques'], secondary:['shoulders','core','hip_flexors'] },
+    primary:['obliques'], secondary:['shoulders','core','hip_flexors'],
+    desc:'Balance on one forearm and the side of one foot, body rigid. Your obliques are working at a steep mechanical disadvantage — one of the most effective lateral core exercises per second of effort.' },
   { id:'mat_hollow', name:'Hollow Body Hold', category:'mat', equipment:'mat', difficulty:'intermediate',
-    primary:['abs','hip_flexors'], secondary:['core'] },
+    primary:['abs','hip_flexors'], secondary:['core'],
+    desc:'Lie on your back, lower back pressed into the floor, arms overhead, legs just above it — and hold. Gymnasts build their entire strength foundation from this position; you\'ll feel why.' },
   { id:'mat_deadbug', name:'Dead Bug', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['abs','core'], secondary:['hip_flexors'] },
+    primary:['abs','core'], secondary:['hip_flexors'],
+    desc:'On your back, extend opposite arm and leg while keeping your lower back pinned to the floor — then switch. Anti-extension core training at its most sneaky; looks easy, exposes every weakness.' },
   { id:'mat_glute_bridge', name:'Glute Bridge', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['glutes'], secondary:['hamstrings','core'] },
+    primary:['glutes'], secondary:['hamstrings','core'],
+    desc:'Lie on your back, feet flat, and drive your hips to the ceiling until your knees, hips, and shoulders form a straight line. Your glutes do the work; your hamstrings assist; your hip flexors finally take a break.' },
   { id:'mat_bird_dog', name:'Bird Dog', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['core','lower_back'], secondary:['glutes','shoulders'] },
+    primary:['core','lower_back'], secondary:['glutes','shoulders'],
+    desc:'From hands and knees, extend your opposite arm and leg without rotating your hips. A masterclass in anti-rotation and spinal stability — your lower back holds everything level while your shoulder and glute do the reaching.' },
   { id:'mat_mountain_climber', name:'Mountain Climbers', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['core','hip_flexors'], secondary:['shoulders','quads','calves'] },
+    primary:['core','hip_flexors'], secondary:['shoulders','quads','calves'],
+    desc:'Start in a plank and drive your knees toward your chest in rapid alternation. Your hip flexors and core are scrambling, your shoulders are holding the plank, and your cardio system shows up uninvited.' },
   { id:'mat_superman', name:'Superman Hold', category:'mat', equipment:'mat', difficulty:'beginner',
-    primary:['lower_back','glutes'], secondary:['hamstrings','traps'] },
+    primary:['lower_back','glutes'], secondary:['hamstrings','traps'],
+    desc:'Lie face-down and lift your arms, chest, and legs off the floor simultaneously. Your posterior chain — lower back, glutes, and hamstrings — contracts hard to fight gravity from every direction.' },
 
   // Legs (additional)
   { id:'kb_split_squat', name:'Split Squat', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['hamstrings','core'] },
+    primary:['quads','glutes'], secondary:['hamstrings','core'],
+    desc:'One foot forward, one back, lower until your rear knee nearly touches the floor. The stationary stance removes balance from the equation so your front quad and glute have no excuses.' },
   { id:'kb_lateral_lunge', name:'Lateral Lunge', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','hip_flexors'], secondary:['hamstrings','core'] },
+    primary:['quads','glutes','hip_flexors'], secondary:['hamstrings','core'],
+    desc:'Step out wide to one side and drop into a single-leg squat, keeping the other leg straight. Your inner thighs and hip flexors stretch at the bottom while your glute powers the push back to center.' },
   { id:'kb_step_up', name:'Step-Up', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['hamstrings','calves','core'] },
+    primary:['quads','glutes'], secondary:['hamstrings','calves','core'],
+    desc:'Drive through your heel on an elevated surface to lift yourself up. Whichever leg is on the box owns the entire rep — quad, glute, and hamstring doing full unilateral duty with no help from the back foot.' },
   { id:'kb_curtsy_lunge', name:'Curtsy Lunge', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes'], secondary:['hip_flexors','core'] },
+    primary:['quads','glutes'], secondary:['hip_flexors','core'],
+    desc:'Step one foot diagonally behind you and lower into a lunge — like a curtsy, but heavier and far less graceful. The cross-behind pattern shifts emphasis to the outer glute and hip abductors in a way standard lunges miss.' },
   { id:'kb_bulgarian_split', name:'Bulgarian Split Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes'], secondary:['hamstrings','core','calves'] },
+    primary:['quads','glutes'], secondary:['hamstrings','core','calves'],
+    desc:'Rear foot elevated on a bench, front foot forward, lower until your front thigh is parallel. The elevated rear leg amplifies the stretch and the demand on your front quad and glute — and there\'s nowhere to hide.' },
   { id:'kb_squat_jump', name:'Squat Jump (KB)', category:'squat', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','calves'], secondary:['hamstrings','core'] },
+    primary:['quads','glutes','calves'], secondary:['hamstrings','core'],
+    desc:'Squat down then explode into a jump, landing softly and cycling straight back down. Your quads and calves generate the power; your landing absorbs the impact through your whole lower chain; your lungs log the overtime.' },
   { id:'kb_pistol_squat', name:'Pistol Squat', category:'squat', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes','hip_flexors'], secondary:['hamstrings','calves','core'] },
+    primary:['quads','glutes','hip_flexors'], secondary:['hamstrings','calves','core'],
+    desc:'A one-legged squat all the way to the floor and back up with the other leg extended forward. Demands quad strength, hip flexor flexibility, ankle mobility, and enough balance to make your ego check the mirror.' },
   { id:'kb_calf_raise', name:'Calf Raise (KB)', category:'squat', equipment:'kettlebell', difficulty:'beginner',
-    primary:['calves'], secondary:['quads'] },
+    primary:['calves'], secondary:['quads'],
+    desc:'Stand with bells at your sides and rise onto your toes as high as possible, then lower with control. The added load forces your gastrocnemius and soleus to work through a fuller range than bodyweight alone.' },
 
   // Arms
   { id:'kb_bicep_curl', name:'KB Bicep Curl', category:'arms', equipment:'kettlebell', difficulty:'beginner',
-    primary:['biceps'], secondary:['forearms'] },
+    primary:['biceps'], secondary:['forearms'],
+    desc:'The classic — bell hanging from your grip, curl it to your shoulder and lower with control. The offset center of mass creates a different moment arm than a dumbbell, making the bottom half noticeably harder.' },
   { id:'kb_tricep_ext', name:'KB Tricep Extension', category:'arms', equipment:'kettlebell', difficulty:'beginner',
-    primary:['triceps'], secondary:['shoulders'] },
+    primary:['triceps'], secondary:['shoulders'],
+    desc:'Hold the bell overhead by the handle and lower it behind your head, then press back up. Your long head of the tricep gets the full stretch at the bottom — an angle barbells and cables struggle to replicate.' },
   { id:'kb_crush_curl', name:'Crush Curl', category:'arms', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['biceps','forearms'], secondary:['chest'] },
+    primary:['biceps','forearms'], secondary:['chest'],
+    desc:'Hold the bell by its sides and squeeze hard throughout the curl. The constant lateral press engages your pecs while your biceps and forearms handle the curl — two muscles taxed for the price of one movement.' },
   { id:'kb_skull_crusher', name:'KB Skull Crusher', category:'arms', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['triceps'], secondary:['chest','shoulders'] },
+    primary:['triceps'], secondary:['chest','shoulders'],
+    desc:'Lie on your back, press the bell over your face and lower it toward your forehead by bending only at the elbows. Triceps get a deep stretch at the bottom; the name is just motivation to maintain control.' },
   { id:'kb_hammer_curl', name:'Hammer Curl (KB)', category:'arms', equipment:'kettlebell', difficulty:'beginner',
-    primary:['biceps','forearms'], secondary:[] },
+    primary:['biceps','forearms'], secondary:[],
+    desc:'Curl with a neutral (thumb-up) grip instead of supinated — hits your brachialis and forearm extensors more than a standard curl and builds the kind of arm thickness that looks earned.' },
 
   // Chest (additional)
   { id:'kb_sa_floor_press', name:'Single-Arm Floor Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['chest','triceps'], secondary:['shoulders','core'] },
+    primary:['chest','triceps'], secondary:['shoulders','core'],
+    desc:'One bell, one arm pressing from the floor — the uneven load forces your core to resist rotation the entire set. Your chest and tricep do the pressing while your obliques do the stabilizing.' },
   { id:'kb_push_up', name:'KB Push-Up', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['chest','triceps'], secondary:['shoulders','core'] },
+    primary:['chest','triceps'], secondary:['shoulders','core'],
+    desc:'Hands on the kettlebell handles raises you slightly off the floor for added range of motion. The rounded handles also recruit more shoulder stabilizer activation than flat-hand push-ups.' },
   { id:'kb_chest_fly', name:'KB Chest Fly', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['chest'], secondary:['shoulders'] },
+    primary:['chest'], secondary:['shoulders'],
+    desc:'Lie flat and arc the bells from overhead down to shoulder level with a slight elbow bend. Your pecs are under a full stretch at the bottom — the same reason bodybuilders love cables for this movement.' },
   { id:'kb_close_grip_press', name:'Close-Grip Floor Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['triceps','chest'], secondary:['shoulders'] },
+    primary:['triceps','chest'], secondary:['shoulders'],
+    desc:'Press two bells with hands close together and elbows tucked — your triceps handle more of the load than a wide-grip press. Clean movement for building pressing strength without stressing the shoulders.' },
 
   // Shoulders (additional)
   { id:'kb_lateral_raise', name:'Lateral Raise', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders'], secondary:['traps'] },
+    primary:['shoulders'], secondary:['traps'],
+    desc:'Arms slightly bent, raise the bells out to shoulder height and lower with control. Your medial deltoid drives the movement — the tempo on the descent is where the real work happens.' },
   { id:'kb_front_raise', name:'Front Raise', category:'press', equipment:'kettlebell', difficulty:'beginner',
-    primary:['shoulders'], secondary:['chest','core'] },
+    primary:['shoulders'], secondary:['chest','core'],
+    desc:'Raise the bell straight in front of you to shoulder height and lower with control. Your anterior deltoid is the engine here — it\'s a smaller muscle and will remind you of that fact around rep 10.' },
   { id:'kb_arnold_press', name:'Arnold Press', category:'press', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','triceps'], secondary:['chest','core'] },
+    primary:['shoulders','triceps'], secondary:['chest','core'],
+    desc:'Start with bells in front of your shoulders palms facing you, then rotate palms outward as you press overhead. The rotation recruits the front and medial deltoid before the standard press portion even begins.' },
   { id:'kb_shrug', name:'KB Shrug', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['traps'], secondary:['shoulders','forearms'] },
+    primary:['traps'], secondary:['shoulders','forearms'],
+    desc:'Bells at your sides, elevate your shoulders straight up toward your ears then lower slowly. The traps run from your neck to your mid-spine and this is the most direct way to load them.' },
   { id:'kb_reverse_fly', name:'Bent-Over Reverse Fly', category:'pull', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','traps'], secondary:['lats','core'] },
+    primary:['shoulders','traps'], secondary:['lats','core'],
+    desc:'Hinged forward with bells hanging, raise both arms out to your sides until they reach shoulder height. Your rear deltoids and lower traps are the target — the muscles most people never train and everyone can tell they don\'t.' },
 
   // Back (additional)
   { id:'kb_renegade_row', name:'Renegade Row', category:'pull', equipment:'kettlebell', difficulty:'advanced',
-    primary:['lats','core'], secondary:['biceps','forearms','shoulders'] },
+    primary:['lats','core'], secondary:['biceps','forearms','shoulders'],
+    desc:'Push-up position with a bell under each hand, row one while the other keeps you planted. Your core fights rotation with every pull — think of it as a plank that also rows.' },
   { id:'kb_bent_row', name:'KB Bent-Over Row', category:'pull', equipment:'kettlebell', difficulty:'beginner',
-    primary:['lats','traps'], secondary:['biceps','forearms','lower_back'] },
+    primary:['lats','traps'], secondary:['biceps','forearms','lower_back'],
+    desc:'Hinge forward, bells hanging, and row both to your hips simultaneously. A bilateral row that loads the lats and middle traps hard — keeping your back flat throughout is 80% of the exercise.' },
 
   // Core / Abs (additional)
   { id:'kb_sit_up', name:'KB Sit-Up', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['abs'], secondary:['hip_flexors'] },
+    primary:['abs'], secondary:['hip_flexors'],
+    desc:'Hold the bell at your chest or extend it overhead as you sit up from flat. The added load shifts your balance point and recruits the abs differently than bodyweight alone.' },
   { id:'kb_side_bend', name:'KB Side Bend', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['obliques'], secondary:['core'] },
+    primary:['obliques'], secondary:['core'],
+    desc:'Bell in one hand at your side, hinge laterally toward it then return. Your obliques on the opposite side are the active movers — and one side always works harder, so choose load accordingly.' },
   { id:'kb_plank_pull', name:'Plank Pull-Through', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','obliques'], secondary:['shoulders','lats'] },
+    primary:['core','obliques'], secondary:['shoulders','lats'],
+    desc:'In a plank, reach under your body to drag the bell from one side to the other. Your core and obliques resist the rotation caused by each pull while your shoulders hold the plank — anti-rotation training with arms.' },
   { id:'kb_woodchop', name:'KB Woodchop', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['obliques','core'], secondary:['shoulders','glutes'] },
+    primary:['obliques','core'], secondary:['shoulders','glutes'],
+    desc:'A diagonal movement from one hip up to the opposite shoulder, mimicking a chopping arc. Your obliques generate the rotation; your shoulders and glutes add power at the endpoints.' },
   { id:'kb_leg_raise', name:'KB Leg Raise', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['abs','hip_flexors'], secondary:['core'] },
+    primary:['abs','hip_flexors'], secondary:['core'],
+    desc:'Lying on your back with the bell above your chest for counterbalance, raise your straight legs to vertical and lower with control. Your abs must resist the pull of your legs through the entire descent.' },
   { id:'kb_v_up', name:'KB V-Up', category:'core', equipment:'kettlebell', difficulty:'advanced',
-    primary:['abs','hip_flexors'], secondary:['core'] },
+    primary:['abs','hip_flexors'], secondary:['core'],
+    desc:'Lie flat then simultaneously raise your straight legs and your arms holding the bell toward each other, meeting in the middle. Both hip flexors and abs contract maximally with no rest at the bottom.' },
   { id:'kb_plank_drag', name:'Plank Drag', category:'core', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['core','obliques'], secondary:['shoulders'] },
+    primary:['core','obliques'], secondary:['shoulders'],
+    desc:'In a high plank, drag the bell across the floor from one side to the other, reaching under your body with the opposite arm. A slow, deliberate anti-rotation challenge with a taxing reach component.' },
   { id:'kb_crunch', name:'KB Crunch', category:'core', equipment:'kettlebell', difficulty:'beginner',
-    primary:['abs'], secondary:['core'] },
+    primary:['abs'], secondary:['core'],
+    desc:'Hold the bell at your chest and perform a classic crunch — upper back off the floor, lower back stays down. The added load creates resistance at the top where bodyweight crunches typically go slack.' },
 
   // Cardio / Conditioning
   { id:'kb_swing_high', name:'KB Swing (High Rep)', category:'cardio', equipment:'kettlebell', difficulty:'beginner',
-    primary:['glutes','hamstrings'], secondary:['core','shoulders','forearms'] },
+    primary:['glutes','hamstrings'], secondary:['core','shoulders','forearms'],
+    desc:'Everything you know from the regular swing, done for long sets that turn your posterior chain into a furnace. High-rep swings are conditioning as much as strength — your heart rate will confirm this.' },
   { id:'kb_burpee', name:'KB Burpee', category:'cardio', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','chest','core'], secondary:['shoulders','triceps','glutes'] },
+    primary:['quads','chest','core'], secondary:['shoulders','triceps','glutes'],
+    desc:'A standard burpee but you land with hands on the kettlebell handles and add a push-up at the bottom. Six movements per rep — squat, jump back, push-up, jump forward, clean, jump up — no mercy.' },
   { id:'kb_man_maker', name:'Man Maker', category:'cardio', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','chest','quads'], secondary:['core','triceps','lats'] },
+    primary:['shoulders','chest','quads'], secondary:['core','triceps','lats'],
+    desc:'Row, row, push-up, clean, thruster — all in one continuous rep with no rest between movements. Named appropriately; leaves absolutely nothing on the table.' },
   { id:'kb_long_cycle', name:'Long Cycle', category:'cardio', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','quads'] },
+    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','quads'],
+    desc:'Clean and jerk in continuous competition-style reps for time or volume. The benchmark of kettlebell sport endurance — you\'re performing two ballistic movements back-to-back without setting the bell down.' },
   { id:'kb_half_snatch', name:'Half Snatch', category:'cardio', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['shoulders','hamstrings'], secondary:['glutes','core','forearms'] },
+    primary:['shoulders','hamstrings'], secondary:['glutes','core','forearms'],
+    desc:'Like a full snatch but the bell is lowered back to the rack position instead of swinging down. More shoulder work than the full snatch, less technique — a solid bridge between the clean and the full snatch.' },
   { id:'kb_jump_squat', name:'KB Jump Squat', category:'cardio', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','calves'], secondary:['core','hamstrings'] },
+    primary:['quads','glutes','calves'], secondary:['core','hamstrings'],
+    desc:'Hold the bell at your chest, squat to parallel, then explode off the floor. Your quads and calves generate the power; the landing absorbs through your whole lower chain; and your lungs log the overtime.' },
 
   // Full Body / Complexes (additional)
   { id:'kb_clean_jerk', name:'Clean & Jerk', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','quads'] },
+    primary:['shoulders','hamstrings','glutes'], secondary:['core','triceps','quads'],
+    desc:'Clean the bell to the rack then drive it overhead with a leg dip and aggressive lockout. The complete expression of lower-body power transferred to overhead strength — the gold standard in kettlebell sport.' },
   { id:'kb_jerk', name:'KB Jerk', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','triceps'], secondary:['core','quads','glutes'] },
+    primary:['shoulders','triceps'], secondary:['core','quads','glutes'],
+    desc:'Start from the rack and use two leg dips to drive the bell overhead with maximum efficiency. The timing of the double dip is everything — your legs generate the power so your shoulder barely has to press.' },
   { id:'kb_bent_press', name:'Bent Press', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['shoulders','obliques'], secondary:['triceps','lats','core'] },
+    primary:['shoulders','obliques'], secondary:['triceps','lats','core'],
+    desc:'Hold the bell overhead and corkscrew your torso sideways until you\'re nearly horizontal, then stand back up. Your obliques, lat, and shoulder work a long diagonal that you simply won\'t feel anywhere else.' },
   { id:'kb_double_clean', name:'Double Clean', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','traps'] },
+    primary:['hamstrings','glutes','forearms'], secondary:['core','biceps','traps'],
+    desc:'Two bells simultaneously cleaned to the rack position — twice the grip demand, twice the hip snap, twice the coordination challenge. Your forearms develop an opinion immediately.' },
   { id:'kb_tactical_lunge', name:'Tactical Lunge', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes'], secondary:['hamstrings','core','shoulders'] },
+    primary:['quads','glutes'], secondary:['hamstrings','core','shoulders'],
+    desc:'A lunge combined with a kettlebell pass — the bell passes between your legs as you step through. Requires timing, core control, and lower-body strength simultaneously, with a grip penalty for losing the rhythm.' },
   { id:'kb_deck_squat', name:'Deck Squat', category:'complex', equipment:'kettlebell', difficulty:'advanced',
-    primary:['quads','glutes','core'], secondary:['hamstrings','hip_flexors'] },
+    primary:['quads','glutes','core'], secondary:['hamstrings','hip_flexors'],
+    desc:'Squat all the way down until you roll back onto your spine, then use momentum and leg drive to roll back up to standing. Your quads fire maximally from a full squat-to-stand and your core controls every inch of the roll.' },
   { id:'kb_squat_press', name:'Squat to Press', category:'complex', equipment:'kettlebell', difficulty:'intermediate',
-    primary:['quads','glutes','shoulders'], secondary:['core','triceps'] },
+    primary:['quads','glutes','shoulders'], secondary:['core','triceps'],
+    desc:'Squat down with the bell at your shoulder, then drive upward and let your leg power flow directly into a shoulder press overhead. The full kinetic chain from feet to fist in one smooth transition.' },
 
   // Slam Ball
   { id:'sb_overhead_slam', name:'Overhead Slam', category:'cardio', equipment:'slam_ball', difficulty:'beginner',
-    primary:['shoulders','core'], secondary:['lats','quads','glutes'] },
+    primary:['shoulders','core'], secondary:['lats','quads','glutes'],
+    desc:'Raise the ball overhead then throw it at the floor as hard as possible. Your shoulders and core load on the way up; the entire front-to-back chain explodes on the way down — pure power with a very satisfying impact.' },
   { id:'sb_rotational_slam', name:'Rotational Slam', category:'cardio', equipment:'slam_ball', difficulty:'intermediate',
-    primary:['obliques','core'], secondary:['shoulders','glutes'] },
+    primary:['obliques','core'], secondary:['shoulders','glutes'],
+    desc:'Rotate to one side to load, then drive the ball into the floor with a full-body rotational throw. Your obliques and core generate the force; your shoulders execute the slam; the ground receives all of it.' },
   { id:'sb_squat_slam', name:'Squat to Slam', category:'complex', equipment:'slam_ball', difficulty:'intermediate',
-    primary:['quads','glutes','shoulders'], secondary:['core','hamstrings'] },
+    primary:['quads','glutes','shoulders'], secondary:['core','hamstrings'],
+    desc:'Squat down with the ball, then explode up and slam it overhead into the floor in one continuous sequence. Combines the power of a hip drive with the aggression of an overhead throw — legs and upper body seamlessly linked.' },
   { id:'sb_wall_ball', name:'Wall Ball', category:'cardio', equipment:'slam_ball', difficulty:'beginner',
-    primary:['quads','shoulders'], secondary:['glutes','core','calves'] },
+    primary:['quads','shoulders'], secondary:['glutes','core','calves'],
+    desc:'Squat down with the ball, then drive up and throw it to a target on the wall — catch and repeat without pause. Your legs load the throw, your shoulders release it, and the cycle keeps your heart rate elevated the entire set.' },
   { id:'sb_russian_twist', name:'SB Russian Twist', category:'core', equipment:'slam_ball', difficulty:'beginner',
-    primary:['obliques','abs'], secondary:['hip_flexors','core'] },
+    primary:['obliques','abs'], secondary:['hip_flexors','core'],
+    desc:'The density of a slam ball makes each rotation meaningfully heavier than a bodyweight twist. Obliques and abs drive the rotation while your hip flexors stabilize — harder than it looks, which is the whole point.' },
 
   // Medicine Ball
   { id:'mb_russian_twist', name:'MB Russian Twist', category:'core', equipment:'medicine_ball', difficulty:'beginner',
-    primary:['obliques','abs'], secondary:['hip_flexors'] },
+    primary:['obliques','abs'], secondary:['hip_flexors'],
+    desc:'Sit with feet elevated, ball at your chest, and rotate side to side through your full range. The density of a medicine ball lets you hold the load away from your body, increasing the lever arm and the demand on your obliques.' },
   { id:'mb_woodchop', name:'MB Wood Chop', category:'core', equipment:'medicine_ball', difficulty:'intermediate',
-    primary:['obliques','core'], secondary:['shoulders','glutes'] },
+    primary:['obliques','core'], secondary:['shoulders','glutes'],
+    desc:'Drive the ball diagonally from hip level to the opposite shoulder in a chopping arc. Obliques generate the rotation; shoulders deliver the ball — more controlled than a slam ball but more dynamic than a dumbbell.' },
   { id:'mb_chest_pass', name:'MB Chest Pass', category:'press', equipment:'medicine_ball', difficulty:'beginner',
-    primary:['chest','triceps'], secondary:['shoulders','core'] },
+    primary:['chest','triceps'], secondary:['shoulders','core'],
+    desc:'Explosively pass the ball from your chest from a standing or kneeling position. Your pecs, triceps, and shoulders generate the throw — a ballistic pressing movement that trains power you can\'t get from a slow bench press.' },
   { id:'mb_squat', name:'MB Squat', category:'squat', equipment:'medicine_ball', difficulty:'beginner',
-    primary:['quads','glutes'], secondary:['core','hamstrings'] },
+    primary:['quads','glutes'], secondary:['core','hamstrings'],
+    desc:'Hold the ball at chest height and squat to parallel. The front load keeps your torso upright and your quads honest — great for teaching squat mechanics and an effective weighted variation in its own right.' },
   { id:'mb_crunch', name:'MB Crunch', category:'core', equipment:'medicine_ball', difficulty:'beginner',
-    primary:['abs'], secondary:['core','hip_flexors'] },
+    primary:['abs'], secondary:['core','hip_flexors'],
+    desc:'Hold the ball overhead or at your chest as you crunch up. The weight shifts the moment arm and increases the load on your upper abs throughout the movement — more honest than a bodyweight crunch by a fair margin.' },
 ];
 
 const MUSCLE_NAMES = {
@@ -253,29 +348,12 @@ const MUSCLE_TO_SVG = {
   core: ['front-abs']
 };
 
-const EXERCISE_ILLUSTRATIONS = {
-  kb_swing: 'illustrations/kb_swing.svg', kb_swing_1h: 'illustrations/kb_swing.svg',
-  kb_swing_alt: 'illustrations/kb_swing.svg', kb_swing_high: 'illustrations/kb_swing.svg',
-  kb_goblet: 'illustrations/kb_goblet.svg', kb_sumo: 'illustrations/kb_goblet.svg',
-  kb_front_squat: 'illustrations/kb_goblet.svg',
-  kb_press: 'illustrations/kb_press.svg', kb_push_press: 'illustrations/kb_press.svg',
-  kb_arnold_press: 'illustrations/kb_press.svg', kb_lateral_raise: 'illustrations/kb_press.svg',
-  kb_row: 'illustrations/kb_row.svg', kb_bent_row: 'illustrations/kb_row.svg',
-  kb_gorilla_row: 'illustrations/kb_row.svg', kb_upright_row: 'illustrations/kb_row.svg',
-  kb_turkish: 'illustrations/kb_turkish.svg',
-  mat_plank: 'illustrations/mat_plank.svg', mat_side_plank: 'illustrations/mat_plank.svg',
-  mat_hollow: 'illustrations/mat_plank.svg', mat_deadbug: 'illustrations/mat_plank.svg',
-  mat_mountain_climber: 'illustrations/mat_plank.svg',
-  kb_deadlift: 'illustrations/kb_deadlift.svg', kb_single_dl: 'illustrations/kb_deadlift.svg',
-  kb_lunge: 'illustrations/kb_lunge.svg', kb_lateral_lunge: 'illustrations/kb_lunge.svg',
-  kb_tactical_lunge: 'illustrations/kb_lunge.svg', kb_curtsy_lunge: 'illustrations/kb_lunge.svg',
-  kb_split_squat: 'illustrations/kb_lunge.svg',
-  kb_farmer: 'illustrations/kb_farmer.svg', kb_rack_carry: 'illustrations/kb_farmer.svg',
-  kb_overhead_carry: 'illustrations/kb_farmer.svg', kb_suitcase: 'illustrations/kb_farmer.svg',
-  kb_bicep_curl: 'illustrations/kb_bicep_curl.svg', kb_hammer_curl: 'illustrations/kb_bicep_curl.svg',
-  kb_crush_curl: 'illustrations/kb_bicep_curl.svg',
-  mat_glute_bridge: 'illustrations/mat_glute_bridge.svg',
-  mat_superman: 'illustrations/mat_glute_bridge.svg', mat_bird_dog: 'illustrations/mat_glute_bridge.svg',
+
+const GEAR_ICONS = {
+  kettlebell: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="22" r="8"/><path d="M11 16 L11 12 Q11 8 16 8 Q21 8 21 12 L21 16"/></svg>`,
+  mat: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="13" r="3"/><line x1="8" y1="14" x2="28" y2="14"/><line x1="11" y1="14" x2="11" y2="22"/><line x1="16" y1="14" x2="16" y2="22"/><line x1="28" y1="14" x2="28" y2="22"/><rect x="3" y="22" width="26" height="3" rx="1.5"/></svg>`,
+  slam_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="19" cy="19" r="11"/><line x1="3" y1="2" x2="8" y2="7"/><line x1="1" y1="7" x2="7" y2="13"/><line x1="1" y1="12" x2="6" y2="17"/></svg>`,
+  medicine_ball: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="16" cy="16" r="12"/><path d="M10 6 Q16 14 22 6"/><path d="M10 26 Q16 18 22 26"/></svg>`,
 };
 
 const WEEKLY_WORKOUTS = [
@@ -311,14 +389,17 @@ let selectedFocus = new Set(['full']);
 let selectedDuration = 20;
 let buildMode = 'quick';
 let circuitMode = false;
-let calendarMonth = new Date();
-let selectedLogDate = null;
+let logFilter = 'all';
+let diagramFilter = 'current';
 let heatmapDays = 7;
+let selectedEquipment = new Set(['kettlebell', 'mat']); // gear shelf state for Generate
+let equipmentFilter = 'all'; // equipment chip filter for Manual Build
 
 // Timer state
 let timerInterval = null;
 let timerSeconds = 0;
 let timerPaused = false;
+let logDuration = 0;
 let timerCurrentEx = 0;
 let timerExAllotments = [];
 let timerExStartSec = 0;
@@ -385,6 +466,8 @@ function openSettings() {
 function closeSettings() {
   document.getElementById('settings-modal').classList.remove('show');
   updatePrefWeightDisplay();
+  initGearShelf();
+  renderEquipChips();
 }
 
 function kettlebellPath(cx, cy, r) {
@@ -504,6 +587,7 @@ function toggleExtraEquipment(eq) {
   s.extraEquipment = extra;
   saveSettingsToStorage(s);
   renderSettingsChips();
+  renderEquipChips();
   if (buildMode === 'manual') renderExerciseList();
 }
 
@@ -569,10 +653,12 @@ function updateTimerDisplay() {
     `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 
   const fsLabel = document.getElementById('fs-label');
-  const fsIllust = document.querySelector('.fs-illustration');
+  const fsDescPanel = document.getElementById('fs-desc-panel');
+  const fsSwipeHint = document.querySelector('.fs-swipe-hint');
   if (circuitMode) {
-    // Circuit mode: show round label + all exercises
-    fsIllust.style.display = 'none';
+    // Circuit mode: hide desc panel and swipe hint
+    if (fsDescPanel) fsDescPanel.style.visibility = 'hidden';
+    if (fsSwipeHint) fsSwipeHint.style.display = 'none';
     fsLabel.innerHTML = '&#x21bb; Circuit Mode';
     fsLabel.classList.add('fs-label-circuit');
     const numRounds = parseInt(currentWorkout[0].sets) || 3;
@@ -606,15 +692,14 @@ function updateTimerDisplay() {
     }
   } else {
     // Standard mode
-    fsIllust.style.display = '';
+    if (fsDescPanel) fsDescPanel.style.visibility = '';
+    if (fsSwipeHint) fsSwipeHint.style.display = '';
     fsLabel.textContent = 'Workout Timer';
     fsLabel.classList.remove('fs-label-circuit');
     if (currentWorkout[timerCurrentEx]) {
       const item = currentWorkout[timerCurrentEx];
-      const illustPath = EXERCISE_ILLUSTRATIONS[item.exercise.id];
-      fsIllust.innerHTML = illustPath
-        ? `<img src="${illustPath}" width="150" height="150" style="opacity:0.88" alt="">`
-        : `<svg viewBox="0 0 200 200" width="120" style="opacity:0.1"><path d="M 67 67 C 61.3 32 138.7 32 133 67 A 70 70 0 1 1 67 67 Z" fill="none" stroke="var(--accent)" stroke-width="3"/></svg>`;
+      document.getElementById('fs-desc-name').textContent = item.exercise.name;
+      document.getElementById('fs-desc-text').textContent = item.exercise.desc || '';
       document.getElementById('fs-exercise-name').textContent = item.exercise.name;
       const wtLabel = item.weight === 'BW' ? '' : `  —  ${item.weight}`;
       document.getElementById('fs-exercise-detail').textContent =
@@ -656,13 +741,21 @@ function renderTimerProgress() {
 function timerTogglePause() { timerPaused = !timerPaused; updateTimerDisplay(); }
 function timerNextExercise() {
   const max = circuitMode ? (parseInt(currentWorkout[0].sets) || 3) - 1 : currentWorkout.length - 1;
-  if (timerCurrentEx < max) { timerCurrentEx++; timerExStartSec = timerSeconds; renderTimerProgress(); updateTimerDisplay(); }
+  if (timerCurrentEx < max) {
+    timerCurrentEx++; timerExStartSec = timerSeconds;
+    document.getElementById('timer-fullscreen').classList.remove('illust-expanded');
+    renderTimerProgress(); updateTimerDisplay();
+  }
 }
 function timerPrevExercise() {
-  if (timerCurrentEx > 0) { timerCurrentEx--; timerExStartSec = timerSeconds; renderTimerProgress(); updateTimerDisplay(); }
+  if (timerCurrentEx > 0) {
+    timerCurrentEx--; timerExStartSec = timerSeconds;
+    document.getElementById('timer-fullscreen').classList.remove('illust-expanded');
+    renderTimerProgress(); updateTimerDisplay();
+  }
 }
 
-// Swipe gestures during workout
+// Tap/swipe gestures during workout
 (function() {
   let startX = 0, startY = 0;
   document.addEventListener('touchstart', e => {
@@ -674,18 +767,23 @@ function timerPrevExercise() {
     if (!overlay.classList.contains('show')) return;
     const dx = startX - e.changedTouches[0].clientX;
     const dy = startY - e.changedTouches[0].clientY;
-    // Use the dominant axis
-    if (Math.abs(dx) > Math.abs(dy)) {
-      if (dx > 50) timerNextExercise();
-    } else {
-      if (dy > 80 && !circuitMode) overlay.classList.add('illust-expanded');
-      if (dy < -80) overlay.classList.remove('illust-expanded');
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 20) {
+      // Tap: toggle desc panel (ignore taps on buttons)
+      if (!circuitMode && !e.target.closest('button')) {
+        e.preventDefault();
+        overlay.classList.toggle('illust-expanded');
+      }
+    } else if (Math.abs(dx) > Math.abs(dy) && dx > 50) {
+      // Swipe left: next exercise
+      timerNextExercise();
     }
   });
 })();
 
 function stopWorkoutTimer() {
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  logDuration = timerSeconds;
   const overlay = document.getElementById('timer-fullscreen');
   overlay.classList.remove('visible');
   setTimeout(() => {
@@ -702,13 +800,9 @@ function stopWorkoutTimer() {
 function updateMusclesTabState() {
   const btn = document.querySelector('.nav-btn[data-tab="diagram"]');
   const viewBtn = document.getElementById('view-muscles-btn');
-  if (currentWorkout.length === 0) {
-    btn.classList.add('disabled');
-    if (viewBtn) viewBtn.style.display = 'none';
-  } else {
-    btn.classList.remove('disabled');
-    if (viewBtn) viewBtn.style.display = '';
-  }
+  // Tab is always enabled — log-based filters work without a current workout
+  btn.classList.remove('disabled');
+  if (viewBtn) viewBtn.style.display = currentWorkout.length > 0 ? '' : 'none';
 }
 
 function switchTab(tab) {
@@ -731,7 +825,7 @@ function setBuildMode(mode) {
   });
   document.getElementById('quick-mode').style.display = mode==='quick' ? 'block' : 'none';
   document.getElementById('manual-mode').style.display = mode==='manual' ? 'block' : 'none';
-  if (mode === 'manual') renderExerciseList();
+  if (mode === 'manual') { renderEquipChips(); renderExerciseList(); }
   if (mode === 'quick' && currentWorkout.length === 0) {
     document.getElementById('quick-settings').style.display = 'block';
     document.getElementById('quick-expand-bar').style.display = 'none';
@@ -769,8 +863,8 @@ function generateWorkout() {
   const avgCount = Math.round([...selectedFocus].reduce((s,f) => s + (focusMap[f].count[selectedDuration]||5), 0) / selectedFocus.size);
   const targetCount = Math.min(avgCount + (selectedFocus.size > 1 ? 1 : 0), 10);
 
-  // Score exercises by relevance
-  let scored = getAvailableExercises().map(ex => {
+  // Score exercises by relevance, filtered to selected equipment
+  let scored = getAvailableExercises().filter(ex => selectedEquipment.has(ex.equipment)).map(ex => {
     let score = 0;
     ex.primary.forEach(m => { if (targetMuscles.includes(m)) score += 3; });
     ex.secondary.forEach(m => { if (targetMuscles.includes(m)) score += 1; });
@@ -834,6 +928,7 @@ function renderExerciseList() {
   const cat = document.getElementById('category-filter').value;
   const sort = (document.getElementById('sort-filter') || {}).value || 'default';
   const filtered = getAvailableExercises().filter(ex => {
+    if (equipmentFilter !== 'all' && ex.equipment !== equipmentFilter) return false;
     if (cat !== 'all' && ex.category !== cat) return false;
     if (search && !ex.name.toLowerCase().includes(search)) return false;
     return true;
@@ -1081,57 +1176,65 @@ function toggleQuickSettings() {
 }
 
 // ==================== MUSCLE DIAGRAM ====================
+function setDiagramFilter(filter) {
+  diagramFilter = filter;
+  document.querySelectorAll('.diagram-pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.filter === filter));
+  updateDiagram();
+}
+
 function updateDiagram() {
-  // Clear all
-  document.querySelectorAll('.muscle').forEach(m => {
-    m.classList.remove('active-primary','active-secondary');
-  });
+  document.querySelectorAll('.muscle').forEach(m =>
+    m.classList.remove('active-primary','active-secondary'));
 
-  const hasWorkout = currentWorkout.length > 0;
-  document.getElementById('diagram-workout-summary').style.display = hasWorkout ? 'block' : 'none';
+  const summaryCard = document.getElementById('diagram-workout-summary');
+  let exercises = []; // { primary:[], secondary:[] }
+  let summaryHtml = '';
 
-  if (!hasWorkout) {
-    document.getElementById('muscle-legend').innerHTML = '';
-    document.getElementById('diagram-summary-list').innerHTML = '';
-    return;
+  if (diagramFilter === 'current') {
+    if (currentWorkout.length === 0) {
+      summaryCard.style.display = 'none';
+      document.getElementById('muscle-legend').innerHTML = '';
+      document.getElementById('diagram-summary-list').innerHTML = '';
+      return;
+    }
+    exercises = currentWorkout.map(item => item.exercise);
+    summaryHtml = currentWorkout.map(item =>
+      `<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;"><span style="font-weight:600">${item.exercise.name}</span><span style="color:var(--text2)">${item.sets}×${item.reps}</span></div>`
+    ).join('');
+    summaryCard.style.display = 'block';
+  } else {
+    const logs = filterLogsByKey(getWorkoutLogs(), diagramFilter);
+    if (logs.length === 0) {
+      summaryCard.style.display = 'none';
+      document.getElementById('muscle-legend').innerHTML = '';
+      return;
+    }
+    exercises = logs.flatMap(log => log.exercises);
+    const labels = { all:'all time', week:'this week', month:'this month', starred:'starred workouts' };
+    summaryHtml = `<div style="font-size:12px;color:var(--text2)">${logs.length} workout${logs.length !== 1 ? 's' : ''} — ${labels[diagramFilter]}</div>`;
+    summaryCard.style.display = 'block';
   }
 
-  // Workout summary
-  document.getElementById('diagram-summary-list').innerHTML = currentWorkout.map(item =>
-    `<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;"><span style="font-weight:600">${item.exercise.name}</span><span style="color:var(--text2)">${item.sets}×${item.reps}</span></div>`
-  ).join('');
+  document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
 
-  // Collect activated muscles
+  // Aggregate muscles
   const primaryMuscles = new Set();
   const secondaryMuscles = new Set();
-  currentWorkout.forEach(item => {
-    item.exercise.primary.forEach(m => primaryMuscles.add(m));
-    item.exercise.secondary.forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
+  exercises.forEach(ex => {
+    (ex.primary || []).forEach(m => primaryMuscles.add(m));
+    (ex.secondary || []).forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
   });
 
-  // Apply to SVG
-  primaryMuscles.forEach(m => {
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.add('active-primary');
-    });
-  });
-  secondaryMuscles.forEach(m => {
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => {
-      const el = document.getElementById(id);
-      if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary');
-    });
-  });
+  primaryMuscles.forEach(m =>
+    (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('active-primary'); }));
+  secondaryMuscles.forEach(m =>
+    (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary'); }));
 
-  // Build legend
   const legend = document.getElementById('muscle-legend');
   let html = '';
-  primaryMuscles.forEach(m => {
-    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
-  });
-  secondaryMuscles.forEach(m => {
-    html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`;
-  });
+  primaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+  secondaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
   legend.innerHTML = html;
 }
 
@@ -1182,7 +1285,12 @@ function openLogModal() {
   const notesEl = document.getElementById('log-notes');
   if (notesEl) notesEl.value = '';
   const summary = document.getElementById('log-exercise-summary');
-  summary.innerHTML = '<label>Exercises</label>' + currentWorkout.map(item =>
+  const durMin = Math.floor(logDuration / 60);
+  const durSec = logDuration % 60;
+  const durLabel = logDuration > 0
+    ? `<div style="font-size:12px;color:var(--text2);margin-bottom:8px">Duration: <strong style="color:var(--text)">${durMin}:${String(durSec).padStart(2,'0')}</strong></div>`
+    : '';
+  summary.innerHTML = durLabel + '<label>Exercises</label>' + currentWorkout.map(item =>
     `<div style="font-size:13px;padding:4px 0">${item.exercise.name} &mdash; ${item.sets}x${item.reps} @ ${item.weight}</div>`
   ).join('');
   document.getElementById('log-modal').classList.add('show');
@@ -1207,7 +1315,7 @@ function saveWorkoutLog() {
     primary: item.exercise.primary, secondary: item.exercise.secondary
   }));
 
-  const log = { id: Date.now().toString(36), date, notes, starred: logStarred, exercises: exerciseData, savedId: loadedSavedId || null };
+  const log = { id: Date.now().toString(36), date, notes, starred: logStarred, duration: logDuration || null, exercises: exerciseData, savedId: loadedSavedId || null };
   const logs = getWorkoutLogs();
   logs.push(log);
   logs.sort((a,b) => b.date.localeCompare(a.date));
@@ -1459,20 +1567,45 @@ function deleteFromEdit() {
 }
 
 // ==================== LOG DISPLAY ====================
+function filterLogsByKey(logs, key) {
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+  if (key === 'starred') return logs.filter(l => l.starred);
+  if (key === 'week') {
+    const weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+    return logs.filter(l => l.date >= weekStart.toISOString().slice(0, 10) && l.date <= todayStr);
+  }
+  if (key === 'month') {
+    const monthStr = todayStr.slice(0, 7);
+    return logs.filter(l => l.date.slice(0, 7) === monthStr);
+  }
+  return logs;
+}
+
+function filterLogsByPill(logs) { return filterLogsByKey(logs, logFilter); }
+
+function setLogFilter(filter) {
+  logFilter = filter;
+  document.querySelectorAll('.log-pill').forEach(p => p.classList.toggle('active', p.dataset.filter === filter));
+  renderLog();
+}
+
 function renderLog() {
   const logs = getWorkoutLogs();
-  renderCalendar(logs);
-
   const list = document.getElementById('log-list');
   const empty = document.getElementById('log-empty');
   if (logs.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
 
-  const filtered = selectedLogDate ? logs.filter(l => l.date === selectedLogDate) : logs;
-  if (filtered.length === 0) { list.innerHTML = '<div class="empty-state"><p>No workouts on this date</p></div>'; empty.style.display = 'none'; return; }
+  const filtered = filterLogsByPill(logs);
+  const emptyMessages = { week:'No workouts this week', month:'No workouts this month', starred:'No starred workouts', all:'' };
+  if (filtered.length === 0) { list.innerHTML = `<div class="empty-state"><p>${emptyMessages[logFilter] || 'No workouts'}</p></div>`; empty.style.display = 'none'; return; }
   empty.style.display = 'none';
 
   list.innerHTML = filtered.map(log => {
     const totalSets = log.exercises.reduce((s,e) => s + (parseInt(e.sets)||0), 0);
+    const durStr = log.duration > 0
+      ? (() => { const m = Math.floor(log.duration/60), s = log.duration%60; return `${m}:${String(s).padStart(2,'0')}`; })()
+      : null;
     return `
     <div class="log-entry">
       <div class="log-date">${log.starred?'<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>':''}${formatDate(log.date)}</div>
@@ -1480,6 +1613,7 @@ function renderLog() {
       <div class="log-stats">
         <span>${log.exercises.length} exercises</span>
         <span>${totalSets} total sets</span>
+        ${durStr ? `<span>&#9201; ${durStr}</span>` : ''}
         ${log.notes ? `<span>${log.notes}</span>` : ''}
       </div>
       <div class="log-actions">
@@ -1518,47 +1652,6 @@ function formatDate(dateStr) {
 }
 
 // ==================== CALENDAR ====================
-function renderCalendar(logs) {
-  const el = document.getElementById('calendar');
-  const year = calendarMonth.getFullYear();
-  const month = calendarMonth.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date();
-
-  const workoutDates = new Set(logs.map(l => l.date));
-  const monthName = calendarMonth.toLocaleDateString('en-US', { month:'long', year:'numeric' });
-
-  let html = `
-    <div class="cal-header">
-      <button class="btn btn-sm btn-secondary" onclick="changeMonth(-1)">&larr;</button>
-      <span style="font-weight:600;font-size:14px">${monthName}</span>
-      <button class="btn btn-sm btn-secondary" onclick="changeMonth(1)">&rarr;</button>
-    </div>
-    <div class="cal-grid">
-      <div class="cal-day-label">S</div><div class="cal-day-label">M</div><div class="cal-day-label">T</div>
-      <div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div>
-  `;
-  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day"></div>';
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday = today.getFullYear()===year && today.getMonth()===month && today.getDate()===d;
-    const hasW = workoutDates.has(dateStr);
-    const isSel = selectedLogDate === dateStr;
-    html += `<div class="cal-day${hasW?' has-workout':''}${isToday?' today':''}${isSel?' selected':''}" onclick="selectLogDate('${dateStr}')">${d}</div>`;
-  }
-  html += '</div>';
-  el.innerHTML = html;
-}
-function selectLogDate(dateStr) {
-  selectedLogDate = selectedLogDate === dateStr ? null : dateStr;
-  renderLog();
-}
-function changeMonth(dir) {
-  calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + dir, 1);
-  selectedLogDate = null;
-  renderLog();
-}
 
 // ==================== INSIGHTS ====================
 function renderInsights() {
@@ -1757,6 +1850,75 @@ function renderSuggestions(logs) {
     `).join('');
 }
 
+// ==================== GEAR SHELF (Generate) ====================
+function initGearShelf() {
+  const s = getSettings();
+  const extraEq = s.extraEquipment || [];
+  const saved = (s.lastEquipment || ['kettlebell', 'mat']).filter(eq =>
+    eq === 'kettlebell' || eq === 'mat' ||
+    (eq === 'slam_ball' && extraEq.includes('slam_ball')) ||
+    (eq === 'medicine_ball' && extraEq.includes('medicine_ball'))
+  );
+  selectedEquipment = new Set(saved.length ? saved : ['kettlebell', 'mat']);
+  renderGearShelf();
+}
+
+function renderGearShelf() {
+  const el = document.getElementById('gear-row');
+  if (!el) return;
+  const s = getSettings();
+  const extraEq = s.extraEquipment || [];
+  const items = [
+    { id:'kettlebell', label:'Kettlebell' },
+    { id:'mat', label:'Mat / BW' },
+    ...(extraEq.includes('slam_ball') ? [{ id:'slam_ball', label:'Slam Ball' }] : []),
+    ...(extraEq.includes('medicine_ball') ? [{ id:'medicine_ball', label:'Med Ball' }] : []),
+  ];
+  el.innerHTML = items.map(item => `
+    <div class="gear-item${selectedEquipment.has(item.id) ? ' active' : ''}" data-eq="${item.id}" onclick="toggleGearEquipment('${item.id}')">
+      ${GEAR_ICONS[item.id]}
+      <span>${item.label}</span>
+    </div>
+  `).join('');
+}
+
+function toggleGearEquipment(eq) {
+  if (selectedEquipment.has(eq)) {
+    if (selectedEquipment.size > 1) selectedEquipment.delete(eq);
+  } else {
+    selectedEquipment.add(eq);
+  }
+  const s = getSettings();
+  s.lastEquipment = [...selectedEquipment];
+  saveSettingsToStorage(s);
+  document.querySelectorAll('.gear-item').forEach(el => {
+    el.classList.toggle('active', selectedEquipment.has(el.dataset.eq));
+  });
+}
+
+// ==================== EQUIPMENT CHIPS (Manual Build) ====================
+function renderEquipChips() {
+  const el = document.getElementById('equip-chips');
+  if (!el) return;
+  const extraEq = (getSettings().extraEquipment || []);
+  const chips = [
+    { id:'all', label:'All' },
+    { id:'kettlebell', label:'KB' },
+    { id:'mat', label:'Mat' },
+    ...(extraEq.includes('slam_ball') ? [{ id:'slam_ball', label:'SB' }] : []),
+    ...(extraEq.includes('medicine_ball') ? [{ id:'medicine_ball', label:'MB' }] : []),
+  ];
+  el.innerHTML = chips.map(c => `
+    <div class="equip-chip${equipmentFilter === c.id ? ' active' : ''}" data-eq="${c.id}" onclick="setEquipmentFilter('${c.id}')">${c.label}</div>
+  `).join('');
+}
+
+function setEquipmentFilter(eq) {
+  equipmentFilter = eq;
+  document.querySelectorAll('.equip-chip').forEach(c => c.classList.toggle('active', c.dataset.eq === eq));
+  renderExerciseList();
+}
+
 // ==================== WORKOUT OF THE WEEK ====================
 function getWeeklyWorkout() {
   const now = new Date();
@@ -1807,6 +1969,8 @@ function loadWeeklyWorkout() {
 
 // ==================== INIT ====================
 updatePrefWeightDisplay();
+initGearShelf();
+renderEquipChips();
 renderExerciseList();
 renderLog();
 updateMusclesTabState();
