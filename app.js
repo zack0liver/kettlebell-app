@@ -1183,8 +1183,10 @@ function setDiagramFilter(filter) {
 }
 
 function updateDiagram() {
-  document.querySelectorAll('.muscle').forEach(m =>
-    m.classList.remove('active-primary','active-secondary'));
+  document.querySelectorAll('.muscle').forEach(m => {
+    m.classList.remove('active-primary','active-secondary');
+    m.style.fillOpacity = '';
+  });
 
   const summaryCard = document.getElementById('diagram-workout-summary');
   let exercises = [];
@@ -1202,6 +1204,26 @@ function updateDiagram() {
       `<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;"><span style="font-weight:600">${item.exercise.name}</span><span style="color:var(--text2)">${item.sets}×${item.reps}</span></div>`
     ).join('');
     summaryCard.style.display = 'block';
+
+    // Binary coloring for current workout
+    const primaryMuscles = new Set();
+    const secondaryMuscles = new Set();
+    exercises.forEach(ex => {
+      (ex.primary || []).forEach(m => primaryMuscles.add(m));
+      (ex.secondary || []).forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
+    });
+    primaryMuscles.forEach(m =>
+      (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('active-primary'); }));
+    secondaryMuscles.forEach(m =>
+      (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary'); }));
+
+    document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
+    const legend = document.getElementById('muscle-legend');
+    let html = '';
+    primaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+    secondaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+    legend.innerHTML = html;
+
   } else {
     const logs = filterLogsByKey(getWorkoutLogs(), diagramFilter);
     if (logs.length === 0) {
@@ -1214,27 +1236,40 @@ function updateDiagram() {
     const labels = { all:'all time', week:'this week', month:'this month', starred:'starred workouts' };
     summaryHtml = `<div style="font-size:12px;color:var(--text2)">${logs.length} workout${logs.length !== 1 ? 's' : ''} — ${labels[diagramFilter]}</div>`;
     summaryCard.style.display = 'block';
+    document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
+
+    // Frequency-based intensity coloring for log views
+    const primaryCount = {};
+    const secondaryCount = {};
+    exercises.forEach(ex => {
+      (ex.primary || []).forEach(m => { primaryCount[m] = (primaryCount[m] || 0) + 1; });
+      (ex.secondary || []).forEach(m => { if (primaryCount[m] === undefined) secondaryCount[m] = (secondaryCount[m] || 0) + 1; });
+    });
+
+    const maxP = Math.max(1, ...Object.values(primaryCount));
+    const maxS = Math.max(1, ...Object.values(secondaryCount));
+
+    Object.entries(primaryCount).forEach(([m, count]) => {
+      const intensity = 0.3 + 0.7 * Math.sqrt(count / maxP); // sqrt for perceptual evenness
+      (MUSCLE_TO_SVG[m]||[]).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.classList.add('active-primary'); el.style.fillOpacity = intensity; }
+      });
+    });
+    Object.entries(secondaryCount).forEach(([m, count]) => {
+      const intensity = 0.25 + 0.55 * Math.sqrt(count / maxS);
+      (MUSCLE_TO_SVG[m]||[]).forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.classList.contains('active-primary')) { el.classList.add('active-secondary'); el.style.fillOpacity = intensity; }
+      });
+    });
+
+    const legend = document.getElementById('muscle-legend');
+    let html = '';
+    Object.keys(primaryCount).forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+    Object.keys(secondaryCount).forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+    legend.innerHTML = html;
   }
-
-  document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
-
-  const primaryMuscles = new Set();
-  const secondaryMuscles = new Set();
-  exercises.forEach(ex => {
-    (ex.primary || []).forEach(m => primaryMuscles.add(m));
-    (ex.secondary || []).forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
-  });
-
-  primaryMuscles.forEach(m =>
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('active-primary'); }));
-  secondaryMuscles.forEach(m =>
-    (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el && !el.classList.contains('active-primary')) el.classList.add('active-secondary'); }));
-
-  const legend = document.getElementById('muscle-legend');
-  let html = '';
-  primaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
-  secondaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
-  legend.innerHTML = html;
 }
 
 // Muscle click handler
