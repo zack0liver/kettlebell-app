@@ -1243,22 +1243,49 @@ document.addEventListener('click', e => {
   const muscle = e.target.closest('.muscle');
   if (!muscle) return;
   const muscleKey = muscle.dataset.muscle;
-  if (!muscleKey || currentWorkout.length === 0) return;
+  if (!muscleKey) return;
 
-  const exercises = currentWorkout.filter(item =>
-    item.exercise.primary.includes(muscleKey) || item.exercise.secondary.includes(muscleKey)
-  );
+  // Gather exercises from the active filter source
+  let matchingExercises = [];
+  let noDataMsg = '';
+
+  if (diagramFilter === 'current') {
+    if (currentWorkout.length === 0) return;
+    matchingExercises = currentWorkout
+      .filter(item => item.exercise.primary.includes(muscleKey) || item.exercise.secondary.includes(muscleKey))
+      .map(item => ({
+        name: item.exercise.name,
+        detail: `${item.sets} sets × ${item.reps} reps @ ${item.weight}`,
+        isPrimary: item.exercise.primary.includes(muscleKey)
+      }));
+    noDataMsg = 'No exercises in current workout target this muscle.';
+  } else {
+    const logs = filterLogsByKey(getWorkoutLogs(), diagramFilter);
+    if (logs.length === 0) return;
+    const seen = new Set();
+    logs.forEach(log => {
+      (log.exercises || []).forEach(ex => {
+        const isPrimary = (ex.primary || []).includes(muscleKey);
+        const isSecondary = (ex.secondary || []).includes(muscleKey);
+        if ((isPrimary || isSecondary) && !seen.has(ex.name)) {
+          seen.add(ex.name);
+          matchingExercises.push({ name: ex.name, detail: null, isPrimary });
+        }
+      });
+    });
+    noDataMsg = 'No logged exercises target this muscle.';
+  }
 
   document.getElementById('popup-muscle-name').textContent = MUSCLE_NAMES[muscleKey] || muscleKey;
   const list = document.getElementById('popup-exercises');
-  if (exercises.length === 0) {
-    list.innerHTML = '<p style="color:var(--text2);font-size:13px">No exercises in current workout target this muscle.</p>';
+  if (matchingExercises.length === 0) {
+    list.innerHTML = `<p style="color:var(--text2);font-size:13px">${noDataMsg}</p>`;
   } else {
-    list.innerHTML = exercises.map(item => `
+    list.innerHTML = matchingExercises.map(item => `
       <div style="padding:6px 0;border-bottom:1px solid var(--border)">
-        <div style="font-weight:600;font-size:14px">${item.exercise.name}</div>
-        <div style="font-size:12px;color:var(--text2)">${item.sets} sets x ${item.reps} reps @ ${item.weight}
-          &mdash; <span class="badge badge-${item.exercise.primary.includes(muscleKey)?'primary':'secondary'}">${item.exercise.primary.includes(muscleKey)?'Primary':'Secondary'}</span>
+        <div style="font-weight:600;font-size:14px">${item.name}</div>
+        <div style="font-size:12px;color:var(--text2)">${item.detail ? item.detail + ' &mdash; ' : ''}
+          <span class="badge badge-${item.isPrimary ? 'primary' : 'secondary'}">${item.isPrimary ? 'Primary' : 'Secondary'}</span>
         </div>
       </div>
     `).join('');
