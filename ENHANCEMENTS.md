@@ -1,7 +1,13 @@
 # Future Enhancements
 
 1. Weight progression guidance / strength training with heavier, shorter sets
-2. Exercise illustrations during workout timer — 11 stick-figure SVGs saved in `illustrations/` subfolder (swing, goblet, press, row, turkish, plank, deadlift, lunge, farmer, curl, glute bridge). Needs refinement before integrating into timer display. Props include orange mat/bench.
+2. Exercise illustrations during workout timer — animate the movements instead of showing a static pose. **Approach approved** (prototype: `future-enhancements/swing-timer-prototype.html`). Technique: 2 poses (movement start → end) as `<g>` groups in one SVG, CSS opacity crossfade on a ~1.4s loop with short holds at each extreme; keep feet/limb lengths identical across poses so it reads as one figure moving.
+   - Next steps:
+     - [ ] Finish the remaining 10 exercise animations in the same style (goblet, press, row, turkish, plank, deadlift, lunge, farmer, curl, glute bridge) — mostly-isometric holds (plank, farmer carry) get a subtle micro-movement, not a big swing.
+     - [ ] Consider a 3rd mid-pose where a 2-pose crossfade ghosts/double-exposes at the midpoint (flagged on the swing — bell briefly appears in two places).
+     - [ ] Wire into the workout-timer display, keyed off the current exercise; fall back to the existing static SVG if no animation exists.
+     - [ ] Verify performance on mobile with the animation looping for the full timer duration.
+   - Source art: 11 static stick-figure SVGs in `illustrations/` (orange KB/equipment accent).
 3. Links to external exercise videos
 4. User-suggested exercises for the database
 5. Better spacing/positioning for the remove (red X) button in workout item rows — tried absolute top-right but felt off, reverted to inline. Needs a better approach.
@@ -12,7 +18,15 @@
 10. ~~Manual Build — auto-sort exercises by equipment type (KB vs. mat/bodyweight)~~ DONE — included in sort dropdown as "Sort: Equipment"
 11. Nested kettlebell SVG in Settings — refine the kettlebell silhouette shape and improve tap targets for easier interaction on mobile
 12. Workout of the Week — curated/featured workout that rotates weekly
-13. Revamp muscle activation diagrams — replace current geometric body SVGs with more anatomically detailed/realistic figures (see mockups/ screenshot for reference). Likely needs illustration software or a proper SVG body template rather than hand-coded paths
+13. Revamp muscle activation diagrams — make the figures look "lit from within" (glowing activated muscles on a dark body) to match `mockups/KettleFit muscle activation tracker screenshot.png`. **Decision made: stay in hand-coded inline SVG** (not raster) so the tap-a-muscle interactivity survives — a rendered image would force ~15-20 layered PNG overlays per view. Prototype: `future-enhancements/muscle-glow-prototype.html` (front view; glow technique approved, abdomen reworked to a compact tapered core).
+   - **Diagram still needs additional work before integration:**
+     - [ ] Build the **back view** to match — the prototype is front-view only; the real diagram has front + back.
+     - [ ] Blend the **obliques** back toward the torso — after the waist-taper fix they read as two slightly-detached glowing pads.
+     - [ ] Refine remaining regions (arms, calves, shoulders) to the same anatomical quality as the chest/abs/quads.
+     - [ ] **Mobile perf:** collapse the per-muscle `feGaussianBlur` filters into a single `<g filter>` wrapping all active regions (one filter pass instead of ~N) before shipping.
+     - [ ] **Reconcile class names** with the live app: prototype uses `.muscle-pri` / `.muscle-sec`; confirm against the real `style.css` (may be `.active-primary` / `.active-secondary`) and rename.
+     - [ ] **Integration note:** prototype mirrors left-side geometry via `<use>`, so any `app.js` code that sets `fill` directly on `<path>` nodes must target the `<use>` nodes instead — class-based toggling works unchanged.
+     - [ ] Swap the reworked SVG into `index.html`, keeping every `id` / `data-muscle` / class so `MUSCLE_MAP` in `app.js` still resolves.
 14. Settings — equipment inventory: add slam ball / medicine ball toggle alongside kettlebell weights, unlocking slam ball and med ball exercises in the exercise database
 15. Affiliate links for recommended equipment (kettlebells, slam balls, mats, etc.)
 16. ~~User sign-in and cloud data storage — enable accounts so workout log, saved favorites, and settings sync across devices (currently localStorage only)~~ DONE — Firebase Auth + Firestore implemented
