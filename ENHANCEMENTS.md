@@ -2,9 +2,11 @@
 
 1. Weight progression guidance / strength training with heavier, shorter sets
 2. Exercise illustrations during workout timer — animate the movements instead of showing a static pose. **Approach approved** (prototype: `future-enhancements/swing-timer-prototype.html`). Technique: 2 poses (movement start → end) as `<g>` groups in one SVG, CSS opacity crossfade on a ~1.4s loop with short holds at each extreme; keep feet/limb lengths identical across poses so it reads as one figure moving.
+   - Progress: all 10 remaining exercises animated (goblet, press, row, turkish, plank, deadlift, lunge, farmer, curl, glute bridge) — prototype: `future-enhancements/exercise-animations-prototype.html`. Isometric holds (plank, farmer carry) use a subtle micro-movement; lunge uses a 3-pose sequence.
    - Next steps:
-     - [ ] Finish the remaining 10 exercise animations in the same style (goblet, press, row, turkish, plank, deadlift, lunge, farmer, curl, glute bridge) — mostly-isometric holds (plank, farmer carry) get a subtle micro-movement, not a big swing.
-     - [ ] Consider a 3rd mid-pose where a 2-pose crossfade ghosts/double-exposes at the midpoint (flagged on the swing — bell briefly appears in two places).
+     - [ ] **Refine the Lunge animation** — currently good-enough as a side-profile 3-pose, but the back-knee depth / step timing could be tightened.
+     - [ ] **Refine the Bent-Over Row animation** — side-view torso tilt and single-leg pose are good-enough for now; revisit the hinge/arch proportions.
+     - [ ] Consider a 3rd mid-pose on any other 2-pose card that ghosts at the crossfade midpoint (turkish get-up was the main candidate).
      - [ ] Wire into the workout-timer display, keyed off the current exercise; fall back to the existing static SVG if no animation exists.
      - [ ] Verify performance on mobile with the animation looping for the full timer duration.
    - Source art: 11 static stick-figure SVGs in `illustrations/` (orange KB/equipment accent).
