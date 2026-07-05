@@ -1,5 +1,4 @@
 module.exports = {
-
   kb_swing_high: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="30" y1="94" x2="112" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g class="pose-a">
@@ -39,7 +38,6 @@ module.exports = {
       <line x1="72" y1="90" x2="72" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
   kb_burpee: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="10" y="88" width="120" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
     <g>
@@ -83,7 +81,6 @@ module.exports = {
       <line x1="52" y1="70" x2="52" y2="73" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
   kb_man_maker: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="10" y="88" width="120" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
     <g class="lunge-a">
@@ -130,59 +127,6 @@ module.exports = {
       <line x1="70" y1="85" x2="70" y2="88" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
-  kb_long_cycle: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="54" y1="94" x2="86" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
-    <g class="lunge-a">
-      <circle cx="70" cy="12" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-      <line x1="70" y1="19" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="48" x2="62" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="62" y1="70" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="48" x2="78" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="78" y1="70" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="28" x2="56" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="56" y1="40" x2="54" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="28" x2="84" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="84" y1="40" x2="84" y2="26" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="84" cy="22" r="5" fill="#ff6b35" opacity=".85"/>
-      <path d="M81,27 Q79,32 84,33 Q89,32 87,27" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-      <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-      <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    </g>
-    <g class="lunge-mid">
-      <circle cx="70" cy="19" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-      <line x1="70" y1="26" x2="70" y2="55" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="55" x2="60" y2="73" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="60" y1="73" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="55" x2="80" y2="73" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="80" y1="73" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="35" x2="56" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="56" y1="47" x2="54" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="35" x2="84" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="84" y1="47" x2="84" y2="33" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="84" cy="29" r="5" fill="#ff6b35" opacity=".85"/>
-      <path d="M81,34 Q79,39 84,40 Q89,39 87,34" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-      <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-      <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    </g>
-    <g class="lunge-b">
-      <circle cx="70" cy="12" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-      <line x1="70" y1="19" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="48" x2="62" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="62" y1="70" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="48" x2="78" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="78" y1="70" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="28" x2="56" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="56" y1="40" x2="54" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="70" y1="28" x2="84" y2="18" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="84" y1="18" x2="85" y2="7" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="85" cy="2" r="5" fill="#ff6b35" opacity=".85"/>
-      <path d="M82,7 Q80,12 85,13 Q90,12 88,7" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-      <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-      <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    </g>
-  </svg>`,
-
   kb_half_snatch: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="54" y1="94" x2="86" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g>
@@ -216,7 +160,6 @@ module.exports = {
       <path d="M52,7 Q50,12 55,13 Q60,12 58,7" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
     </g>
   </svg>`,
-
   kb_jump_squat: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="46" y1="90" x2="94" y2="90" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g class="lunge-a">
@@ -268,7 +211,6 @@ module.exports = {
       <line x1="84" y1="70" x2="84" y2="73" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
   sb_overhead_slam: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="30" y1="91" x2="110" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g class="lunge-a">
@@ -317,7 +259,6 @@ module.exports = {
       <line x1="62" y1="88" x2="62" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
   sb_rotational_slam: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="48" y1="91" x2="104" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g>
@@ -356,7 +297,6 @@ module.exports = {
       <circle cx="93" cy="85" r="6" fill="#ff6b35" opacity=".85"/>
     </g>
   </svg>`,
-
   sb_wall_ball: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="40" y1="91" x2="100" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g class="lunge-a">
@@ -405,7 +345,6 @@ module.exports = {
       <line x1="66" y1="88" x2="66" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
   kb_swing_1h: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="30" y1="94" x2="112" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g class="pose-a">
@@ -445,7 +384,6 @@ module.exports = {
       <line x1="72" y1="90" x2="72" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
-
   kb_swing_alt: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="30" y1="94" x2="112" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <g class="pose-a">
@@ -484,6 +422,5 @@ module.exports = {
       <line x1="58" y1="90" x2="58" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
       <line x1="72" y1="90" x2="72" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
-  </svg>`
-
+  </svg>`,
 };

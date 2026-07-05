@@ -1,6 +1,5 @@
 module.exports = {
-
-kb_clean: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_clean: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="54" y1="93" x2="86" y2="93" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
   <g class="lunge-a">
     <circle cx="70" cy="24" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -51,8 +50,7 @@ kb_clean: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/
     <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
   </g>
 </svg>`,
-
-kb_snatch: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_snatch: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="54" y1="93" x2="86" y2="93" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
   <g class="lunge-a">
     <circle cx="70" cy="24" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -103,8 +101,7 @@ kb_snatch: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000
     <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
   </g>
 </svg>`,
-
-kb_clean_press: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_clean_press: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="54" y1="94" x2="86" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
   <g>
     <circle cx="70" cy="12" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -137,8 +134,7 @@ kb_clean_press: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org
     <path d="M83,4 Q81,9 86,10 Q91,9 89,4" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
-
-kb_thruster: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_thruster: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="54" y1="93" x2="86" y2="93" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
   <g class="lunge-a">
     <circle cx="70" cy="30" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -189,8 +185,7 @@ kb_thruster: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/20
     <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
   </g>
 </svg>`,
-
-kb_single_dl: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_single_dl: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="28" y1="92" x2="110" y2="92" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
   <g class="pose-a">
     <circle cx="72" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -221,109 +216,4 @@ kb_single_dl: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2
     <line x1="66" y1="90" x2="66" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
   </g>
 </svg>`,
-
-kb_clean_jerk: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <line x1="54" y1="93" x2="86" y2="93" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
-  <g class="lunge-a">
-    <circle cx="70" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="17" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="48" x2="62" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="62" y1="70" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="48" x2="78" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="70" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="28" x2="58" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="40" x2="56" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="28" x2="82" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="82" y1="40" x2="83" y2="27" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="83" cy="23" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M80,28 Q78,33 83,34 Q88,33 86,28" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-  <g class="lunge-mid">
-    <circle cx="70" cy="17" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="24" x2="70" y2="55" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="55" x2="60" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="60" y1="74" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="55" x2="80" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="80" y1="74" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="35" x2="58" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="47" x2="56" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="35" x2="82" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="82" y1="47" x2="83" y2="34" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="83" cy="30" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M80,35 Q78,40 83,41 Q88,40 86,35" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-  <g class="lunge-b">
-    <circle cx="70" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="17" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="48" x2="62" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="62" y1="70" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="48" x2="78" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="70" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="28" x2="58" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="40" x2="56" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="28" x2="77" y2="15" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="77" y1="15" x2="79" y2="4" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="79" cy="-1" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M76,4 Q74,9 79,10 Q84,9 82,4" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-</svg>`,
-
-kb_jerk: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <line x1="54" y1="93" x2="86" y2="93" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
-  <g class="lunge-a">
-    <circle cx="70" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="17" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="48" x2="62" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="62" y1="70" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="48" x2="78" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="70" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="28" x2="58" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="40" x2="56" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="28" x2="82" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="82" y1="40" x2="83" y2="27" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="83" cy="23" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M80,28 Q78,33 83,34 Q88,33 86,28" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-  <g class="lunge-mid">
-    <circle cx="70" cy="18" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="25" x2="70" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="56" x2="60" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="60" y1="74" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="56" x2="80" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="80" y1="74" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="36" x2="58" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="48" x2="56" y2="61" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="36" x2="82" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="82" y1="48" x2="83" y2="35" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="83" cy="31" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M80,36 Q78,41 83,42 Q88,41 86,36" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-  <g class="lunge-b">
-    <circle cx="70" cy="14" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="21" x2="70" y2="52" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="52" x2="61" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="61" y1="72" x2="58" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="52" x2="79" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="79" y1="72" x2="82" y2="91" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="32" x2="58" y2="39" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="39" x2="54" y2="50" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="32" x2="78" y2="19" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="19" x2="80" y2="8" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="80" cy="3" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M77,8 Q75,13 80,14 Q85,13 83,8" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <line x1="58" y1="91" x2="58" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="91" x2="82" y2="94" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-</svg>`
-
 };
