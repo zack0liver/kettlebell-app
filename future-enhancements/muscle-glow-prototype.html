@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muscle Glow Prototype — FRONT</title>
+<style>
+  :root{
+    --bg:#0f0f13; --text:#f2f2f5; --text2:#9a9aa5;
+    --accent:#ff6b35; --border:#2a2a35;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    display:flex; justify-content:center; min-height:100vh; padding:28px 16px;
+  }
+  .wrap{width:100%;max-width:400px}
+  h1{font-size:24px;font-weight:700;margin-bottom:4px}
+  .sub{font-size:13px;color:var(--text2);margin-bottom:22px}
+  .view-label{text-align:center;font-size:12px;font-weight:600;letter-spacing:2px;color:var(--text2);margin-bottom:6px}
+  .body-svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);
+    background:#17171d;border:1px solid var(--border);border-radius:20px;padding:5px 12px}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .dot-pri{background:var(--accent);box-shadow:0 0 8px 2px rgba(255,107,53,.7)}
+  .dot-sec{background:#9c4e26;box-shadow:0 0 5px 1px rgba(255,107,53,.3)}
+  .dot-off{background:#2a2a36;border:1px solid #3c3c4a}
+  .hint{text-align:center;font-size:11px;color:var(--text2);opacity:.65;margin-top:12px}
+
+  .muscle{cursor:pointer;transition:fill .25s}
+  .muscle-off{fill:url(#gradOff);stroke:rgba(95,95,120,.4);stroke-width:.8}
+  .muscle-sec{fill:url(#gradSec);stroke:rgba(255,150,90,.3);stroke-width:.6;filter:url(#bloomSec)}
+  .muscle-pri{fill:url(#gradPri);stroke:rgba(255,195,145,.5);stroke-width:.6;filter:url(#bloomPri)}
+  .detail{fill:none;stroke:rgba(10,6,4,.4);stroke-width:1.4;stroke-linecap:round;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Muscle Activation</h1>
+  <div class="sub">Glow prototype — front view. Tap a muscle to cycle its state.</div>
+  <div class="view-label">FRONT</div>
+
+  <svg class="body-svg" id="svg-front" viewBox="0 0 200 460">
+    <defs>
+      <!-- ambient halo behind figure -->
+      <radialGradient id="ambient" cx="50%" cy="42%" r="60%">
+        <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.13"/>
+        <stop offset="55%" stop-color="#ff6b35" stop-opacity="0.05"/>
+        <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
+      </radialGradient>
+
+      <!-- dark body shading -->
+      <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#292933"/>
+        <stop offset="45%" stop-color="#1f1f28"/>
+        <stop offset="100%" stop-color="#16161d"/>
+      </linearGradient>
+
+      <!-- inactive muscle: barely lighter than body, rounded shading -->
+      <linearGradient id="gradOff" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2d2d3a"/>
+        <stop offset="100%" stop-color="#1d1d26"/>
+      </linearGradient>
+
+      <!-- lit-from-within falloff: hot center, saturated edge -->
+      <radialGradient id="gradPri" cx="50%" cy="42%" r="72%">
+        <stop offset="0%" stop-color="#ffe2b3"/>
+        <stop offset="28%" stop-color="#ffa45e"/>
+        <stop offset="62%" stop-color="#ff6b35"/>
+        <stop offset="100%" stop-color="#c94a1c"/>
+      </radialGradient>
+      <radialGradient id="gradSec" cx="50%" cy="42%" r="72%">
+        <stop offset="0%" stop-color="#cf7040"/>
+        <stop offset="55%" stop-color="#9c4e26"/>
+        <stop offset="100%" stop-color="#63321a"/>
+      </radialGradient>
+
+      <!-- bloom: blurred copies merged under the sharp source -->
+      <filter id="bloomPri" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="halo"/>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="tight"/>
+        <feMerge>
+          <feMergeNode in="halo"/><feMergeNode in="halo"/>
+          <feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="bloomSec" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="halo"/>
+        <feMerge>
+          <feMergeNode in="halo"/><feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- left-side muscle geometry, mirrored via <use> -->
+      <path id="g-delt" d="M60,71 Q45,72 37,83 Q31,93 33,107 Q34,113 39,113 Q46,111 50,102 Q56,88 62,76 Q63,71 60,71 Z"/>
+      <path id="g-chest" d="M97,77 Q78,72 64,77 Q53,82 53,94 Q54,107 64,114 Q77,120 89,116 Q97,113 97,105 Z"/>
+      <path id="g-bicep" d="M35,112 Q29,124 27,142 Q26,158 30,168 Q33,172 37,168 Q41,158 41,140 Q41,122 38,112 Q36,109 35,112 Z"/>
+      <path id="g-forearm" d="M28,172 Q24,192 22,212 Q21,230 25,244 Q28,250 32,246 Q36,236 36,214 Q37,192 34,174 Q31,168 28,172 Z"/>
+      <path id="g-oblique" d="M83,120 Q72,123 66,133 Q62,148 65,166 Q69,182 77,190 Q82,193 84,187 Q81,172 81,154 Q81,136 83,120 Z"/>
+      <path id="g-hipflex" d="M82,214 Q90,220 96,230 Q88,235 79,230 Q78,221 82,214 Z"/>
+      <path id="g-quad" d="M62,230 Q56,262 57,292 Q59,320 67,332 Q75,340 82,331 Q89,316 89,288 Q89,258 91,236 Q76,242 62,230 Z"/>
+      <path id="g-calf" d="M66,352 Q61,376 62,398 Q63,416 69,425 Q75,428 79,420 Q83,402 81,378 Q79,358 75,350 Q70,347 66,352 Z"/>
+    </defs>
+
+    <!-- ambient glow behind the figure -->
+    <ellipse cx="100" cy="190" rx="98" ry="160" fill="url(#ambient)"/>
+
+    <!-- dark body silhouette (composed of overlapping rounded parts) -->
+    <g fill="url(#bodyGrad)" stroke="#3a3a48" stroke-width="0.7" stroke-linejoin="round">
+      <ellipse cx="100" cy="27" rx="16.5" ry="20.5"/>
+      <path d="M87,42 Q88,56 78,63 L122,63 Q112,56 113,42 Q100,50 87,42 Z"/>
+      <path d="M58,68 Q50,72 48,84 L44,138 Q43,172 51,202 Q57,224 68,232 Q82,240 100,240 Q118,240 132,232 Q143,224 149,202 Q157,172 156,138 L152,84 Q150,72 142,68 Q120,60 100,60 Q80,60 58,68 Z"/>
+      <!-- arms -->
+      <path d="M58,69 Q40,72 33,86 Q28,98 27,116 L23,190 Q21,222 24,248 Q26,260 33,261 Q40,260 42,246 Q45,220 44,192 L46,130 Q47,104 52,90 Z"/>
+      <path d="M142,69 Q160,72 167,86 Q172,98 173,116 L177,190 Q179,222 176,248 Q174,260 167,261 Q160,260 158,246 Q155,220 156,192 L154,130 Q153,104 148,90 Z"/>
+      <ellipse cx="30" cy="268" rx="7" ry="13"/>
+      <ellipse cx="170" cy="268" rx="7" ry="13"/>
+      <!-- legs -->
+      <path d="M64,225 Q54,262 55,300 Q56,338 65,362 Q61,392 63,416 Q64,432 73,434 Q82,434 85,420 Q88,396 84,368 Q92,336 92,300 Q93,262 96,236 Q80,240 64,225 Z"/>
+      <path d="M136,225 Q146,262 145,300 Q144,338 135,362 Q139,392 137,416 Q136,432 127,434 Q118,434 115,420 Q112,396 116,368 Q108,336 108,300 Q107,262 104,236 Q120,240 136,225 Z"/>
+      <path d="M63,428 Q59,440 66,443 L82,443 Q87,437 84,428 Z"/>
+      <path d="M137,428 Q141,440 134,443 L118,443 Q113,437 116,428 Z"/>
+    </g>
+
+    <!-- muscle regions -->
+    <g id="muscles">
+      <!-- shoulders : secondary -->
+      <use id="front-shoulder-l" data-muscle="shoulders" href="#g-delt" class="muscle muscle-sec"/>
+      <use id="front-shoulder-r" data-muscle="shoulders" href="#g-delt" transform="translate(200,0) scale(-1,1)" class="muscle muscle-sec"/>
+
+      <!-- chest : primary -->
+      <use id="front-chest-l" data-muscle="chest" href="#g-chest" class="muscle muscle-pri"/>
+      <use id="front-chest-r" data-muscle="chest" href="#g-chest" transform="translate(200,0) scale(-1,1)" class="muscle muscle-pri"/>
+
+      <!-- biceps / forearms : inactive -->
+      <use id="front-bicep-l" data-muscle="biceps" href="#g-bicep" class="muscle muscle-off"/>
+      <use id="front-bicep-r" data-muscle="biceps" href="#g-bicep" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+      <use id="front-forearm-l" data-muscle="forearms" href="#g-forearm" class="muscle muscle-off"/>
+      <use id="front-forearm-r" data-muscle="forearms" href="#g-forearm" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+
+      <!-- obliques : secondary -->
+      <use id="front-oblique-l" data-muscle="obliques" href="#g-oblique" class="muscle muscle-sec"/>
+      <use id="front-oblique-r" data-muscle="obliques" href="#g-oblique" transform="translate(200,0) scale(-1,1)" class="muscle muscle-sec"/>
+
+      <!-- abs : primary -->
+      <path id="front-abs" data-muscle="abs" class="muscle muscle-pri"
+        d="M87,116 Q100,114 113,116 Q112,138 110,157 Q108,174 104,182 Q100,185 96,182 Q92,174 90,157 Q88,138 87,116 Z"/>
+
+      <!-- hip flexors : inactive -->
+      <use id="front-hipflexor-l" data-muscle="hip_flexors" href="#g-hipflex" class="muscle muscle-off"/>
+      <use id="front-hipflexor-r" data-muscle="hip_flexors" href="#g-hipflex" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+
+      <!-- quads : primary -->
+      <use id="front-quad-l" data-muscle="quads" href="#g-quad" class="muscle muscle-pri"/>
+      <use id="front-quad-r" data-muscle="quads" href="#g-quad" transform="translate(200,0) scale(-1,1)" class="muscle muscle-pri"/>
+
+      <!-- calves : inactive -->
+      <use id="front-calf-l" data-muscle="calves" href="#g-calf" class="muscle muscle-off"/>
+      <use id="front-calf-r" data-muscle="calves" href="#g-calf" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+    </g>
+
+    <!-- anatomical detail lines (non-interactive) -->
+    <g class="detail">
+      <!-- ab segmentation -->
+      <path d="M100,118 L100,180"/>
+      <path d="M91,138 Q100,140 109,138"/>
+      <path d="M92,156 Q100,158 108,156"/>
+      <path d="M94,172 Q100,174 106,172"/>
+      <!-- pec lower sweep -->
+      <path d="M60,102 Q75,113 92,111"/>
+      <path d="M140,102 Q125,113 108,111"/>
+      <!-- quad separation -->
+      <path d="M74,244 Q72,286 74,322"/>
+      <path d="M126,244 Q128,286 126,322"/>
+    </g>
+  </svg>
+
+  <div class="legend">
+    <span><i class="dot dot-pri"></i>Primary</span>
+    <span><i class="dot dot-sec"></i>Secondary</span>
+    <span><i class="dot dot-off"></i>Inactive</span>
+  </div>
+  <div class="hint">Primary: chest, abs, quads · Secondary: shoulders, obliques</div>
+</div>
+
+<script>
+  const states = ['muscle-off','muscle-sec','muscle-pri'];
+  document.querySelectorAll('.muscle').forEach(el => {
+    el.addEventListener('click', () => {
+      const i = states.findIndex(s => el.classList.contains(s));
+      el.classList.remove(states[i]);
+      el.classList.add(states[(i+1)%3]);
+    });
+  });
+</script>
+</body>
+</html>

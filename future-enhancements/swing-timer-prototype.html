@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swing Timer Prototype</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f13;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    background: #16161b;
+    border: 1px solid #26262c;
+    border-radius: 20px;
+    padding: 32px 40px 36px;
+    width: 320px;
+    text-align: center;
+  }
+  .set-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6b6b74;
+    margin-bottom: 8px;
+  }
+  .anim {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 4px;
+    position: relative;
+  }
+  .anim svg { width: 100%; height: 100%; }
+  .pose-a, .pose-b { animation-duration: 1.4s; animation-iteration-count: infinite; }
+  .pose-a { animation-name: showA; }
+  .pose-b { animation-name: showB; }
+  @keyframes showA {
+    0%   { opacity: 1; animation-timing-function: ease-in-out; }
+    10%  { opacity: 1; animation-timing-function: ease-in-out; }
+    45%  { opacity: 0; }
+    60%  { opacity: 0; animation-timing-function: ease-in-out; }
+    95%  { opacity: 1; }
+    100% { opacity: 1; }
+  }
+  @keyframes showB {
+    0%   { opacity: 0; animation-timing-function: ease-in-out; }
+    10%  { opacity: 0; animation-timing-function: ease-in-out; }
+    45%  { opacity: 1; }
+    60%  { opacity: 1; animation-timing-function: ease-in-out; }
+    95%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  .timer {
+    font-size: 64px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #ff6b35;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .exercise {
+    font-size: 20px;
+    font-weight: 600;
+    color: #f2f2f2;
+    margin-bottom: 4px;
+  }
+  .reps {
+    font-size: 14px;
+    color: #8a8a93;
+  }
+  .progress {
+    margin-top: 22px;
+    height: 4px;
+    border-radius: 2px;
+    background: #26262c;
+    overflow: hidden;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    width: 60%;
+    border-radius: 2px;
+    background: #ff6b35;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="set-label">Set 2 of 3</div>
+
+    <div class="anim">
+      <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="94" x2="112" y2="94" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
+
+        <!-- Pose A: hinge, KB swung back between the legs -->
+        <g class="pose-a">
+          <circle cx="84" cy="30" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+          <line x1="78" y1="36" x2="56" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="56" y1="54" x2="61" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="61" y1="72" x2="58" y2="90" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="56" y1="54" x2="67" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="67" y1="72" x2="72" y2="90" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="71" y1="41" x2="64" y2="55" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="64" y1="55" x2="58" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="73" y1="43" x2="66" y2="57" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="66" y1="57" x2="60" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(52,75) rotate(49)">
+            <circle r="6" fill="#ff6b35" opacity=".85"/>
+            <path d="M-3,-6 Q-5,-11 0,-12 Q5,-11 3,-6" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+          </g>
+          <line x1="58" y1="90" x2="58" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+          <line x1="72" y1="90" x2="72" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- Pose B: stand tall, KB at chest height, arms out front -->
+        <g class="pose-b">
+          <circle cx="66" cy="14" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+          <line x1="66" y1="21" x2="64" y2="50" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="64" y1="50" x2="60" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="60" y1="70" x2="58" y2="90" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="64" y1="50" x2="70" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="70" y1="70" x2="72" y2="90" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="65" y1="28" x2="82" y2="29" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="82" y1="29" x2="98" y2="31" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="65" y1="31" x2="82" y2="32" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="82" y1="32" x2="98" y2="34" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(106,38) rotate(-55)">
+            <circle r="6" fill="#ff6b35" opacity=".85"/>
+            <path d="M-3,-6 Q-5,-11 0,-12 Q5,-11 3,-6" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+          </g>
+          <line x1="58" y1="90" x2="58" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+          <line x1="72" y1="90" x2="72" y2="93" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="timer">0:24</div>
+    <div class="exercise">Kettlebell Swing</div>
+    <div class="reps">3 &times; 10</div>
+
+    <div class="progress"><span></span></div>
+  </div>
+</body>
+</html>
