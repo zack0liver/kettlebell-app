@@ -95,16 +95,24 @@ module.exports = {
     <line x1="38" y1="47" x2="36" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="38" y1="47" x2="44" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="38" y1="47" x2="80" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <g class="lunge-a">
     <line x1="80" y1="68" x2="98" y2="77" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="98" y1="77" x2="116" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="80" y1="68" x2="60" y2="64" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="60" y1="64" x2="66" y2="83" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
-  <g class="pose-a">
-    <line x1="80" y1="68" x2="60" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="60" y1="62" x2="66" y2="80" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <g class="lunge-mid">
+    <line x1="80" y1="68" x2="98" y2="77" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="98" y1="77" x2="116" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="80" y1="68" x2="96" y2="79" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="96" y1="79" x2="112" y2="87" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
-  <g class="pose-b">
-    <line x1="80" y1="68" x2="61" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="61" y1="70" x2="67" y2="84" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <g class="lunge-b">
+    <line x1="80" y1="68" x2="98" y2="77" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="98" y1="77" x2="116" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="80" y1="68" x2="61" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="61" y1="66" x2="67" y2="85" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 </svg>`,
 

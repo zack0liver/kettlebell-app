@@ -307,7 +307,7 @@ module.exports = {
       <line x1="61" y1="36" x2="65" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="70" y1="26" x2="79" y2="36" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="79" y1="36" x2="75" y2="40" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="70" cy="41" r="6" fill="#ff6b35" opacity=".85"/>
+      <circle cx="70" cy="41" r="9" fill="#ff6b35" opacity=".85"/>
       <line x1="54" y1="88" x2="54" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
       <line x1="86" y1="88" x2="86" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
@@ -322,7 +322,7 @@ module.exports = {
       <line x1="61" y1="52" x2="65" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="70" y1="42" x2="79" y2="52" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="79" y1="52" x2="75" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="70" cy="57" r="6" fill="#ff6b35" opacity=".85"/>
+      <circle cx="70" cy="57" r="9" fill="#ff6b35" opacity=".85"/>
       <line x1="54" y1="88" x2="54" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
       <line x1="86" y1="88" x2="86" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
