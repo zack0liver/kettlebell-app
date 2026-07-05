@@ -1,6 +1,5 @@
 module.exports = {
-
-kb_windmill: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_windmill: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <line x1="44" y1="91" x2="96" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <line x1="52" y1="88" x2="52" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
@@ -35,88 +34,9 @@ kb_windmill: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/20
     <path d="M61,31 Q59,36 64,37 Q69,36 67,31" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
-
-kb_halo: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <line x1="50" y1="91" x2="90" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
-    <circle cx="70" cy="26" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="33" x2="70" y2="58" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="58" x2="62" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="62" y1="74" x2="60" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="58" x2="78" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="74" x2="80" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="60" y1="88" x2="60" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="80" y1="88" x2="80" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-  <g class="lunge-a">
-    <line x1="70" y1="38" x2="59" y2="34" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="59" y1="34" x2="52" y2="27" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="38" x2="62" y2="31" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="62" y1="31" x2="55" y2="23" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="51" cy="20" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M48,25 Q46,30 51,31 Q56,30 54,25" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-  </g>
-  <g class="lunge-mid">
-    <line x1="70" y1="38" x2="60" y2="26" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="60" y1="26" x2="64" y2="15" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="38" x2="80" y2="26" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="80" y1="26" x2="76" y2="15" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="70" cy="8" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M67,13 Q65,18 70,19 Q75,18 73,13" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-  </g>
-  <g class="lunge-b">
-    <line x1="70" y1="38" x2="81" y2="34" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="81" y1="34" x2="88" y2="27" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="38" x2="78" y2="31" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="31" x2="85" y2="23" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="89" cy="20" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M86,25 Q84,30 89,31 Q94,30 92,25" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-  </g>
-</svg>`,
-
-kb_russian_twist: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <rect x="12" y="86" width="116" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
-    <line x1="70" y1="82" x2="58" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="66" x2="54" y2="83" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="82" x2="82" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="82" y1="66" x2="86" y2="83" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="54" y1="83" x2="54" y2="86" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="86" y1="83" x2="86" y2="86" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-  <g class="lunge-a">
-    <circle cx="65" cy="45" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="66" y1="52" x2="70" y2="82" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="67" y1="56" x2="57" y2="65" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="57" y1="65" x2="50" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="67" y1="56" x2="59" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="59" y1="68" x2="52" y2="75" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="47" cy="78" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M44,73 Q42,68 47,67 Q52,68 50,73" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-  </g>
-  <g class="lunge-mid">
-    <circle cx="70" cy="45" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="52" x2="70" y2="82" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="56" x2="62" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="62" y1="60" x2="66" y2="63" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="56" x2="78" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="78" y1="60" x2="74" y2="63" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="70" cy="69" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M67,64 Q65,59 70,58 Q75,59 73,64" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-  </g>
-  <g class="lunge-b">
-    <circle cx="75" cy="45" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="74" y1="52" x2="70" y2="82" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="73" y1="56" x2="83" y2="65" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="83" y1="65" x2="90" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="73" y1="56" x2="81" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="81" y1="68" x2="88" y2="75" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="93" cy="78" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M90,73 Q88,68 93,67 Q98,68 96,73" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-  </g>
-</svg>`,
-
-kb_pullover: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_halo: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="58" y1="92" x2="82" y2="92" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/><g><circle cx="70" cy="22" r="8" stroke="#e0e0e0" stroke-width="2.5"/><line x1="70" y1="30" x2="70" y2="58" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="70" y1="58" x2="62" y2="76" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="62" y1="76" x2="60" y2="92" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="70" y1="58" x2="78" y2="76" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="78" y1="76" x2="80" y2="92" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="60" y1="92" x2="60" y2="95" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/><line x1="80" y1="92" x2="80" y2="95" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/></g><g class="lunge-a"><line x1="70" y1="34" x2="82" y2="26" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="82" y1="26" x2="86" y2="24" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><circle cx="88" cy="24" r="5" fill="#ff6b35" opacity=".85"/><path d="M85,19 Q83,14 88,13 Q93,14 91,19" stroke="#ff6b35" stroke-width="1.5" fill="none"/></g><g class="lunge-mid"><line x1="70" y1="34" x2="64" y2="16" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="64" y1="16" x2="68" y2="8" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="70" y1="34" x2="76" y2="16" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><circle cx="70" cy="6" r="5" fill="#ff6b35" opacity=".85"/><path d="M67,1 Q65,-4 70,-5 Q75,-4 73,1" stroke="#ff6b35" stroke-width="1.5" fill="none"/></g><g class="lunge-b"><line x1="70" y1="34" x2="58" y2="26" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="58" y1="26" x2="54" y2="24" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><circle cx="52" cy="24" r="5" fill="#ff6b35" opacity=".85"/><path d="M49,19 Q47,14 52,13 Q57,14 55,19" stroke="#ff6b35" stroke-width="1.5" fill="none"/></g></svg>`,
+  kb_russian_twist: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="84" width="100" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/><circle cx="42" cy="44" r="7" stroke="#e0e0e0" stroke-width="2.5"/><line x1="46" y1="52" x2="58" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="58" y1="72" x2="78" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><line x1="78" y1="62" x2="84" y2="78" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><g class="lunge-a"><line x1="46" y1="54" x2="40" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><circle cx="36" cy="70" r="5" fill="#ff6b35" opacity=".85"/><path d="M33,65 Q31,60 36,59 Q41,60 39,65" stroke="#ff6b35" stroke-width="1.5" fill="none"/></g><g class="lunge-mid"><line x1="46" y1="54" x2="54" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><circle cx="58" cy="64" r="5" fill="#ff6b35" opacity=".85"/><path d="M55,59 Q53,54 58,53 Q63,54 61,59" stroke="#ff6b35" stroke-width="1.5" fill="none"/></g><g class="lunge-b"><line x1="46" y1="54" x2="66" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/><circle cx="72" cy="62" r="5" fill="#ff6b35" opacity=".85"/><path d="M69,57 Q67,52 72,51 Q77,52 75,57" stroke="#ff6b35" stroke-width="1.5" fill="none"/></g></svg>`,
+  kb_pullover: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <rect x="8" y="86" width="118" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
     <circle cx="30" cy="78" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -141,8 +61,7 @@ kb_pullover: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/20
     <path d="M42,49 Q40,54 45,55 Q50,54 48,49" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
-
-kb_figure8: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_figure8: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <line x1="40" y1="91" x2="100" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <circle cx="70" cy="22" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -179,8 +98,7 @@ kb_figure8: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/200
     <line x1="60" y1="46" x2="62" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 </svg>`,
-
-kb_sit_up: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_sit_up: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <rect x="8" y="86" width="118" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
     <line x1="64" y1="80" x2="76" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
@@ -207,8 +125,7 @@ kb_sit_up: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000
     <path d="M58,48 Q56,43 61,42 Q66,43 64,48" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
-
-kb_side_bend: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_side_bend: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <line x1="50" y1="91" x2="90" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <line x1="70" y1="52" x2="62" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
@@ -239,8 +156,7 @@ kb_side_bend: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2
     <line x1="72" y1="40" x2="68" y2="50" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 </svg>`,
-
-kb_plank_pull: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_plank_pull: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <rect x="8" y="86" width="118" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
     <circle cx="28" cy="54" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
@@ -266,8 +182,7 @@ kb_plank_pull: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/
     <path d="M19,74 Q17,69 22,68 Q27,69 25,74" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
-
-kb_woodchop: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  kb_woodchop: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
     <line x1="48" y1="91" x2="92" y2="91" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
     <line x1="58" y1="88" x2="58" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
@@ -315,6 +230,5 @@ kb_woodchop: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/20
     <circle cx="42" cy="66" r="5" fill="#ff6b35" opacity=".85"/>
     <path d="M39,61 Q37,56 42,55 Q47,56 45,61" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
-</svg>`
-
+</svg>`,
 };

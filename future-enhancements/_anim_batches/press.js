@@ -4,44 +4,35 @@ module.exports = {
     <g class="lunge-a">
       <circle cx="64" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
       <line x1="64" y1="17" x2="64" y2="46" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="64" y1="46" x2="60" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="60" y1="66" x2="58" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="64" y1="46" x2="68" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="68" y1="66" x2="70" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="64" y1="46" x2="63" y2="67" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="63" y1="67" x2="62" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="64" y1="26" x2="76" y2="38" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="76" y1="38" x2="76" y2="26" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <circle cx="76" cy="22" r="5" fill="#ff6b35" opacity=".85"/>
       <path d="M73,27 Q71,32 76,33 Q81,32 79,27" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-      <line x1="58" y1="88" x2="58" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-      <line x1="70" y1="88" x2="70" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="88" x2="62" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
     <g class="lunge-mid">
       <circle cx="64" cy="17" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
       <line x1="64" y1="24" x2="64" y2="52" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="64" y1="52" x2="56" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="56" y1="70" x2="58" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="64" y1="52" x2="71" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="71" y1="70" x2="70" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="64" y1="52" x2="70" y2="71" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="70" y1="71" x2="62" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="64" y1="33" x2="76" y2="45" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="76" y1="45" x2="76" y2="33" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <circle cx="76" cy="29" r="5" fill="#ff6b35" opacity=".85"/>
       <path d="M73,34 Q71,39 76,40 Q81,39 79,34" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-      <line x1="58" y1="88" x2="58" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-      <line x1="70" y1="88" x2="70" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="88" x2="62" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
     <g class="lunge-b">
       <circle cx="64" cy="10" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
       <line x1="64" y1="17" x2="64" y2="46" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="64" y1="46" x2="60" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="60" y1="66" x2="58" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="64" y1="46" x2="68" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="68" y1="66" x2="70" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="64" y1="46" x2="63" y2="67" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="63" y1="67" x2="62" y2="88" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="64" y1="26" x2="74" y2="16" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="74" y1="16" x2="76" y2="3" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <circle cx="76" cy="-1" r="5" fill="#ff6b35" opacity=".85"/>
       <path d="M73,4 Q71,9 76,10 Q81,9 79,4" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-      <line x1="58" y1="88" x2="58" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
-      <line x1="70" y1="88" x2="70" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="88" x2="62" y2="91" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
     </g>
   </svg>`,
 
@@ -151,8 +142,8 @@ module.exports = {
       <line x1="66" y1="66" x2="96" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="96" y1="68" x2="102" y2="76" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="102" y1="76" x2="108" y2="83" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="34" y1="62" x2="30" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="30" y1="70" x2="44" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="34" y1="62" x2="46" y2="58" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="46" y1="58" x2="44" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     </g>
   </svg>`,
 

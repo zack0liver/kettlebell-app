@@ -69,43 +69,42 @@ module.exports = {
   mat_bird_dog: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="10" y="88" width="120" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
   <g>
-    <circle cx="36" cy="50" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="46" y1="57" x2="92" y2="58" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="47" y1="57" x2="47" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="92" y1="58" x2="97" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="97" y1="86" x2="109" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="34" cy="52" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+    <line x1="44" y1="60" x2="90" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="44" y1="60" x2="42" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="90" y1="60" x2="94" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="94" y1="86" x2="107" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
   <g class="pose-a">
-    <line x1="49" y1="57" x2="51" y2="72" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="51" y1="72" x2="53" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="92" y1="58" x2="88" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="88" y1="86" x2="100" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="44" y1="60" x2="50" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="90" y1="60" x2="86" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="86" y1="86" x2="99" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
   <g class="pose-b">
-    <line x1="49" y1="57" x2="32" y2="59" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="32" y1="59" x2="16" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="92" y1="58" x2="109" y2="55" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="109" y1="55" x2="125" y2="53" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="44" y1="60" x2="31" y2="61" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="31" y1="61" x2="18" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="90" y1="60" x2="109" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="109" y1="54" x2="127" y2="49" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 </svg>`,
 
   mat_mountain_climber: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="10" y="88" width="120" height="3" rx="1.5" fill="#ff6b35" opacity=".5"/>
   <g>
-    <circle cx="35" cy="46" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="42" y1="52" x2="40" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="42" y1="52" x2="46" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="42" y1="52" x2="86" y2="66" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="86" y1="66" x2="101" y2="76" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="101" y1="76" x2="116" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="31" cy="40" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+    <line x1="38" y1="47" x2="36" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="38" y1="47" x2="44" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="38" y1="47" x2="80" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="80" y1="68" x2="98" y2="77" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="98" y1="77" x2="116" y2="86" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
   <g class="pose-a">
-    <line x1="86" y1="66" x2="64" y2="58" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="64" y1="58" x2="72" y2="74" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="80" y1="68" x2="60" y2="62" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="60" y1="62" x2="66" y2="80" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
   <g class="pose-b">
-    <line x1="86" y1="66" x2="66" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="66" y1="70" x2="74" y2="84" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="80" y1="68" x2="61" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="61" y1="70" x2="67" y2="84" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 </svg>`,
 

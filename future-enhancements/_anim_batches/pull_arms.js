@@ -138,6 +138,8 @@ module.exports = {
   kb_shrug: `<svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="52" y1="92" x2="88" y2="92" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" opacity=".15"/>
   <g>
+    <circle cx="70" cy="12" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
+    <line x1="70" y1="19" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="70" y1="48" x2="62" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="62" y1="68" x2="62" y2="89" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="70" y1="48" x2="78" y2="68" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
@@ -146,8 +148,6 @@ module.exports = {
     <line x1="78" y1="89" x2="78" y2="92" stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
   </g>
   <g class="pose-a">
-    <circle cx="70" cy="12" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="19" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="70" y1="29" x2="58" y2="42" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="58" y1="42" x2="56" y2="56" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="70" y1="29" x2="82" y2="42" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
@@ -158,16 +158,14 @@ module.exports = {
     <path d="M81,57 Q79,52 84,51 Q89,52 87,57" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
   <g class="pose-b">
-    <circle cx="70" cy="9" r="7" stroke="#e0e0e0" stroke-width="2.5"/>
-    <line x1="70" y1="16" x2="70" y2="48" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="26" x2="58" y2="39" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="58" y1="39" x2="56" y2="53" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="70" y1="26" x2="82" y2="39" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="82" y1="39" x2="84" y2="53" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="56" cy="59" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M53,54 Q51,49 56,48 Q61,49 59,54" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
-    <circle cx="84" cy="59" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M81,54 Q79,49 84,48 Q89,49 87,54" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+    <line x1="70" y1="20" x2="58" y2="33" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="58" y1="33" x2="56" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="70" y1="20" x2="82" y2="33" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="82" y1="33" x2="84" y2="47" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="56" cy="53" r="5" fill="#ff6b35" opacity=".85"/>
+    <path d="M53,48 Q51,43 56,42 Q61,43 59,48" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+    <circle cx="84" cy="53" r="5" fill="#ff6b35" opacity=".85"/>
+    <path d="M81,48 Q79,43 84,42 Q89,43 87,48" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
 
@@ -215,22 +213,36 @@ module.exports = {
     <line x1="98" y1="56" x2="94" y2="82" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="106" y1="82" x2="108" y2="85" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="94" y1="82" x2="92" y2="85" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <g class="lunge-a">
     <line x1="36" y1="50" x2="34" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="34" y1="60" x2="32" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <circle cx="32" cy="81" r="5" fill="#ff6b35" opacity=".85"/>
     <path d="M29,76 Q27,71 32,70 Q37,71 35,76" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+    <line x1="44" y1="51" x2="52" y2="44" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="52" y1="44" x2="50" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="50" cy="60" r="5" fill="#ff6b35" opacity=".85"/>
+    <path d="M47,55 Q45,50 50,49 Q55,50 53,55" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
-  <g class="pose-a">
+  <g class="lunge-mid">
+    <line x1="36" y1="50" x2="34" y2="60" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="34" y1="60" x2="32" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="32" cy="81" r="5" fill="#ff6b35" opacity=".85"/>
+    <path d="M29,76 Q27,71 32,70 Q37,71 35,76" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
     <line x1="44" y1="51" x2="47" y2="61" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="47" y1="61" x2="46" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
     <circle cx="46" cy="81" r="5" fill="#ff6b35" opacity=".85"/>
     <path d="M43,76 Q41,71 46,70 Q51,71 49,76" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
-  <g class="pose-b">
-    <line x1="44" y1="51" x2="52" y2="44" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="52" y1="44" x2="50" y2="54" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="50" cy="60" r="5" fill="#ff6b35" opacity=".85"/>
-    <path d="M47,55 Q45,50 50,49 Q55,50 53,55" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+  <g class="lunge-b">
+    <line x1="36" y1="50" x2="43" y2="42" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="43" y1="42" x2="40" y2="52" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="40" cy="58" r="5" fill="#ff6b35" opacity=".85"/>
+    <path d="M37,53 Q35,48 40,47 Q45,48 43,53" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
+    <line x1="44" y1="51" x2="47" y2="61" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="47" y1="61" x2="46" y2="70" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="46" cy="81" r="5" fill="#ff6b35" opacity=".85"/>
+    <path d="M43,76 Q41,71 46,70 Q51,71 49,76" stroke="#ff6b35" stroke-width="1.5" fill="none"/>
   </g>
 </svg>`,
 
