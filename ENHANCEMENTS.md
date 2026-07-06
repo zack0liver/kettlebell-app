@@ -20,14 +20,9 @@
 10. ~~Manual Build — auto-sort exercises by equipment type (KB vs. mat/bodyweight)~~ DONE — included in sort dropdown as "Sort: Equipment"
 11. Nested kettlebell SVG in Settings — refine the kettlebell silhouette shape and improve tap targets for easier interaction on mobile
 12. Workout of the Week — curated/featured workout that rotates weekly
-13. Revamp muscle activation diagrams — make the figures look "lit from within" (glowing activated muscles on a dark body) to match `mockups/KettleFit muscle activation tracker screenshot.png`. **Decision made: stay in hand-coded inline SVG** (not raster) so the tap-a-muscle interactivity survives — a rendered image would force ~15-20 layered PNG overlays per view. Prototype: `future-enhancements/muscle-glow-prototype.html` (front view; glow technique approved, abdomen reworked to a compact tapered core).
-   - **Diagram still needs additional work before integration:**
-     - [ ] Build the **back view** to match — the prototype is front-view only; the real diagram has front + back.
-     - [ ] Blend the **obliques** back toward the torso — after the waist-taper fix they read as two slightly-detached glowing pads.
-     - [ ] Refine remaining regions (arms, calves, shoulders) to the same anatomical quality as the chest/abs/quads.
-     - [ ] **Mobile perf:** collapse the per-muscle `feGaussianBlur` filters into a single `<g filter>` wrapping all active regions (one filter pass instead of ~N) before shipping.
-     - [ ] **Reconcile class names** with the live app: prototype uses `.muscle-pri` / `.muscle-sec`; confirm against the real `style.css` (may be `.active-primary` / `.active-secondary`) and rename.
-     - [ ] **Integration note:** prototype mirrors left-side geometry via `<use>`, so any `app.js` code that sets `fill` directly on `<path>` nodes must target the `<use>` nodes instead — class-based toggling works unchanged.
+13. ~~Revamp muscle activation diagrams — "lit from within" glow (front + back)~~ **DONE & INTEGRATED** — glowing front + back diagrams live in `index.html`. Hand-coded inline SVG (kept the tap-a-muscle interactivity), per-muscle radial-gradient fills + `feGaussianBlur` bloom driven by the app's existing `.active-primary` / `.active-secondary` classes (CSS remap in `style.css`; `app.js` untouched). Source prototype: `future-enhancements/muscle-glow-prototype.html`.
+   - Remaining follow-up (optional, deferred):
+     - [ ] **Mobile perf:** collapse the per-muscle `feGaussianBlur` filters into a single `<g filter>` wrapping all active regions (one filter pass instead of ~N). Deferred — the diagram only re-renders on tap / tab-open (not animating), so risk is low; revisit only if it feels slow on-device, especially the log-view heatmap where many muscles glow at once.
      - [ ] Swap the reworked SVG into `index.html`, keeping every `id` / `data-muscle` / class so `MUSCLE_MAP` in `app.js` still resolves.
 14. Settings — equipment inventory: add slam ball / medicine ball toggle alongside kettlebell weights, unlocking slam ball and med ball exercises in the exercise database
 15. Affiliate links for recommended equipment (kettlebells, slam balls, mats, etc.)
