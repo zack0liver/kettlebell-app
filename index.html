@@ -335,105 +335,228 @@
     <div class="diagram-container">
       <div class="body-view">
         <h3>FRONT</h3>
-        <svg class="body-svg" id="svg-front" viewBox="0 0 200 450">
-          <!-- Head -->
-          <ellipse class="outline" cx="100" cy="30" rx="22" ry="26"/>
-          <!-- Neck -->
-          <rect class="outline" x="90" y="56" width="20" height="14" rx="4"/>
-          <!-- Torso outline -->
-          <path class="outline" d="M60,70 Q55,70 50,80 L42,130 Q40,155 50,180 L55,200 Q60,210 65,215 L70,220 Q80,225 100,225 Q120,225 130,220 L135,215 Q140,210 145,200 L150,180 Q160,155 158,130 L150,80 Q145,70 140,70 Z"/>
+        <svg class="body-svg" id="svg-front" viewBox="0 0 200 460">
+    <defs>
+      <!-- ambient halo behind figure -->
+      <radialGradient id="ambient" cx="50%" cy="42%" r="60%">
+        <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.13"/>
+        <stop offset="55%" stop-color="#ff6b35" stop-opacity="0.05"/>
+        <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
+      </radialGradient>
 
-          <!-- Chest (left) -->
-          <path class="muscle" id="front-chest-l" data-muscle="chest" d="M60,75 Q58,78 54,85 L48,110 Q50,120 60,118 L95,105 L95,75 Q80,70 60,75 Z"/>
-          <!-- Chest (right) -->
-          <path class="muscle" id="front-chest-r" data-muscle="chest" d="M140,75 Q142,78 146,85 L152,110 Q150,120 140,118 L105,105 L105,75 Q120,70 140,75 Z"/>
+      <!-- dark body shading -->
+      <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#292933"/>
+        <stop offset="45%" stop-color="#1f1f28"/>
+        <stop offset="100%" stop-color="#16161d"/>
+      </linearGradient>
 
-          <!-- Shoulders (left) -->
-          <path class="muscle" id="front-shoulder-l" data-muscle="shoulders" d="M55,70 Q38,72 32,88 L40,110 L50,85 Z"/>
-          <!-- Shoulders (right) -->
-          <path class="muscle" id="front-shoulder-r" data-muscle="shoulders" d="M145,70 Q162,72 168,88 L160,110 L150,85 Z"/>
+      <!-- inactive muscle: barely lighter than body, rounded shading -->
+      <linearGradient id="gradOff" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2d2d3a"/>
+        <stop offset="100%" stop-color="#1d1d26"/>
+      </linearGradient>
 
-          <!-- Abs -->
-          <path class="muscle" id="front-abs" data-muscle="abs" d="M80,110 L80,200 Q90,210 100,210 Q110,210 120,200 L120,110 Q110,105 100,105 Q90,105 80,110 Z"/>
+      <!-- lit-from-within falloff: hot center, saturated edge -->
+      <radialGradient id="gradPri" cx="50%" cy="42%" r="72%">
+        <stop offset="0%" stop-color="#ffe2b3"/>
+        <stop offset="28%" stop-color="#ffa45e"/>
+        <stop offset="62%" stop-color="#ff6b35"/>
+        <stop offset="100%" stop-color="#c94a1c"/>
+      </radialGradient>
+      <radialGradient id="gradSec" cx="50%" cy="42%" r="72%">
+        <stop offset="0%" stop-color="#cf7040"/>
+        <stop offset="55%" stop-color="#9c4e26"/>
+        <stop offset="100%" stop-color="#63321a"/>
+      </radialGradient>
 
-          <!-- Obliques (left) -->
-          <path class="muscle" id="front-oblique-l" data-muscle="obliques" d="M55,118 L48,130 Q43,155 50,180 L60,200 L65,215 Q70,218 78,205 L78,110 Q68,115 55,118 Z"/>
-          <!-- Obliques (right) -->
-          <path class="muscle" id="front-oblique-r" data-muscle="obliques" d="M145,118 L152,130 Q157,155 150,180 L140,200 L135,215 Q130,218 122,205 L122,110 Q132,115 145,118 Z"/>
+      <!-- bloom: blurred copies merged under the sharp source -->
+      <filter id="bloomPri" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="halo"/>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="tight"/>
+        <feMerge>
+          <feMergeNode in="halo"/><feMergeNode in="halo"/>
+          <feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="bloomSec" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="halo"/>
+        <feMerge>
+          <feMergeNode in="halo"/><feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
 
-          <!-- Biceps (left) -->
-          <path class="muscle" id="front-bicep-l" data-muscle="biceps" d="M32,95 L26,115 Q24,135 28,155 L38,155 Q42,135 40,115 Z"/>
-          <!-- Biceps (right) -->
-          <path class="muscle" id="front-bicep-r" data-muscle="biceps" d="M168,95 L174,115 Q176,135 172,155 L162,155 Q158,135 160,115 Z"/>
+      <!-- left-side muscle geometry, mirrored via <use> -->
+      <path id="g-delt" d="M59,70 Q49,70 43,78 Q37,84 35,94 Q34,104 38,111 Q44,115 49,108 Q52,100 54,91 Q57,80 62,74 Q64,70 59,70 Z"/>
+      <path id="g-chest" d="M97,77 Q78,72 64,77 Q53,82 53,94 Q54,107 64,114 Q77,120 89,116 Q97,113 97,105 Z"/>
+      <path id="g-bicep" d="M36,117 Q30,123 29,138 Q29,153 33,165 Q36,172 40,169 Q43,164 44,151 Q44,133 42,122 Q39,113 36,117 Z"/>
+      <path id="g-forearm" d="M32,176 Q26,182 25,200 Q24,222 27,241 Q29,249 33,248 Q37,245 38,230 Q40,206 38,188 Q36,175 32,176 Z"/>
+      <path id="g-oblique" d="M85,121 Q74,123 64,119 Q55,116 51,124 Q48,132 50,145 Q54,162 63,177 Q70,189 74,194 Q79,196 81,189 Q84,175 84,156 Q86,138 85,121 Z"/>
+      <path id="g-hipflex" d="M70,206 Q76,208 82,217 Q87,225 86,231 Q81,234 76,228 Q70,219 68,211 Q68,207 70,206 Z"/>
+      <path id="g-quad" d="M62,230 Q56,262 57,292 Q59,320 67,332 Q75,340 82,331 Q89,316 89,288 Q89,258 91,236 Q76,242 62,230 Z"/>
+      <path id="g-calf" d="M71,349 Q66,357 65,377 Q65,397 68,412 Q71,422 75,421 Q79,416 81,400 Q83,378 80,361 Q77,347 71,349 Z"/>
+    </defs>
 
-          <!-- Forearms (left) -->
-          <path class="muscle" id="front-forearm-l" data-muscle="forearms" d="M28,158 L22,200 Q20,220 24,240 L34,240 Q36,220 34,200 L38,158 Z"/>
-          <!-- Forearms (right) -->
-          <path class="muscle" id="front-forearm-r" data-muscle="forearms" d="M172,158 L178,200 Q180,220 176,240 L166,240 Q164,220 166,200 L162,158 Z"/>
+    <!-- ambient glow behind the figure -->
+    <ellipse cx="100" cy="190" rx="98" ry="160" fill="url(#ambient)"/>
 
-          <!-- Quads (left) -->
-          <path class="muscle" id="front-quad-l" data-muscle="quads" d="M68,222 L60,280 Q58,310 62,340 L88,340 Q92,310 90,280 L95,222 Q82,228 68,222 Z"/>
-          <!-- Quads (right) -->
-          <path class="muscle" id="front-quad-r" data-muscle="quads" d="M132,222 L140,280 Q142,310 138,340 L112,340 Q108,310 110,280 L105,222 Q118,228 132,222 Z"/>
+    <!-- dark body silhouette (composed of overlapping rounded parts) -->
+    <g fill="url(#bodyGrad)" stroke="#3a3a48" stroke-width="0.7" stroke-linejoin="round">
+      <ellipse cx="100" cy="27" rx="16.5" ry="20.5"/>
+      <path d="M87,42 Q88,56 78,63 L122,63 Q112,56 113,42 Q100,50 87,42 Z"/>
+      <path d="M58,68 Q50,72 48,84 L44,138 Q43,172 51,202 Q57,224 68,232 Q82,240 100,240 Q118,240 132,232 Q143,224 149,202 Q157,172 156,138 L152,84 Q150,72 142,68 Q120,60 100,60 Q80,60 58,68 Z"/>
+      <!-- arms -->
+      <path d="M58,69 Q40,72 33,86 Q28,98 27,116 L23,190 Q21,222 24,248 Q26,260 33,261 Q40,260 42,246 Q45,220 44,192 L46,130 Q47,104 52,90 Z"/>
+      <path d="M142,69 Q160,72 167,86 Q172,98 173,116 L177,190 Q179,222 176,248 Q174,260 167,261 Q160,260 158,246 Q155,220 156,192 L154,130 Q153,104 148,90 Z"/>
+      <ellipse cx="30" cy="268" rx="7" ry="13"/>
+      <ellipse cx="170" cy="268" rx="7" ry="13"/>
+      <!-- legs -->
+      <path d="M64,225 Q54,262 55,300 Q56,338 65,362 Q61,392 63,416 Q64,432 73,434 Q82,434 85,420 Q88,396 84,368 Q92,336 92,300 Q93,262 96,236 Q80,240 64,225 Z"/>
+      <path d="M136,225 Q146,262 145,300 Q144,338 135,362 Q139,392 137,416 Q136,432 127,434 Q118,434 115,420 Q112,396 116,368 Q108,336 108,300 Q107,262 104,236 Q120,240 136,225 Z"/>
+      <path d="M63,428 Q59,440 66,443 L82,443 Q87,437 84,428 Z"/>
+      <path d="M137,428 Q141,440 134,443 L118,443 Q113,437 116,428 Z"/>
+    </g>
 
-          <!-- Hip flexors -->
-          <path class="muscle" id="front-hipflexor-l" data-muscle="hip_flexors" d="M78,210 L68,222 L95,222 L92,210 Z"/>
-          <path class="muscle" id="front-hipflexor-r" data-muscle="hip_flexors" d="M122,210 L132,222 L105,222 L108,210 Z"/>
+    <!-- muscle regions -->
+    <g id="muscles">
+      <!-- shoulders : secondary -->
+      <use id="front-shoulder-l" data-muscle="shoulders" href="#g-delt" class="muscle"/>
+      <use id="front-shoulder-r" data-muscle="shoulders" href="#g-delt" transform="translate(200,0) scale(-1,1)" class="muscle"/>
 
-          <!-- Calves (front, tibialis) -->
-          <path class="muscle" id="front-calf-l" data-muscle="calves" d="M64,345 L62,380 Q60,400 64,420 L86,420 Q90,400 88,380 L86,345 Z"/>
-          <path class="muscle" id="front-calf-r" data-muscle="calves" d="M136,345 L138,380 Q140,400 136,420 L114,420 Q110,400 112,380 L114,345 Z"/>
-        </svg>
+      <!-- chest : primary -->
+      <use id="front-chest-l" data-muscle="chest" href="#g-chest" class="muscle"/>
+      <use id="front-chest-r" data-muscle="chest" href="#g-chest" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+
+      <!-- biceps / forearms : inactive -->
+      <use id="front-bicep-l" data-muscle="biceps" href="#g-bicep" class="muscle"/>
+      <use id="front-bicep-r" data-muscle="biceps" href="#g-bicep" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+      <use id="front-forearm-l" data-muscle="forearms" href="#g-forearm" class="muscle"/>
+      <use id="front-forearm-r" data-muscle="forearms" href="#g-forearm" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+
+      <!-- obliques : secondary -->
+      <use id="front-oblique-l" data-muscle="obliques" href="#g-oblique" class="muscle"/>
+      <use id="front-oblique-r" data-muscle="obliques" href="#g-oblique" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+
+      <!-- abs : primary -->
+      <path id="front-abs" data-muscle="abs" class="muscle"
+        d="M87,116 Q100,114 113,116 Q112,136 109,156 Q107,173 103,181 Q100,184 97,181 Q93,173 91,156 Q88,136 87,116 Z"/>
+
+      <!-- hip flexors : inactive -->
+      <use id="front-hipflexor-l" data-muscle="hip_flexors" href="#g-hipflex" class="muscle"/>
+      <use id="front-hipflexor-r" data-muscle="hip_flexors" href="#g-hipflex" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+
+      <!-- quads : primary -->
+      <use id="front-quad-l" data-muscle="quads" href="#g-quad" class="muscle"/>
+      <use id="front-quad-r" data-muscle="quads" href="#g-quad" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+
+      <!-- calves : inactive -->
+      <use id="front-calf-l" data-muscle="calves" href="#g-calf" class="muscle"/>
+      <use id="front-calf-r" data-muscle="calves" href="#g-calf" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+    </g>
+
+    <!-- anatomical detail lines (non-interactive) -->
+    <g class="detail">
+      <!-- ab segmentation -->
+      <path d="M100,118 L100,180"/>
+      <path d="M91,138 Q100,140 109,138"/>
+      <path d="M92,156 Q100,158 108,156"/>
+      <path d="M94,172 Q100,174 106,172"/>
+      <!-- pec lower sweep -->
+      <path d="M60,102 Q75,113 92,111"/>
+      <path d="M140,102 Q125,113 108,111"/>
+      <!-- quad separation -->
+      <path d="M74,244 Q72,286 74,322"/>
+      <path d="M126,244 Q128,286 126,322"/>
+    </g>
+  </svg>
       </div>
 
       <div class="body-view">
         <h3>BACK</h3>
-        <svg class="body-svg" id="svg-back" viewBox="0 0 200 450">
-          <!-- Head -->
-          <ellipse class="outline" cx="100" cy="30" rx="22" ry="26"/>
-          <!-- Neck -->
-          <rect class="outline" x="90" y="56" width="20" height="14" rx="4"/>
-          <!-- Torso outline -->
-          <path class="outline" d="M60,70 Q55,70 50,80 L42,130 Q40,155 50,180 L55,200 Q60,210 65,215 L70,220 Q80,225 100,225 Q120,225 130,220 L135,215 Q140,210 145,200 L150,180 Q160,155 158,130 L150,80 Q145,70 140,70 Z"/>
+        <svg class="body-svg" id="svg-back" viewBox="0 0 200 460">
+    <defs>
+      <!-- left-side back muscle geometry, mirrored via <use> -->
+      <path id="g-b-reardelt" d="M58,70 Q49,70 43,79 Q37,85 35,95 Q34,105 38,111 Q44,115 49,108 Q52,100 54,91 Q57,82 61,74 Q63,70 58,70 Z"/>
+      <path id="g-b-trap" d="M100,50 Q92,52 80,60 Q64,66 57,74 Q54,79 59,81 Q76,80 88,88 Q95,96 97,112 Q99,120 100,124 Z"/>
+      <path id="g-b-lat" d="M60,98 Q55,110 56,130 Q58,155 68,172 Q78,184 90,188 Q95,189 96,184 Q97,160 92,134 Q88,112 80,100 Q70,92 60,98 Z"/>
+      <path id="g-b-tricep" d="M36,117 Q30,124 29,140 Q29,156 33,168 Q36,175 40,172 Q44,166 44,151 Q45,134 42,122 Q38,113 36,117 Z"/>
+      <path id="g-b-forearm" d="M32,178 Q26,184 25,202 Q24,223 27,241 Q29,249 33,248 Q37,245 38,230 Q40,207 38,190 Q36,177 32,178 Z"/>
+      <path id="g-b-glute" d="M66,214 Q56,224 57,240 Q59,256 72,262 Q86,266 94,258 Q98,250 97,236 Q96,222 88,216 Q76,210 66,214 Z"/>
+      <path id="g-b-ham" d="M62,268 Q57,296 59,322 Q62,342 70,350 Q77,355 83,348 Q89,334 89,306 Q90,280 90,266 Q76,274 62,268 Z"/>
+      <path id="g-b-calf" d="M70,360 Q65,367 65,385 Q65,403 68,415 Q71,424 75,423 Q79,418 81,403 Q84,382 80,367 Q76,356 70,360 Z"/>
+    </defs>
 
-          <!-- Traps -->
-          <path class="muscle" id="back-traps" data-muscle="traps" d="M75,68 L60,72 L54,85 L70,95 L95,80 L95,72 Z"/>
-          <path class="muscle" id="back-traps-r" data-muscle="traps" d="M125,68 L140,72 L146,85 L130,95 L105,80 L105,72 Z"/>
+    <!-- ambient glow behind the figure -->
+    <ellipse cx="100" cy="190" rx="98" ry="160" fill="url(#ambient)"/>
 
-          <!-- Rear delts -->
-          <path class="muscle" id="back-reardelt-l" data-muscle="shoulders" d="M55,70 Q38,72 32,88 L40,110 L50,85 Z"/>
-          <path class="muscle" id="back-reardelt-r" data-muscle="shoulders" d="M145,70 Q162,72 168,88 L160,110 L150,85 Z"/>
+    <!-- dark body silhouette (same proportions as front) -->
+    <g fill="url(#bodyGrad)" stroke="#3a3a48" stroke-width="0.7" stroke-linejoin="round">
+      <ellipse cx="100" cy="27" rx="16.5" ry="20.5"/>
+      <path d="M87,42 Q88,56 78,63 L122,63 Q112,56 113,42 Q100,50 87,42 Z"/>
+      <path d="M58,68 Q50,72 48,84 L44,138 Q43,172 51,202 Q57,224 68,232 Q82,240 100,240 Q118,240 132,232 Q143,224 149,202 Q157,172 156,138 L152,84 Q150,72 142,68 Q120,60 100,60 Q80,60 58,68 Z"/>
+      <!-- arms -->
+      <path d="M58,69 Q40,72 33,86 Q28,98 27,116 L23,190 Q21,222 24,248 Q26,260 33,261 Q40,260 42,246 Q45,220 44,192 L46,130 Q47,104 52,90 Z"/>
+      <path d="M142,69 Q160,72 167,86 Q172,98 173,116 L177,190 Q179,222 176,248 Q174,260 167,261 Q160,260 158,246 Q155,220 156,192 L154,130 Q153,104 148,90 Z"/>
+      <ellipse cx="30" cy="268" rx="7" ry="13"/>
+      <ellipse cx="170" cy="268" rx="7" ry="13"/>
+      <!-- legs -->
+      <path d="M64,225 Q54,262 55,300 Q56,338 65,362 Q61,392 63,416 Q64,432 73,434 Q82,434 85,420 Q88,396 84,368 Q92,336 92,300 Q93,262 96,236 Q80,240 64,225 Z"/>
+      <path d="M136,225 Q146,262 145,300 Q144,338 135,362 Q139,392 137,416 Q136,432 127,434 Q118,434 115,420 Q112,396 116,368 Q108,336 108,300 Q107,262 104,236 Q120,240 136,225 Z"/>
+      <path d="M63,428 Q59,440 66,443 L82,443 Q87,437 84,428 Z"/>
+      <path d="M137,428 Q141,440 134,443 L118,443 Q113,437 116,428 Z"/>
+    </g>
 
-          <!-- Lats (left) -->
-          <path class="muscle" id="back-lat-l" data-muscle="lats" d="M56,95 L48,115 Q44,140 48,165 L58,180 L75,170 L80,115 L70,100 Z"/>
-          <!-- Lats (right) -->
-          <path class="muscle" id="back-lat-r" data-muscle="lats" d="M144,95 L152,115 Q156,140 152,165 L142,180 L125,170 L120,115 L130,100 Z"/>
+    <!-- muscle regions -->
+    <g id="muscles-back">
+      <!-- traps : secondary -->
+      <use id="back-traps" data-muscle="traps" href="#g-b-trap" class="muscle"/>
+      <use id="back-traps-r" data-muscle="traps" href="#g-b-trap" transform="translate(200,0) scale(-1,1)" class="muscle"/>
 
-          <!-- Lower back -->
-          <path class="muscle" id="back-lowerback" data-muscle="lower_back" d="M78,120 L78,200 Q90,210 100,210 Q110,210 122,200 L122,120 Q110,115 100,115 Q90,115 78,120 Z"/>
+      <!-- rear delts : inactive -->
+      <use id="back-reardelt-l" data-muscle="shoulders" href="#g-b-reardelt" class="muscle"/>
+      <use id="back-reardelt-r" data-muscle="shoulders" href="#g-b-reardelt" transform="translate(200,0) scale(-1,1)" class="muscle"/>
 
-          <!-- Triceps (left) -->
-          <path class="muscle" id="back-tricep-l" data-muscle="triceps" d="M32,95 L26,115 Q24,135 28,155 L38,155 Q42,135 40,115 Z"/>
-          <!-- Triceps (right) -->
-          <path class="muscle" id="back-tricep-r" data-muscle="triceps" d="M168,95 L174,115 Q176,135 172,155 L162,155 Q158,135 160,115 Z"/>
+      <!-- lats : secondary -->
+      <use id="back-lat-l" data-muscle="lats" href="#g-b-lat" class="muscle"/>
+      <use id="back-lat-r" data-muscle="lats" href="#g-b-lat" transform="translate(200,0) scale(-1,1)" class="muscle"/>
 
-          <!-- Forearms back -->
-          <path class="muscle" id="back-forearm-l" data-muscle="forearms" d="M28,158 L22,200 Q20,220 24,240 L34,240 Q36,220 34,200 L38,158 Z"/>
-          <path class="muscle" id="back-forearm-r" data-muscle="forearms" d="M172,158 L178,200 Q180,220 176,240 L166,240 Q164,220 166,200 L162,158 Z"/>
+      <!-- triceps / forearms : inactive -->
+      <use id="back-tricep-l" data-muscle="triceps" href="#g-b-tricep" class="muscle"/>
+      <use id="back-tricep-r" data-muscle="triceps" href="#g-b-tricep" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+      <use id="back-forearm-l" data-muscle="forearms" href="#g-b-forearm" class="muscle"/>
+      <use id="back-forearm-r" data-muscle="forearms" href="#g-b-forearm" transform="translate(200,0) scale(-1,1)" class="muscle"/>
 
-          <!-- Glutes -->
-          <path class="muscle" id="back-glute-l" data-muscle="glutes" d="M65,210 L60,230 Q62,250 75,255 L97,250 L97,210 Q82,215 65,210 Z"/>
-          <path class="muscle" id="back-glute-r" data-muscle="glutes" d="M135,210 L140,230 Q138,250 125,255 L103,250 L103,210 Q118,215 135,210 Z"/>
+      <!-- lower back : inactive -->
+      <path id="back-lowerback" data-muscle="lower_back" class="muscle"
+        d="M92,168 Q100,166 108,168 Q110,190 108,206 Q105,215 100,217 Q95,215 92,206 Q90,190 92,168 Z"/>
 
-          <!-- Hamstrings (left) -->
-          <path class="muscle" id="back-ham-l" data-muscle="hamstrings" d="M62,255 L58,290 Q56,320 60,345 L88,345 Q92,320 90,290 L92,255 Q78,260 62,255 Z"/>
-          <!-- Hamstrings (right) -->
-          <path class="muscle" id="back-ham-r" data-muscle="hamstrings" d="M138,255 L142,290 Q144,320 140,345 L112,345 Q108,320 110,290 L108,255 Q122,260 138,255 Z"/>
+      <!-- glutes : primary -->
+      <use id="back-glute-l" data-muscle="glutes" href="#g-b-glute" class="muscle"/>
+      <use id="back-glute-r" data-muscle="glutes" href="#g-b-glute" transform="translate(200,0) scale(-1,1)" class="muscle"/>
 
-          <!-- Calves (back) -->
-          <path class="muscle" id="back-calf-l" data-muscle="calves" d="M62,348 L60,380 Q58,400 62,420 L86,420 Q90,400 88,380 L86,348 Z"/>
-          <path class="muscle" id="back-calf-r" data-muscle="calves" d="M138,348 L140,380 Q142,400 138,420 L114,420 Q110,400 112,380 L114,348 Z"/>
-        </svg>
+      <!-- hamstrings : primary -->
+      <use id="back-ham-l" data-muscle="hamstrings" href="#g-b-ham" class="muscle"/>
+      <use id="back-ham-r" data-muscle="hamstrings" href="#g-b-ham" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+
+      <!-- calves : inactive -->
+      <use id="back-calf-l" data-muscle="calves" href="#g-b-calf" class="muscle"/>
+      <use id="back-calf-r" data-muscle="calves" href="#g-b-calf" transform="translate(200,0) scale(-1,1)" class="muscle"/>
+    </g>
+
+    <!-- anatomical detail lines (non-interactive) -->
+    <g class="detail">
+      <!-- spine -->
+      <path d="M100,64 L100,164"/>
+      <!-- glute crease -->
+      <path d="M85,258 Q100,265 115,258"/>
+      <!-- hamstring separation -->
+      <path d="M75,278 Q73,308 75,340"/>
+      <path d="M125,278 Q127,308 125,340"/>
+      <!-- calf inner heads -->
+      <path d="M72,370 Q70,392 72,414"/>
+      <path d="M128,370 Q130,392 128,414"/>
+    </g>
+  </svg>
       </div>
     </div>
 
