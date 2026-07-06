@@ -39,7 +39,7 @@
 <body>
 <div class="wrap">
   <h1>Muscle Activation</h1>
-  <div class="sub">Glow prototype — front view. Tap a muscle to cycle its state.</div>
+  <div class="sub">Glow prototype — front + back views. Tap a muscle to cycle its state.</div>
   <div class="view-label">FRONT</div>
 
   <svg class="body-svg" id="svg-front" viewBox="0 0 200 460">
@@ -94,14 +94,14 @@
       </filter>
 
       <!-- left-side muscle geometry, mirrored via <use> -->
-      <path id="g-delt" d="M60,71 Q45,72 37,83 Q31,93 33,107 Q34,113 39,113 Q46,111 50,102 Q56,88 62,76 Q63,71 60,71 Z"/>
+      <path id="g-delt" d="M59,70 Q49,70 43,78 Q37,84 35,94 Q34,104 38,111 Q44,115 49,108 Q52,100 54,91 Q57,80 62,74 Q64,70 59,70 Z"/>
       <path id="g-chest" d="M97,77 Q78,72 64,77 Q53,82 53,94 Q54,107 64,114 Q77,120 89,116 Q97,113 97,105 Z"/>
-      <path id="g-bicep" d="M35,112 Q29,124 27,142 Q26,158 30,168 Q33,172 37,168 Q41,158 41,140 Q41,122 38,112 Q36,109 35,112 Z"/>
-      <path id="g-forearm" d="M28,172 Q24,192 22,212 Q21,230 25,244 Q28,250 32,246 Q36,236 36,214 Q37,192 34,174 Q31,168 28,172 Z"/>
-      <path id="g-oblique" d="M83,120 Q72,123 66,133 Q62,148 65,166 Q69,182 77,190 Q82,193 84,187 Q81,172 81,154 Q81,136 83,120 Z"/>
+      <path id="g-bicep" d="M36,117 Q30,123 29,138 Q29,153 33,165 Q36,172 40,169 Q43,164 44,151 Q44,133 42,122 Q39,113 36,117 Z"/>
+      <path id="g-forearm" d="M32,176 Q26,182 25,200 Q24,222 27,241 Q29,249 33,248 Q37,245 38,230 Q40,206 38,188 Q36,175 32,176 Z"/>
+      <path id="g-oblique" d="M85,121 Q74,123 64,119 Q55,116 51,124 Q48,134 48,150 L47,166 Q48,186 55,199 Q61,208 69,207 Q77,205 80,196 Q84,180 85,160 Q86,139 85,121 Z"/>
       <path id="g-hipflex" d="M82,214 Q90,220 96,230 Q88,235 79,230 Q78,221 82,214 Z"/>
       <path id="g-quad" d="M62,230 Q56,262 57,292 Q59,320 67,332 Q75,340 82,331 Q89,316 89,288 Q89,258 91,236 Q76,242 62,230 Z"/>
-      <path id="g-calf" d="M66,352 Q61,376 62,398 Q63,416 69,425 Q75,428 79,420 Q83,402 81,378 Q79,358 75,350 Q70,347 66,352 Z"/>
+      <path id="g-calf" d="M71,349 Q66,357 65,377 Q65,397 68,412 Q71,422 75,421 Q79,416 81,400 Q83,378 80,361 Q77,347 71,349 Z"/>
     </defs>
 
     <!-- ambient glow behind the figure -->
@@ -177,12 +177,99 @@
     </g>
   </svg>
 
+  <div class="view-label" style="margin-top:22px">BACK</div>
+
+  <svg class="body-svg" id="svg-back" viewBox="0 0 200 460">
+    <defs>
+      <!-- left-side back muscle geometry, mirrored via <use> -->
+      <path id="g-b-reardelt" d="M58,70 Q49,70 43,79 Q37,85 35,95 Q34,105 38,111 Q44,115 49,108 Q52,100 54,91 Q57,82 61,74 Q63,70 58,70 Z"/>
+      <path id="g-b-trap" d="M100,50 Q92,52 80,60 Q64,66 57,74 Q54,79 59,81 Q76,80 88,88 Q95,96 97,112 Q99,120 100,124 Z"/>
+      <path id="g-b-lat" d="M60,98 Q55,110 56,130 Q58,155 68,172 Q78,184 90,188 Q95,189 96,184 Q97,160 92,134 Q88,112 80,100 Q70,92 60,98 Z"/>
+      <path id="g-b-tricep" d="M36,117 Q30,124 29,140 Q29,156 33,168 Q36,175 40,172 Q44,166 44,151 Q45,134 42,122 Q38,113 36,117 Z"/>
+      <path id="g-b-forearm" d="M32,178 Q26,184 25,202 Q24,223 27,241 Q29,249 33,248 Q37,245 38,230 Q40,207 38,190 Q36,177 32,178 Z"/>
+      <path id="g-b-glute" d="M66,214 Q56,224 57,240 Q59,256 72,262 Q86,266 94,258 Q98,250 97,236 Q96,222 88,216 Q76,210 66,214 Z"/>
+      <path id="g-b-ham" d="M62,268 Q57,296 59,322 Q62,342 70,350 Q77,355 83,348 Q89,334 89,306 Q90,280 90,266 Q76,274 62,268 Z"/>
+      <path id="g-b-calf" d="M70,360 Q65,367 65,385 Q65,403 68,415 Q71,424 75,423 Q79,418 81,403 Q84,382 80,367 Q76,356 70,360 Z"/>
+    </defs>
+
+    <!-- ambient glow behind the figure -->
+    <ellipse cx="100" cy="190" rx="98" ry="160" fill="url(#ambient)"/>
+
+    <!-- dark body silhouette (same proportions as front) -->
+    <g fill="url(#bodyGrad)" stroke="#3a3a48" stroke-width="0.7" stroke-linejoin="round">
+      <ellipse cx="100" cy="27" rx="16.5" ry="20.5"/>
+      <path d="M87,42 Q88,56 78,63 L122,63 Q112,56 113,42 Q100,50 87,42 Z"/>
+      <path d="M58,68 Q50,72 48,84 L44,138 Q43,172 51,202 Q57,224 68,232 Q82,240 100,240 Q118,240 132,232 Q143,224 149,202 Q157,172 156,138 L152,84 Q150,72 142,68 Q120,60 100,60 Q80,60 58,68 Z"/>
+      <!-- arms -->
+      <path d="M58,69 Q40,72 33,86 Q28,98 27,116 L23,190 Q21,222 24,248 Q26,260 33,261 Q40,260 42,246 Q45,220 44,192 L46,130 Q47,104 52,90 Z"/>
+      <path d="M142,69 Q160,72 167,86 Q172,98 173,116 L177,190 Q179,222 176,248 Q174,260 167,261 Q160,260 158,246 Q155,220 156,192 L154,130 Q153,104 148,90 Z"/>
+      <ellipse cx="30" cy="268" rx="7" ry="13"/>
+      <ellipse cx="170" cy="268" rx="7" ry="13"/>
+      <!-- legs -->
+      <path d="M64,225 Q54,262 55,300 Q56,338 65,362 Q61,392 63,416 Q64,432 73,434 Q82,434 85,420 Q88,396 84,368 Q92,336 92,300 Q93,262 96,236 Q80,240 64,225 Z"/>
+      <path d="M136,225 Q146,262 145,300 Q144,338 135,362 Q139,392 137,416 Q136,432 127,434 Q118,434 115,420 Q112,396 116,368 Q108,336 108,300 Q107,262 104,236 Q120,240 136,225 Z"/>
+      <path d="M63,428 Q59,440 66,443 L82,443 Q87,437 84,428 Z"/>
+      <path d="M137,428 Q141,440 134,443 L118,443 Q113,437 116,428 Z"/>
+    </g>
+
+    <!-- muscle regions -->
+    <g id="muscles-back">
+      <!-- traps : secondary -->
+      <use id="back-traps" data-muscle="traps" href="#g-b-trap" class="muscle muscle-sec"/>
+      <use id="back-traps-r" data-muscle="traps" href="#g-b-trap" transform="translate(200,0) scale(-1,1)" class="muscle muscle-sec"/>
+
+      <!-- rear delts : inactive -->
+      <use id="back-reardelt-l" data-muscle="shoulders" href="#g-b-reardelt" class="muscle muscle-off"/>
+      <use id="back-reardelt-r" data-muscle="shoulders" href="#g-b-reardelt" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+
+      <!-- lats : secondary -->
+      <use id="back-lat-l" data-muscle="lats" href="#g-b-lat" class="muscle muscle-sec"/>
+      <use id="back-lat-r" data-muscle="lats" href="#g-b-lat" transform="translate(200,0) scale(-1,1)" class="muscle muscle-sec"/>
+
+      <!-- triceps / forearms : inactive -->
+      <use id="back-tricep-l" data-muscle="triceps" href="#g-b-tricep" class="muscle muscle-off"/>
+      <use id="back-tricep-r" data-muscle="triceps" href="#g-b-tricep" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+      <use id="back-forearm-l" data-muscle="forearms" href="#g-b-forearm" class="muscle muscle-off"/>
+      <use id="back-forearm-r" data-muscle="forearms" href="#g-b-forearm" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+
+      <!-- lower back : inactive -->
+      <path id="back-lowerback" data-muscle="lower_back" class="muscle muscle-off"
+        d="M92,168 Q100,166 108,168 Q110,190 108,206 Q105,215 100,217 Q95,215 92,206 Q90,190 92,168 Z"/>
+
+      <!-- glutes : primary -->
+      <use id="back-glute-l" data-muscle="glutes" href="#g-b-glute" class="muscle muscle-pri"/>
+      <use id="back-glute-r" data-muscle="glutes" href="#g-b-glute" transform="translate(200,0) scale(-1,1)" class="muscle muscle-pri"/>
+
+      <!-- hamstrings : primary -->
+      <use id="back-ham-l" data-muscle="hamstrings" href="#g-b-ham" class="muscle muscle-pri"/>
+      <use id="back-ham-r" data-muscle="hamstrings" href="#g-b-ham" transform="translate(200,0) scale(-1,1)" class="muscle muscle-pri"/>
+
+      <!-- calves : inactive -->
+      <use id="back-calf-l" data-muscle="calves" href="#g-b-calf" class="muscle muscle-off"/>
+      <use id="back-calf-r" data-muscle="calves" href="#g-b-calf" transform="translate(200,0) scale(-1,1)" class="muscle muscle-off"/>
+    </g>
+
+    <!-- anatomical detail lines (non-interactive) -->
+    <g class="detail">
+      <!-- spine -->
+      <path d="M100,64 L100,164"/>
+      <!-- glute crease -->
+      <path d="M85,258 Q100,265 115,258"/>
+      <!-- hamstring separation -->
+      <path d="M75,278 Q73,308 75,340"/>
+      <path d="M125,278 Q127,308 125,340"/>
+      <!-- calf inner heads -->
+      <path d="M72,370 Q70,392 72,414"/>
+      <path d="M128,370 Q130,392 128,414"/>
+    </g>
+  </svg>
+
   <div class="legend">
     <span><i class="dot dot-pri"></i>Primary</span>
     <span><i class="dot dot-sec"></i>Secondary</span>
     <span><i class="dot dot-off"></i>Inactive</span>
   </div>
-  <div class="hint">Primary: chest, abs, quads · Secondary: shoulders, obliques</div>
+  <div class="hint">Front — Primary: chest, abs, quads · Secondary: shoulders, obliques<br>Back — Primary: glutes, hamstrings · Secondary: lats, traps</div>
 </div>
 
 <script>
