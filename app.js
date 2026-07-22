@@ -383,6 +383,51 @@ const WEEKLY_WORKOUTS = [
     exercises:[{id:'kb_goblet',sets:4,reps:'12'},{id:'kb_front_squat',sets:3,reps:'8'},{id:'kb_split_squat',sets:3,reps:'10'},{id:'kb_bulgarian_split',sets:3,reps:'8'},{id:'kb_cossack',sets:2,reps:'8'}] },
 ];
 
+// ==================== STRETCH MODE ====================
+// Curated stretch library. hold = seconds; perSide = held on each side (Left then Right).
+const STRETCHES = [
+  { id:'neck_release',    name:'Neck Release',          target:'Neck',        perSide:true,  hold:20, cue:'Ear toward shoulder, let the opposite arm hang heavy.' },
+  { id:'shoulder_rolls',  name:'Shoulder Rolls',        target:'Shoulders',   perSide:false, hold:20, cue:'Big slow circles — forward, then back.' },
+  { id:'cross_shoulder',  name:'Cross-Body Shoulder',   target:'Shoulders',   perSide:true,  hold:30, cue:'Draw the arm across your chest and hug it in.' },
+  { id:'chest_opener',    name:'Doorway Chest Opener',  target:'Chest',       perSide:false, hold:30, cue:'Forearms on the frame, step through, lift the chest.' },
+  { id:'cat_cow',         name:'Cat-Cow',               target:'Spine',       perSide:false, hold:30, cue:'Flow between rounding and arching with your breath.' },
+  { id:'child_pose',      name:"Child's Pose",          target:'Lower Back',  perSide:false, hold:40, cue:'Hips to heels, arms long, breathe into your back.' },
+  { id:'thread_needle',   name:'Thread the Needle',     target:'Upper Back',  perSide:true,  hold:30, cue:'Reach one arm under, let the shoulder melt down.' },
+  { id:'seated_twist',    name:'Seated Spinal Twist',   target:'Obliques',    perSide:true,  hold:30, cue:'Sit tall and rotate from the ribs, not the neck.' },
+  { id:'lat_reach',       name:'Side-Body Lat Reach',   target:'Lats',        perSide:true,  hold:30, cue:'Reach overhead and lean — lengthen the whole side.' },
+  { id:'std_hamstring',   name:'Standing Hamstring Fold',target:'Hamstrings', perSide:false, hold:30, cue:'Hinge at the hips, soft knees, let the head hang.' },
+  { id:'figure4',         name:'Figure-4 Glute',        target:'Glutes',      perSide:true,  hold:30, cue:'Ankle over the opposite knee, sink the hips back.' },
+  { id:'kneel_hipflexor', name:'Kneeling Hip-Flexor',   target:'Hip Flexors', perSide:true,  hold:30, cue:'Tuck the pelvis and press the hips forward.' },
+  { id:'quad_stretch',    name:'Standing Quad',         target:'Quads',       perSide:true,  hold:30, cue:'Heel to glute, knees together, stand tall.' },
+  { id:'butterfly',       name:'Butterfly Groin',       target:'Inner Thigh', perSide:false, hold:30, cue:'Soles together, let the knees fall open.' },
+  { id:'calf_stretch',    name:'Wall Calf Stretch',     target:'Calves',      perSide:true,  hold:30, cue:'Back heel down, press it into the floor.' },
+  { id:'wrist_stretch',   name:'Wrist & Forearm',       target:'Forearms',    perSide:true,  hold:20, cue:'Extend the arm, gently draw the fingers back.' },
+  { id:'deep_squat',      name:'Deep Squat Hold',       target:'Hips',        perSide:false, hold:40, cue:'Sink low, elbows gently pressing the knees wide.' },
+  // Upper-back focused
+  { id:'bear_hug',        name:'Bear Hug',              target:'Upper Back',  perSide:false, hold:30, cue:'Wrap your arms wide around yourself, spread the shoulder blades.' },
+  { id:'eagle_arms',      name:'Eagle Arm Reach',       target:'Upper Back',  perSide:true,  hold:30, cue:'Cross one arm under the other, round forward and reach away.' },
+  { id:'puppy_pose',      name:'Extended Puppy Pose',   target:'Upper Back',  perSide:false, hold:40, cue:'Hips over knees, walk the hands out, melt the chest toward the floor.' },
+  { id:'thoracic_ext',    name:'Thoracic Extension',    target:'Upper Back',  perSide:false, hold:30, cue:'Hands on a chair, hips back, let the chest sink between the arms.' },
+  { id:'scapular_squeeze',name:'Scapular Squeeze',      target:'Upper Back',  perSide:false, hold:20, cue:'Draw the shoulder blades down and together — squeeze and hold.' },
+  { id:'wall_angels',     name:'Wall Angels',           target:'Upper Back',  perSide:false, hold:30, cue:'Back flat to the wall, slide the arms up and down slowly.' },
+  { id:'prone_w',         name:'Prone W Raise',         target:'Upper Back',  perSide:false, hold:20, cue:'Face down, pull the elbows back into a W and squeeze.' },
+];
+
+const STRETCH_ROUTINES = [
+  { id:'morning',  name:'Morning Mobility',      subtitle:'Wake up the whole body',
+    stretchIds:['neck_release','shoulder_rolls','cat_cow','lat_reach','std_hamstring','kneel_hipflexor','quad_stretch','deep_squat'] },
+  { id:'fullbody', name:'Full-Body Mobility',    subtitle:'Head-to-toe reset',
+    stretchIds:['neck_release','cross_shoulder','chest_opener','thread_needle','seated_twist','std_hamstring','figure4','kneel_hipflexor','quad_stretch','calf_stretch','deep_squat','child_pose'] },
+  { id:'cooldown', name:'Post-Workout Cooldown', subtitle:'Ease down after training',
+    stretchIds:['std_hamstring','figure4','kneel_hipflexor','quad_stretch','chest_opener','cross_shoulder','child_pose'] },
+  { id:'quick',    name:'Quick Reset',           subtitle:'~3 minutes',
+    stretchIds:['shoulder_rolls','cat_cow','std_hamstring','kneel_hipflexor','deep_squat'] },
+  { id:'upperback_relief', name:'Upper-Back Relief', subtitle:'Melt out mid-back tension',
+    stretchIds:['cat_cow','thread_needle','bear_hug','eagle_arms','lat_reach','puppy_pose','seated_twist','child_pose'] },
+  { id:'upperback_activate', name:'Upper-Back Activation', subtitle:'Wake up a strong upper back',
+    stretchIds:['scapular_squeeze','wall_angels','prone_w','cat_cow','thoracic_ext','thread_needle','bear_hug'] },
+];
+
 // ==================== APP STATE ====================
 let currentWorkout = []; // [{exercise, sets, reps, weight}]
 let selectedFocus = new Set(['full']);
@@ -404,6 +449,16 @@ let timerCurrentEx = 0;
 let timerExAllotments = [];
 let timerExStartSec = 0;
 let timerShownAnimId = null; // which exercise's animation is currently in the timer
+
+// Stretch Mode state
+let stretchSeq = [];        // [{st, side}] flattened segments
+let stretchIdx = 0;
+let stretchPhase = 'ready'; // 'ready' (lead-in) | 'hold'
+let stretchRemaining = 0;   // seconds left in current phase
+let stretchPaused = false;
+let stretchInterval = null;
+let stretchStartMs = 0;     // wall-clock start, for logged duration
+let stretchRoutine = null;
 
 // Per-exercise workout-timer animations (2-pose crossfade; lunge is 3-pose). Keyed by exercise id.
 // Fill in more ids as animations are made; exercises without one just show no illustration.
@@ -2595,6 +2650,8 @@ function openSettings() {
   });
   updateDifficultyCount(diff);
   renderSettingsChips();
+  const stretchToggle = document.getElementById('stretch-on-open');
+  if (stretchToggle) stretchToggle.checked = s.stretchOnOpen !== false;
 }
 function closeSettings() {
   document.getElementById('settings-modal').classList.remove('show');
@@ -2805,7 +2862,7 @@ function updateTimerDisplay() {
     let listHtml = `<div class="fs-circuit-list">`;
     currentWorkout.forEach(item => {
       const repsLabel = item.reps;
-      const wtLabel = item.weight === 'BW' ? '' : ` — ${item.weight}`;
+      const wtLabel = (item.weight === 'BW' || item.weight === '—') ? '' : ` — ${item.weight}`;
       listHtml += `<div><span class="ex-name">${item.exercise.name}</span> <span class="ex-detail">${repsLabel} reps${wtLabel}</span></div>`;
     });
     listHtml += `</div>`;
@@ -2815,7 +2872,7 @@ function updateTimerDisplay() {
     const remMin = Math.floor(remaining / 60);
     const remS = remaining % 60;
     document.getElementById('fs-exercise-allotment').textContent =
-      `${String(remMin).padStart(2,'0')}:${String(remS).padStart(2,'0')} remaining`;
+      `${String(remMin).padStart(2,'0')}:${String(remS).padStart(2,'0')} left this set`;
 
     // Up Next
     const upnextEl = document.getElementById('fs-upnext');
@@ -2828,14 +2885,14 @@ function updateTimerDisplay() {
     // Standard mode
     if (fsDescPanel) fsDescPanel.style.visibility = '';
     if (fsSwipeHint) fsSwipeHint.style.display = '';
-    fsLabel.textContent = 'Workout Timer';
+    fsLabel.textContent = 'Total Elapsed';
     fsLabel.classList.remove('fs-label-circuit');
     if (currentWorkout[timerCurrentEx]) {
       const item = currentWorkout[timerCurrentEx];
       document.getElementById('fs-desc-name').textContent = item.exercise.name;
       document.getElementById('fs-desc-text').textContent = item.exercise.desc || '';
       document.getElementById('fs-exercise-name').textContent = item.exercise.name;
-      const wtLabel = item.weight === 'BW' ? '' : `  —  ${item.weight}`;
+      const wtLabel = (item.weight === 'BW' || item.weight === '—') ? '' : `  —  ${item.weight}`;
       document.getElementById('fs-exercise-detail').textContent =
         `${item.sets} sets x ${item.reps} reps${wtLabel}`;
       const elapsedInEx = timerSeconds - timerExStartSec;
@@ -2843,7 +2900,7 @@ function updateTimerDisplay() {
       const remMin = Math.floor(remaining / 60);
       const remSec = remaining % 60;
       document.getElementById('fs-exercise-allotment').textContent =
-        `${String(remMin).padStart(2,'0')}:${String(remSec).padStart(2,'0')} remaining`;
+        `${String(remMin).padStart(2,'0')}:${String(remSec).padStart(2,'0')} left this exercise`;
     }
 
     // Up Next
@@ -2945,6 +3002,203 @@ function stopWorkoutTimer() {
   }, 300);
 }
 
+// ==================== STRETCH MODE ENGINE ====================
+const STRETCH_READY_SEC = 3; // lead-in countdown before each hold
+
+function getStretchLogs() { return getSettings().stretchLogs || []; }
+function saveStretchLogs(arr) { const s = getSettings(); s.stretchLogs = arr; saveSettingsToStorage(s); }
+
+// Rotate a suggested routine by day-of-year, like the Workout of the Week.
+function getSuggestedStretchRoutine() {
+  const d = new Date();
+  const dayNum = Math.floor((d - new Date(d.getFullYear(), 0, 1)) / 86400000);
+  return STRETCH_ROUTINES[dayNum % STRETCH_ROUTINES.length];
+}
+
+function buildStretchSequence(routine) {
+  return routine.stretchIds.flatMap(id => {
+    const st = STRETCHES.find(s => s.id === id);
+    if (!st) return [];
+    return st.perSide ? [{ st, side:'Left' }, { st, side:'Right' }] : [{ st, side:null }];
+  });
+}
+
+function stretchSegmentCount(routine) { return buildStretchSequence(routine).length; }
+function estStretchMinutes(routine) {
+  const secs = buildStretchSequence(routine).reduce((n, seg) => n + STRETCH_READY_SEC + seg.st.hold, 0);
+  return Math.max(1, Math.round(secs / 60));
+}
+
+function startStretch(routineId) {
+  const routine = STRETCH_ROUTINES.find(r => r.id === routineId);
+  if (!routine) return;
+  stretchRoutine = routine;
+  stretchSeq = buildStretchSequence(routine);
+  if (stretchSeq.length === 0) return;
+  stretchPaused = false;
+  stretchStartMs = Date.now();
+  dismissStretchPrompt();
+  beginStretchSegment(0);
+
+  const overlay = document.getElementById('stretch-fullscreen');
+  overlay.classList.add('show');
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('visible')));
+
+  if (stretchInterval) clearInterval(stretchInterval);
+  stretchInterval = setInterval(stretchTick, 1000);
+}
+
+function beginStretchSegment(idx) {
+  stretchIdx = idx;
+  stretchPhase = 'ready';
+  stretchRemaining = STRETCH_READY_SEC;
+  updateStretchDisplay();
+  renderStretchProgress();
+}
+
+function stretchTick() {
+  if (stretchPaused) return;
+  stretchRemaining--;
+  if (stretchRemaining > 0) { updateStretchDisplay(); return; }
+  if (stretchPhase === 'ready') {
+    stretchPhase = 'hold';
+    stretchRemaining = stretchSeq[stretchIdx].st.hold;
+    stretchBuzz();
+    updateStretchDisplay();
+  } else if (stretchIdx < stretchSeq.length - 1) {
+    stretchBuzz();
+    beginStretchSegment(stretchIdx + 1);
+  } else {
+    finishStretch();
+  }
+}
+
+function stretchBuzz() { if (navigator.vibrate) { try { navigator.vibrate(60); } catch (e) {} } }
+
+function updateStretchDisplay() {
+  const seg = stretchSeq[stretchIdx];
+  if (!seg) return;
+  const st = seg.st;
+
+  let phaseLabel;
+  if (stretchPhase === 'ready') {
+    const prev = stretchSeq[stretchIdx - 1];
+    phaseLabel = (seg.side === 'Right' && prev && prev.st === st) ? 'Switch Sides' : 'Get Ready';
+  } else {
+    phaseLabel = 'Hold';
+  }
+  document.getElementById('stretch-phase').textContent = phaseLabel;
+
+  const sideEl = document.getElementById('stretch-side');
+  if (seg.side) { sideEl.textContent = seg.side; sideEl.style.display = ''; }
+  else { sideEl.style.display = 'none'; }
+
+  const m = Math.floor(stretchRemaining / 60), s = stretchRemaining % 60;
+  document.getElementById('stretch-clock').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  document.getElementById('stretch-name').textContent = st.name;
+  document.getElementById('stretch-cue').textContent = `${st.target} — ${st.cue}`;
+
+  const next = stretchSeq[stretchIdx + 1];
+  const upEl = document.getElementById('stretch-upnext');
+  if (next) {
+    const sideTag = next.side ? ` (${next.side})` : '';
+    upEl.innerHTML = `Up Next: <strong>${next.st.name}${sideTag}</strong>`;
+  } else {
+    upEl.innerHTML = `<strong>Last one!</strong>`;
+  }
+
+  document.getElementById('stretch-pause-btn').textContent = stretchPaused ? 'Resume' : 'Pause';
+}
+
+function renderStretchProgress() {
+  const bar = document.getElementById('stretch-progress');
+  const dots = [];
+  for (let i = 0; i < stretchSeq.length; i++) {
+    let cls = 'timer-dot';
+    if (i < stretchIdx) cls += ' done';
+    if (i === stretchIdx) cls += ' current';
+    dots.push(`<div class="${cls}"></div>`);
+  }
+  bar.innerHTML = dots.join('');
+}
+
+function stretchTogglePause() { stretchPaused = !stretchPaused; updateStretchDisplay(); }
+function stretchNext() {
+  if (stretchIdx < stretchSeq.length - 1) beginStretchSegment(stretchIdx + 1);
+  else finishStretch();
+}
+function stretchPrev() { if (stretchIdx > 0) beginStretchSegment(stretchIdx - 1); }
+
+function hideStretchOverlay() {
+  const overlay = document.getElementById('stretch-fullscreen');
+  overlay.classList.remove('visible');
+  setTimeout(() => overlay.classList.remove('show'), 300);
+}
+
+// Manual End and natural completion both flow through here.
+function endStretchSession(toastMsg) {
+  if (stretchInterval) { clearInterval(stretchInterval); stretchInterval = null; }
+  const logged = logStretchSession();
+  hideStretchOverlay();
+  if (logged && toastMsg) showToast(toastMsg);
+}
+function stopStretch() { endStretchSession(null); }
+function finishStretch() { endStretchSession('Nice — stretch complete'); }
+
+function logStretchSession() {
+  if (!stretchRoutine) return false;
+  const durationSec = Math.round((Date.now() - stretchStartMs) / 1000);
+  if (durationSec < 20) return false; // ignore instant exits
+  const now = new Date();
+  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const logs = getStretchLogs();
+  logs.push({
+    id: Date.now().toString(36),
+    date,
+    routineId: stretchRoutine.id,
+    routineName: stretchRoutine.name,
+    durationSec,
+    count: stretchSeq.length
+  });
+  logs.sort((a,b) => b.date.localeCompare(a.date));
+  saveStretchLogs(logs);
+  renderLog();
+  return true;
+}
+
+// ---- Prompt (on open) + routine picker ----
+function showStretchPrompt() {
+  const r = getSuggestedStretchRoutine();
+  document.getElementById('stretch-prompt-name').textContent = r.name;
+  document.getElementById('stretch-prompt-sub').textContent = `${r.subtitle} · ~${estStretchMinutes(r)} min`;
+  const startBtn = document.getElementById('stretch-prompt-start');
+  startBtn.onclick = () => startStretch(r.id);
+  document.getElementById('stretch-prompt').classList.add('show');
+}
+function dismissStretchPrompt() { document.getElementById('stretch-prompt').classList.remove('show'); }
+
+// Fills the Stretch tab panel with the routine list.
+function renderStretchRoutines() {
+  const list = document.getElementById('stretch-routine-list');
+  if (!list) return;
+  list.innerHTML = STRETCH_ROUTINES.map(r => `
+    <div class="stretch-routine-item" onclick="startStretch('${r.id}')">
+      <div style="min-width:0">
+        <div class="stretch-routine-name">${r.name}</div>
+        <div class="stretch-routine-sub">${r.subtitle}</div>
+      </div>
+      <div class="stretch-routine-meta">${stretchSegmentCount(r)} moves<br>~${estStretchMinutes(r)} min</div>
+    </div>`).join('');
+}
+// From the on-open prompt's Browse button: go to the Stretch tab.
+function browseStretchRoutines() { dismissStretchPrompt(); switchTab('stretch'); }
+
+function setStretchOnOpen(el) {
+  const s = getSettings();
+  s.stretchOnOpen = el.checked;
+  saveSettingsToStorage(s);
+}
+
 // ==================== TAB NAVIGATION ====================
 function updateMusclesTabState() {
   const btn = document.querySelector('.nav-btn[data-tab="diagram"]');
@@ -2962,6 +3216,7 @@ function switchTab(tab) {
   if (tab === 'diagram') updateDiagram();
   if (tab === 'log') renderLog();
   if (tab === 'insights') renderInsights();
+  if (tab === 'stretch') renderStretchRoutines();
 }
 
 // ==================== BUILD MODE ====================
@@ -3051,7 +3306,7 @@ function generateWorkout() {
       sets = selectedDuration >= 30 ? 4 : 3;
       reps = ['swing','complex'].includes(ex.category) ? '12' : '8';
     }
-    const wtLabel = unit === 'kg' ? `${weight} kg` : `${weight} lb`;
+    const wtLabel = prefKg == null ? '—' : (unit === 'kg' ? `${weight} kg` : `${weight} lb`);
     return { exercise: ex, sets, reps, weight: ['mat','slam_ball','medicine_ball'].includes(ex.equipment) ? 'BW' : wtLabel };
   });
 
@@ -3113,7 +3368,7 @@ function addExercise(id) {
   const unit = s.unit || 'lb';
   const prefKg = getPreferredWeight();
   const wt = unit === 'kg' ? prefKg : KG_TO_LB[prefKg];
-  const wtLabel = unit === 'kg' ? `${wt} kg` : `${wt} lb`;
+  const wtLabel = prefKg == null ? '—' : (unit === 'kg' ? `${wt} kg` : `${wt} lb`);
   currentWorkout.push({
     exercise: ex, sets: 3,
     reps: ex.name.includes('Hold') || ex.name.includes('Plank') ? '30s' : '10',
@@ -3355,12 +3610,13 @@ function updateDiagram() {
     summaryCard.style.display = 'block';
 
     // Binary coloring for current workout
+    // Collect all primaries first, then secondaries excluding any that are primary
+    // anywhere in the workout — otherwise a muscle that's secondary in an early
+    // exercise and primary in a later one lands in both (duplicate legend entry).
     const primaryMuscles = new Set();
     const secondaryMuscles = new Set();
-    exercises.forEach(ex => {
-      (ex.primary || []).forEach(m => primaryMuscles.add(m));
-      (ex.secondary || []).forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); });
-    });
+    exercises.forEach(ex => (ex.primary || []).forEach(m => primaryMuscles.add(m)));
+    exercises.forEach(ex => (ex.secondary || []).forEach(m => { if (!primaryMuscles.has(m)) secondaryMuscles.add(m); }));
     primaryMuscles.forEach(m =>
       (MUSCLE_TO_SVG[m]||[]).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('active-primary'); }));
     secondaryMuscles.forEach(m =>
@@ -3369,8 +3625,8 @@ function updateDiagram() {
     document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
     const legend = document.getElementById('muscle-legend');
     let html = '';
-    primaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
-    secondaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+    primaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot"></div>${MUSCLE_NAMES[m]}</div>`; });
+    secondaryMuscles.forEach(m => { html += `<div class="legend-item"><div class="legend-dot secondary"></div>${MUSCLE_NAMES[m]} <span style="color:var(--text2);opacity:.7">(sec)</span></div>`; });
     legend.innerHTML = html;
 
   } else {
@@ -3388,12 +3644,12 @@ function updateDiagram() {
     document.getElementById('diagram-summary-list').innerHTML = summaryHtml;
 
     // Frequency-based intensity coloring for log views
+    // Tally all primaries first, then secondaries excluding any muscle counted
+    // as primary anywhere — prevents the same muscle appearing in both legends.
     const primaryCount = {};
     const secondaryCount = {};
-    exercises.forEach(ex => {
-      (ex.primary || []).forEach(m => { primaryCount[m] = (primaryCount[m] || 0) + 1; });
-      (ex.secondary || []).forEach(m => { if (primaryCount[m] === undefined) secondaryCount[m] = (secondaryCount[m] || 0) + 1; });
-    });
+    exercises.forEach(ex => (ex.primary || []).forEach(m => { primaryCount[m] = (primaryCount[m] || 0) + 1; }));
+    exercises.forEach(ex => (ex.secondary || []).forEach(m => { if (primaryCount[m] === undefined) secondaryCount[m] = (secondaryCount[m] || 0) + 1; }));
 
     const maxP = Math.max(1, ...Object.values(primaryCount));
     const maxS = Math.max(1, ...Object.values(secondaryCount));
@@ -3415,8 +3671,8 @@ function updateDiagram() {
 
     const legend = document.getElementById('muscle-legend');
     let html = '';
-    Object.keys(primaryCount).forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--primary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
-    Object.keys(secondaryCount).forEach(m => { html += `<div class="legend-item"><div class="legend-dot" style="background:var(--secondary-muscle)"></div>${MUSCLE_NAMES[m]}</div>`; });
+    Object.keys(primaryCount).forEach(m => { html += `<div class="legend-item"><div class="legend-dot"></div>${MUSCLE_NAMES[m]}</div>`; });
+    Object.keys(secondaryCount).forEach(m => { html += `<div class="legend-item"><div class="legend-dot secondary"></div>${MUSCLE_NAMES[m]} <span style="color:var(--text2);opacity:.7">(sec)</span></div>`; });
     legend.innerHTML = html;
   }
 }
@@ -3801,21 +4057,25 @@ function setLogFilter(filter) {
 
 function renderLog() {
   const logs = getWorkoutLogs();
+  const stretchLogs = getStretchLogs();
   const list = document.getElementById('log-list');
   const empty = document.getElementById('log-empty');
-  if (logs.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+  if (logs.length === 0 && stretchLogs.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
 
   const filtered = filterLogsByPill(logs);
-  const emptyMessages = { week:'No workouts this week', month:'No workouts this month', starred:'No starred workouts', all:'' };
-  if (filtered.length === 0) { list.innerHTML = `<div class="empty-state"><p>${emptyMessages[logFilter] || 'No workouts'}</p></div>`; empty.style.display = 'none'; return; }
+  // Stretch sessions have no starred concept, so they never show under the Starred pill.
+  const stretchFiltered = logFilter === 'starred' ? [] : filterLogsByKey(stretchLogs, logFilter);
+  const emptyMessages = { week:'Nothing logged this week', month:'Nothing logged this month', starred:'No starred workouts', all:'' };
+  if (filtered.length === 0 && stretchFiltered.length === 0) { list.innerHTML = `<div class="empty-state"><p>${emptyMessages[logFilter] || 'Nothing logged'}</p></div>`; empty.style.display = 'none'; return; }
   empty.style.display = 'none';
 
-  list.innerHTML = filtered.map(log => {
+  const entries = [];
+  filtered.forEach(log => {
     const totalSets = log.exercises.reduce((s,e) => s + (parseInt(e.sets)||0), 0);
     const durStr = log.duration > 0
       ? (() => { const m = Math.floor(log.duration/60), s = log.duration%60; return `${m}:${String(s).padStart(2,'0')}`; })()
       : null;
-    return `
+    entries.push({ date: log.date, html: `
     <div class="log-entry">
       <div class="log-date">${log.starred?'<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>':''}${formatDate(log.date)}</div>
       <div class="log-exercises">${log.exercises.map(e => e.name).join(', ')}</div>
@@ -3829,8 +4089,30 @@ function renderLog() {
         <button class="btn btn-sm btn-secondary" onclick="reloadWorkout('${log.id}')">Reload</button>
         <button class="btn btn-sm btn-danger" onclick="deleteLog('${log.id}')">Delete</button>
       </div>
-    </div>`;
-  }).join('');
+    </div>` });
+  });
+  stretchFiltered.forEach(log => {
+    const mins = Math.max(1, Math.round((log.durationSec||0)/60));
+    entries.push({ date: log.date, html: `
+    <div class="log-entry stretch-entry">
+      <div class="log-date">${formatDate(log.date)}</div>
+      <div class="log-exercises">${log.routineName}</div>
+      <div class="log-stats">
+        <span>${log.count} stretches</span>
+        <span>&#9201; ${mins} min</span>
+      </div>
+      <div class="log-actions">
+        <button class="btn btn-sm btn-danger" onclick="deleteStretchLog('${log.id}')">Delete</button>
+      </div>
+    </div>` });
+  });
+  entries.sort((a,b) => b.date.localeCompare(a.date));
+  list.innerHTML = entries.map(e => e.html).join('');
+}
+
+function deleteStretchLog(id) {
+  saveStretchLogs(getStretchLogs().filter(l => l.id !== id));
+  renderLog();
 }
 
 function reloadWorkout(logId) {
@@ -4184,3 +4466,4 @@ renderExerciseList();
 renderLog();
 updateMusclesTabState();
 renderWorkoutOfTheWeek();
+if (getSettings().stretchOnOpen !== false) showStretchPrompt();

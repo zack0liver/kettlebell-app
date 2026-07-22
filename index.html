@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <title>Kettle Bell Genie</title>
-<link rel="stylesheet" href="style.css?v=21">
+<link rel="stylesheet" href="style.css?v=24">
 <link rel="stylesheet" href="auth.css">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -20,7 +20,7 @@
 
 <!-- Full-Screen Workout Timer Overlay -->
 <div class="timer-fullscreen" id="timer-fullscreen">
-  <div class="fs-label" id="fs-label">Workout Timer</div>
+  <div class="fs-label" id="fs-label">Total Elapsed</div>
   <div class="fs-clock" id="fs-clock">00:00</div>
   <div class="fs-exercise-name" id="fs-exercise-name"></div>
   <div class="fs-illustration" id="fs-illustration" style="display:none"></div>
@@ -41,6 +41,25 @@
   <div class="fs-bottom-controls">
     <button class="btn btn-primary" id="fs-pause-btn" onclick="timerTogglePause()">Pause</button>
     <button class="btn btn-danger" onclick="stopWorkoutTimer()">End Workout</button>
+  </div>
+</div>
+
+<!-- Full-Screen Stretch Mode Overlay -->
+<div class="timer-fullscreen" id="stretch-fullscreen">
+  <div class="fs-label" id="stretch-phase">Get Ready</div>
+  <div class="fs-clock" id="stretch-clock">00:03</div>
+  <div class="fs-exercise-name" id="stretch-name"></div>
+  <div class="st-side" id="stretch-side" style="display:none">Left</div>
+  <div class="fs-exercise-detail" id="stretch-cue" style="max-width:360px"></div>
+  <div class="fs-upnext" id="stretch-upnext"></div>
+  <div class="fs-progress" id="stretch-progress"></div>
+  <div class="fs-controls">
+    <button class="btn btn-secondary" onclick="stretchPrev()">Prev</button>
+    <button class="btn btn-secondary" onclick="stretchNext()">Next</button>
+  </div>
+  <div class="fs-bottom-controls">
+    <button class="btn btn-primary" id="stretch-pause-btn" onclick="stretchTogglePause()">Pause</button>
+    <button class="btn btn-danger" onclick="stopStretch()">End</button>
   </div>
 </div>
 
@@ -636,6 +655,13 @@
     </div>
     </div><!-- /insights-content -->
   </div>
+
+  <!-- STRETCH TAB -->
+  <div class="tab-panel" id="tab-stretch">
+    <div class="section-title">Stretch &amp; Mobility</div>
+    <p style="font-size:12px; color:var(--text2); margin:-6px 0 14px">Pick a guided routine — hands-free, auto-advancing holds.</p>
+    <div id="stretch-routine-list"></div>
+  </div>
 </div>
 
 <!-- Bottom Navigation -->
@@ -659,6 +685,10 @@
   <button class="nav-btn" onclick="switchTab('insights')" data-tab="insights">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
     Insights
+  </button>
+  <button class="nav-btn" onclick="switchTab('stretch')" data-tab="stretch">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7M12 8.5 7 5.5M12 8.5 17 5.5M12 13l-3 7M12 13l3 7"/></svg>
+    Stretch
   </button>
 </nav>
 
@@ -734,8 +764,30 @@
       <p style="font-size:11px; color:var(--text2); margin:0 0 8px; opacity:.7">Toggle to unlock bonus exercises</p>
       <div id="extra-equipment-toggles"></div>
     </div>
+    <div class="form-group">
+      <label style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; margin-bottom:0">
+        <span>Stretch prompt on open</span>
+        <input type="checkbox" id="stretch-on-open" onchange="setStretchOnOpen(this)" style="width:auto">
+      </label>
+      <p style="font-size:11px; color:var(--text2); margin:4px 0 0; opacity:.7">Suggest a stretch routine when you open the app</p>
+    </div>
     <div style="display:flex; gap:8px; margin-top:14px;">
       <button class="btn btn-primary" style="flex:1" onclick="closeSettings()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Stretch prompt (on open) -->
+<div class="modal" id="stretch-prompt">
+  <div class="modal-backdrop" onclick="dismissStretchPrompt()"></div>
+  <div class="modal-content" style="max-width:360px;text-align:center">
+    <h2 style="margin:0 0 4px">Loosen up first?</h2>
+    <div style="font-size:16px;font-weight:700;color:var(--blue)" id="stretch-prompt-name"></div>
+    <div style="font-size:12px;color:var(--text2);margin-top:2px" id="stretch-prompt-sub"></div>
+    <button class="btn btn-primary btn-block" id="stretch-prompt-start" style="margin-top:16px">Start stretching</button>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-secondary" style="flex:1" onclick="browseStretchRoutines()">Browse</button>
+      <button class="btn btn-secondary" style="flex:1" onclick="dismissStretchPrompt()">Skip</button>
     </div>
   </div>
 </div>
@@ -758,6 +810,6 @@
 
 <script src="firebase-config.js?v=21"></script>
 <script src="firebase-sync.js?v=21"></script>
-<script src="app.js?v=21"></script>
+<script src="app.js?v=23"></script>
 </body>
 </html>
